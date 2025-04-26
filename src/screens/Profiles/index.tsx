@@ -18,12 +18,12 @@ export default function Profiles() {
         </thead>
         <tbody>
           {data?.map((profile) => (
-            <tr key={profile.id}>
-              <td>{profile.name}</td>
-              <td>{profile.proxy.host}</td>
-              <td>{profile.proxy.autoProxyRegion}</td>
-              <td>{profile.proxy.customName}</td>
-              <td>
+            <tr key={profile.id} className="border-b border-gray-200">
+              <td className="py-2">{profile.name}</td>
+              <td className="py-2">{profile.proxy.host}</td>
+              <td className="py-2">{profile.proxy.autoProxyRegion}</td>
+              <td className="py-2">{profile.proxy.customName}</td>
+              <td className="py-2">
                 <Button>Run</Button>
               </td>
             </tr>
