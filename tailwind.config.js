@@ -4,7 +4,12 @@ export default {
     "./src/**/*.{html,js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['Montserrat', 'sans-serif'],
+        serif: ['Space Grotesk', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
 }
