@@ -1,9 +1,7 @@
-import { app, BrowserWindow } from 'electron'
-import { createRequire } from 'node:module'
+import { app, BrowserWindow, ipcMain } from 'electron'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
-
-const require = createRequire(import.meta.url)
+import { runProfile } from './runProfile'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // The built directory structure
@@ -50,6 +48,17 @@ function createWindow() {
     win.loadFile(path.join(RENDERER_DIST, 'index.html'))
   }
 }
+
+
+
+// Đăng ký IPC handler
+ipcMain.handle('get-current-time', async () => {
+  console.log('get-current-time')
+})
+
+ipcMain.handle('run-profile', async (_event, profileId: string) => {
+  runProfile(profileId)
+})
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits

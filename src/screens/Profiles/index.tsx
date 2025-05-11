@@ -3,6 +3,12 @@ import Button from "@/components/Button"
 export default function Profiles() {
   const { data, isLoading } = useGetProfiles()
 
+  const runProfile = async (profileId: string) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    await window.api.runProfile(profileId)
+  }
+
   return (
     <div>
       {isLoading && <div>Loading...</div>}
@@ -24,7 +30,7 @@ export default function Profiles() {
               <td className="py-2">{profile.proxy.autoProxyRegion}</td>
               <td className="py-2">{profile.proxy.customName}</td>
               <td className="py-2">
-                <Button>Run</Button>
+                <Button onClick={() => runProfile(profile.id)}>Run</Button>
               </td>
             </tr>
           ))}

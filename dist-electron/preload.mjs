@@ -20,3 +20,7 @@ electron.contextBridge.exposeInMainWorld("ipcRenderer", {
   // You can expose other APTs you need here.
   // ...
 });
+electron.contextBridge.exposeInMainWorld("api", {
+  getCurrentTime: () => electron.ipcRenderer.invoke("get-current-time"),
+  runProfile: (profileId) => electron.ipcRenderer.invoke("run-profile", profileId)
+});

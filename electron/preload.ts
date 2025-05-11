@@ -22,3 +22,8 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
   // You can expose other APTs you need here.
   // ...
 })
+
+contextBridge.exposeInMainWorld('api', {
+  getCurrentTime: () => ipcRenderer.invoke('get-current-time'),
+  runProfile: (profileId: string) => ipcRenderer.invoke('run-profile', profileId),
+})

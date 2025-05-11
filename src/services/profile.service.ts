@@ -16,7 +16,7 @@ interface Profile {
   }
 }
 
-const getProfiles = async ():Promise<Profile[]> => {
+const getProfiles = async (): Promise<Profile[]> => {
   const data = await request.get(GET_PROFILES)
   return get(data, 'profiles', [])
 }
@@ -26,4 +26,13 @@ export const useGetProfiles = () => {
     queryKey: [GET_PROFILES],
     queryFn: getProfiles,
   })
+}
+
+export const useProfile = () => {
+  const runProfile = async (profileId: string) => {
+    console.log('runProfile', profileId)
+  }
+  return {
+    runProfile,
+  }
 }
