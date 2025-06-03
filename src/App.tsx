@@ -1,19 +1,22 @@
 import './App.css'
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import Login from './screens/Login'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+// import Login from './screens/Login'
 import Profiles from './screens/Profiles'
+import React from 'react'
+import Token from './components/Token'
 
 function App() {
   return (
-    <Router>
-      <nav>
-        <Link to="/">Home</Link> | <Link to="/profiles">Profiles</Link>
-      </nav>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/profiles" element={<Profiles />} />
-      </Routes>
-    </Router>
+    <React.Fragment>
+      <div className='pb-10'>
+        <Token />
+      </div>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Profiles />} />
+        </Routes>
+      </Router>
+    </React.Fragment>
   )
 }
 

@@ -18,6 +18,7 @@ interface Profile {
 
 const getProfiles = async (): Promise<Profile[]> => {
   const data = await request.get(GET_PROFILES)
+
   return get(data, 'profiles', [])
 }
 
