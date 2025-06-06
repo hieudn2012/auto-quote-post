@@ -9,6 +9,18 @@ export default function Profiles() {
     await window.api.runProfile(profileId)
   }
 
+  const stopProfile = async (profileId: string) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    await window.api.stopProfile(profileId)
+  }
+
+  const sharePost = async (profileId: string) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    await window.api.sharePost(profileId)
+  }
+
   return (
     <div>
       {isLoading && <div>Loading...</div>}
@@ -30,7 +42,11 @@ export default function Profiles() {
               <td className="py-2">{profile.proxy.autoProxyRegion}</td>
               <td className="py-2">{profile.proxy.customName}</td>
               <td className="py-2">
-                <Button onClick={() => runProfile(profile.id)}>Run</Button>
+                <div className="flex gap-2">
+                  <Button onClick={() => runProfile(profile.id)}>Run</Button>
+                  <Button onClick={() => stopProfile(profile.id)}>Stop</Button>
+                  <Button onClick={() => sharePost(profile.id)}>Share</Button>
+                </div>
               </td>
             </tr>
           ))}

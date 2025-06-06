@@ -55,4 +55,4 @@ export const closeAllProfiles = async () => {
   } catch (error) {
     console.error('Lỗi khi đóng tất cả profiles:', error);
   }
-} 
+}

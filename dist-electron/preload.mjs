@@ -22,5 +22,7 @@ electron.contextBridge.exposeInMainWorld("ipcRenderer", {
 });
 electron.contextBridge.exposeInMainWorld("api", {
   getCurrentTime: () => electron.ipcRenderer.invoke("get-current-time"),
-  runProfile: (profileId) => electron.ipcRenderer.invoke("run-profile", profileId)
+  runProfile: (profileId) => electron.ipcRenderer.invoke("run-profile", profileId),
+  stopProfile: (profileId) => electron.ipcRenderer.invoke("stop-profile", profileId),
+  sharePost: (profileId) => electron.ipcRenderer.invoke("share-post", profileId)
 });

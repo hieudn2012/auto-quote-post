@@ -26,4 +26,6 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
 contextBridge.exposeInMainWorld('api', {
   getCurrentTime: () => ipcRenderer.invoke('get-current-time'),
   runProfile: (profileId: string) => ipcRenderer.invoke('run-profile', profileId),
+  stopProfile: (profileId: string) => ipcRenderer.invoke('stop-profile', profileId),
+  sharePost: (profileId: string) => ipcRenderer.invoke('share-post', profileId),
 })

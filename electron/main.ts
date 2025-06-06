@@ -1,7 +1,8 @@
 import { app, BrowserWindow, ipcMain } from 'electron'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
-import { runProfile } from './runProfile'
+import { runProfile, sharePost, stopProfile } from './runProfile'
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // The built directory structure
@@ -58,6 +59,14 @@ ipcMain.handle('get-current-time', async () => {
 
 ipcMain.handle('run-profile', async (_event, profileId: string) => {
   runProfile(profileId)
+})
+
+ipcMain.handle('stop-profile', async (_event, profileId: string) => {
+  stopProfile(profileId)
+})
+
+ipcMain.handle('share-post', async (_event, profileId: string) => {
+  sharePost(profileId)
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
