@@ -1,22 +1,23 @@
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-// import Login from './screens/Login'
+import Dashboard from './screens/Dashboard'
 import Profiles from './screens/Profiles'
-import React from 'react'
-import Token from './components/Token'
+import History from './screens/History'
+import Error from './screens/Error'
+import Setting from './screens/Setting'
+import { RoutePath } from './components/Siderbar'
 
 function App() {
   return (
-    <React.Fragment>
-      <div className='pb-10'>
-        <Token />
-      </div>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Profiles />} />
-        </Routes>
-      </Router>
-    </React.Fragment>
+    <Router>
+      <Routes>
+        <Route path={RoutePath.Dashboard} element={<Dashboard />} />
+        <Route path={RoutePath.Profiles} element={<Profiles />} />
+        <Route path={RoutePath.History} element={<History />} />
+        <Route path={RoutePath.Error} element={<Error />} />
+        <Route path={RoutePath.Settings} element={<Setting />} />
+      </Routes>
+    </Router>
   )
 }
 

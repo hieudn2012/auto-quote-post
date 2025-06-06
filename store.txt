@@ -1,1 +1,1 @@
-683ea17f13f70b76ea64d128 || ws://127.0.0.1:27564/devtools/browser/f4c20b3c-59b1-4094-a514-8e182b3ac7a3 || success
+683ea17f13f70b76ea64d128 || ws://127.0.0.1:25458/devtools/browser/5145254d-f996-4e37-9015-557c100461c2 || success

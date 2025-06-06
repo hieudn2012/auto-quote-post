@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import request from "@/utils/request"
-import { get } from "lodash"
+import { get, sortBy } from "lodash"
 
 const GET_PROFILES = `/browser/v2`
 
@@ -18,8 +18,9 @@ interface Profile {
 
 const getProfiles = async (): Promise<Profile[]> => {
   const data = await request.get(GET_PROFILES)
+  const sortedProfiles = sortBy(get(data, 'profiles', []), 'name').reverse()
 
-  return get(data, 'profiles', [])
+  return sortedProfiles
 }
 
 export const useGetProfiles = () => {
@@ -27,13 +28,4 @@ export const useGetProfiles = () => {
     queryKey: [GET_PROFILES],
     queryFn: getProfiles,
   })
-}
-
-export const useProfile = () => {
-  const runProfile = async (profileId: string) => {
-    console.log('runProfile', profileId)
-  }
-  return {
-    runProfile,
-  }
 }

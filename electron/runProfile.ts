@@ -1,18 +1,6 @@
-import { GologinApi } from "gologin";
-import { addBrowser } from "./manageProfiles";
-import { TOKEN } from '../src/config';
 import axios from "axios";
 import fs from 'fs';
 import puppeteer from 'puppeteer-core';
-
-const texts = [
-  'Một ngày tốt lành 1',
-  'Một ngày tốt lành 2',
-  'Một ngày tốt lành 3',
-  'Một ngày tốt lành 4',
-  'Một ngày tốt lành 5',
-]
-
 const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms * 1000));
 
 const startProfile = async (profileId: string) => {
