@@ -1,6 +1,6 @@
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Dashboard from './screens/Dashboard'
+// import Dashboard from './screens/Dashboard'
 import Profiles from './screens/Profiles'
 import History from './screens/History'
 import Error from './screens/Error'
@@ -11,7 +11,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path={RoutePath.Dashboard} element={<Dashboard />} />
+        {/* <Route path={RoutePath.Dashboard} element={<Dashboard />} /> */}
         <Route path={RoutePath.Profiles} element={<Profiles />} />
         <Route path={RoutePath.History} element={<History />} />
         <Route path={RoutePath.Error} element={<Error />} />

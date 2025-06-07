@@ -1,0 +1,6 @@
+683c52a3f3b6c6b0c2f45834 || proxies.checkErrorGroups.nonfunctional || 2025-06-07T15:30:23.285Z
+683c52a3f3b6c6b0c2f45834 || Repost button not found || 2025-06-07T15:30:41.757Z
+683c52a3f3b6c6b0c2f45834 || Repost button not found || 2025-06-07T15:30:50.773Z
+683c52a3f3b6c6b0c2f45834 || net::ERR_ABORTED at https://www.threads.com/@siukayy.16/post/DKdghD9zi_W || 2025-06-07T15:30:53.287Z
+683c52a3f3b6c6b0c2f45834 || Protocol error (Target.setAutoAttach): Target closed || 2025-06-07T15:30:53.338Z
+683c52a3f3b6c6b0c2f45834 || connect ECONNREFUSED 127.0.0.1:21882 || 2025-06-07T15:30:53.338Z

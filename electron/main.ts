@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain } from 'electron'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import { runProfile, sharePost, stopProfile } from './runProfile'
+import { getAllError, getAllHistory } from './writeLog'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -67,6 +68,14 @@ ipcMain.handle('stop-profile', async (_event, profileId: string) => {
 
 ipcMain.handle('share-post', async (_event, profileId: string) => {
   sharePost(profileId)
+})
+
+ipcMain.handle('get-all-error', async () => {
+  return getAllError()
+})
+
+ipcMain.handle('get-all-history', async () => {
+  return getAllHistory()
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common

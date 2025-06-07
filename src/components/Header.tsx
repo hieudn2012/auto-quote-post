@@ -6,8 +6,8 @@ export const Header = () => {
 
   const mapLocationToTitle = (path: string) => {
     switch (path) {
-      case RoutePath.Dashboard:
-        return "Dashboard"
+      // case RoutePath.Dashboard:
+      //   return "Dashboard"
       case RoutePath.Profiles:
         return "Profiles"
       case RoutePath.History:

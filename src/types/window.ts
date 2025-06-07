@@ -3,6 +3,8 @@ export interface WindowInstance {
     runProfile: (profileId: string) => Promise<void>
     stopProfile: (profileId: string) => Promise<void>
     sharePost: (profileId: string) => Promise<void>
+    getAllError: () => Promise<string[]>
+    getAllHistory: () => Promise<string[]>
   }
 }
 

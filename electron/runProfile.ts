@@ -1,7 +1,37 @@
 import axios from "axios";
 import fs from 'fs';
 import puppeteer from 'puppeteer-core';
+import { writeBrowser, writeHistory, writeError, getBrowser } from "./writeLog";
+import { TOKEN } from "../src/config";
+import { each, get } from "lodash";
+
 const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms * 1000));
+
+const ports = [
+  30000,
+  30001,
+  30002,
+]
+
+const changePort = async ({ profileId }: { profileId: string }) => {
+  const data = {
+    autoProxyRegion: "us",
+    changeIpUrl: "",
+    host: "51.81.186.144",
+    mode: "socks5",
+    password: "",
+    port: 30001,
+    torProxyRegion: "us",
+    username: ""
+  }
+
+  return axios.patch(`https://api.gologin.com/browser/${profileId}/proxy`, data, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${TOKEN}`
+    }
+  })
+}
 
 const startProfile = async (profileId: string) => {
   return axios.post('http://localhost:36912/browser/start-profile', {
@@ -29,43 +59,88 @@ export const runProfile = async (profileId: string) => {
     const { data } = await startProfile(profileId);
     const wsUrl = data.wsUrl;
 
-    // save wsUrl to store.txt with format: profileId || wsUrl || status
-    fs.writeFileSync('store.txt', `${profileId} || ${wsUrl} || ${data.status}`);
+    writeHistory({ profileId, message: 'Start run profile', dateTime: new Date().toISOString() });
+    writeBrowser({ profileId, wsUrl });
+
+    await sharePost({ profileId, postUrl: 'https://www.threads.com/@siukayy.16/post/DKdghD9zi_W' });
+
   } catch (error) {
-    console.error(error, 'error');
+    await changePort({ profileId });
+    writeError({ profileId, error: get(error, 'response.data', 'Unknown error') });
+    await runProfile(profileId);
   }
 }
 
-export const sharePost = async (profileId: string) => {
-  const wsUrl = fs.readFileSync('store.txt', 'utf8').split('||')[1];
-  const browser = await puppeteer.connect({
-    browserWSEndpoint: wsUrl
-  });
+export const sharePost = async ({ profileId, postUrl }: { profileId: string, postUrl: string }) => {
+  try {
+    const wsUrl = getBrowser(profileId);
+    const browser = await puppeteer.connect({
+      browserWSEndpoint: wsUrl
+    });
 
-  const page = await browser.newPage();
-  await page.goto(`https://www.threads.com/@siukayy.16/post/DKdghD9zi_W`);
+    const page = await browser.newPage();
+    await page.goto(postUrl);
 
-  // find svg with aria-label="Repost"
-  const svg = await page.$('svg[aria-label="Repost"]');
-  console.log(svg, 'svg');
-  await wait(3);
-  await svg?.click();
-  await wait(3);
-  console.log('click repost');
-  await wait(5);
+    await wait(3);
 
-  // find svg with aria-label = Quote 
-  const svgQuote = await page.$('svg[aria-label="Quote"]');
-  await wait(3); 
-  svgQuote?.click();
-  await wait(3); 
+    // find svg with aria-label="Repost"
+    const svg = await page.$('svg[aria-label="Repost"]');
+    await wait(3);
+    if (!svg) {
+      throw new Error('Repost button not found');
+    }
+    await svg?.click();
+    console.log('click repost');
+    await wait(5);
 
-  // find input with type = file
-  const input = await page.$('input[type="file"]');
-  console.log(input, 'input');
+    // find svg with aria-label = Quote 
+    const svgQuote = await page.$('svg[aria-label="Quote"]');
+    await wait(3);
+    if (!svgQuote) {
+      throw new Error('Quote button not found');
+    }
+    await svgQuote?.click();
+    console.log('click quote');
+    await wait(3);
+    // find input with type = file
+    const input = await page.$('input[type="file"]');
+    await wait(3);
+    if (!input) {
+      throw new Error('Input file not found');
+    }
 
-  // upload image '/Users/admin/Desktop/Screenshot 2025-05-28 at 14.17.19.png' to input
-  await input?.uploadFile('/Users/admin/Desktop/Screenshot 2025-06-05 at 18.43.56.png');
-  await wait(3);
-  console.log('upload image');
+    console.log('input found');
+    // upload image '/Users/admin/Desktop/Screenshot 2025-05-28 at 14.17.19.png' to input
+    await input?.uploadFile('/Users/admin/Desktop/Screenshot 2025-06-05 at 18.43.56.png');
+    console.log('upload image');
+    await wait(5);
+
+    // find div with aria-label="Empty text field. Type to compose a new post."
+    const commentInput = await page.$('div[aria-label="Empty text field. Type to compose a new post."]');
+    await wait(3);
+    if (!commentInput) {
+      throw new Error('Comment input not found');
+    }
+    await commentInput?.click();
+    await wait(3);
+
+    await page.keyboard.type('Hello');
+    await wait(3);
+
+    // close pages only keep last page
+    const pages = await browser.pages();
+    each(pages, (page, index) => {
+      if (index !== pages.length - 1) {
+        page.close();
+      }
+    });
+  } catch (error) {
+    const message = get(error, 'message', 'Unknown error');
+    console.log(message, 'message');
+    writeError({ profileId, error: message });
+    if (message.includes('connect ECONNREFUSED')) {
+      return;
+    }
+    await sharePost({ profileId, postUrl });
+  }
 }

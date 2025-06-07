@@ -28,4 +28,6 @@ contextBridge.exposeInMainWorld('api', {
   runProfile: (profileId: string) => ipcRenderer.invoke('run-profile', profileId),
   stopProfile: (profileId: string) => ipcRenderer.invoke('stop-profile', profileId),
   sharePost: (profileId: string) => ipcRenderer.invoke('share-post', profileId),
+  getAllError: () => ipcRenderer.invoke('get-all-error'),
+  getAllHistory: () => ipcRenderer.invoke('get-all-history'),
 })

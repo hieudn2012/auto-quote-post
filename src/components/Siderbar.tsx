@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
 
 export enum RoutePath {
-  Dashboard = "/",
+  // Dashboard = "/",
   Profiles = "/profiles",
   History = "/history",
   Error = "/error",
@@ -9,11 +9,11 @@ export enum RoutePath {
 }
 
 const sidebarItems = [
-  {
-    label: "Dashboard",
-    path: RoutePath.Dashboard,
-    icon: "fas fa-home",
-  },
+  // {
+  //   label: "Dashboard",
+  //   path: RoutePath.Dashboard,
+  //   icon: "fas fa-home",
+  // },
   {
     label: "Profiles",
     path: RoutePath.Profiles,
