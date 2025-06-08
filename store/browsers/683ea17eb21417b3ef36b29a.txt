@@ -2,3 +2,4 @@ ws://127.0.0.1:25181/devtools/browser/fd8ec47c-1851-4d9a-b8c6-d5923bc07a25
 ws://127.0.0.1:23051/devtools/browser/4a334c7a-5746-47d2-9df3-5f88ff15dd22
 ws://127.0.0.1:29349/devtools/browser/e1e5df86-2990-4f08-96ad-6c0e43bed33b
 ws://127.0.0.1:23402/devtools/browser/b123cb51-652b-47bd-915b-7cfa80f03428
+ws://127.0.0.1:26800/devtools/browser/ee660718-0570-40b1-977d-ff7902b55a93

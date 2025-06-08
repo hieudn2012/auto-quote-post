@@ -1,1 +1,3 @@
 683ea17cf8262e47aaa3b4c7 || Input file not found || 2025-06-08T07:25:46.051Z
+683ea17cf8262e47aaa3b4c7 || Protocol error (DOM.describeNode): Session closed. Most likely the page has been closed. || 2025-06-08T08:11:37.985Z
+683ea17cf8262e47aaa3b4c7 || connect ECONNREFUSED 127.0.0.1:23418 || 2025-06-08T08:11:37.990Z

@@ -5,3 +5,6 @@
 683ea17f13f70b76ea64d128 || proxies.checkErrorGroups.nonfunctional || 2025-06-08T06:32:09.441Z
 683ea17f13f70b76ea64d128 || Quote button not found || 2025-06-08T06:57:53.116Z
 683ea17f13f70b76ea64d128 || proxies.checkErrorGroups.nonfunctional || 2025-06-08T07:28:00.610Z
+683ea17f13f70b76ea64d128 || proxies.checkErrorGroups.nonfunctional || 2025-06-08T08:11:18.621Z
+683ea17f13f70b76ea64d128 || Attempted to use detached Frame '0AE41853454E3A285EF1A6A2AAE51589'. || 2025-06-08T08:11:33.932Z
+683ea17f13f70b76ea64d128 || connect ECONNREFUSED 127.0.0.1:25354 || 2025-06-08T08:11:33.940Z

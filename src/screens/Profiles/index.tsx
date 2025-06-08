@@ -2,19 +2,23 @@ import { useGetProfiles } from "@/services/profile.service"
 import Button from "@/components/Button"
 import { Layout } from "@/components/Layout"
 import { windowInstance } from "@/types/window"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Checkbox from "@/components/Checkbox"
+import useProfileStore from "@/store/profile.store"
+import ProfileStatus from "@/components/ProfileStatus"
 
 export default function Profiles() {
   const { data, isLoading } = useGetProfiles()
   const [selectedProfile, setSelectedProfile] = useState<string[] | null>(null)
-
+  const { setProfiles, updateProfileStatus } = useProfileStore()
   const runProfile = async (profileId: string) => {
     await windowInstance.api.runProfile(profileId)
+    updateProfileStatus(profileId, "running")
   }
 
   const stopProfile = async (profileId: string) => {
     await windowInstance.api.stopProfile(profileId)
+    updateProfileStatus(profileId, "stopped")
   }
 
   const selectAllProfiles = (checked: boolean) => {
@@ -54,6 +58,15 @@ export default function Profiles() {
     }
   }
 
+  useEffect(() => {
+    const profiles = data?.map(profile => ({
+      id: profile.id,
+      name: profile.name,
+      status: "ready" as const
+    }))
+    setProfiles(profiles ?? [])
+  }, [data, setProfiles])
+
   return (
     <Layout>
       {isLoading && <div>Loading...</div>}
@@ -92,7 +105,7 @@ export default function Profiles() {
                 />
               </td>
               <td className="py-2">
-                Ready
+                <ProfileStatus id={profile.id} />
               </td>
               <td className="py-2">
                 <div className="flex gap-2">

@@ -31,3 +31,4 @@ ws://127.0.0.1:20207/devtools/browser/19e99b7c-0bd7-427a-903f-d01cdb6952cd
 ws://127.0.0.1:29146/devtools/browser/426dca13-9540-4da4-ab70-05000eba9b29
 ws://127.0.0.1:27797/devtools/browser/0968f9aa-6a74-4c5a-babe-f1b566a79496
 ws://127.0.0.1:28832/devtools/browser/34e11d44-bdb7-46c1-b880-f2e93a773910
+ws://127.0.0.1:25354/devtools/browser/afe43411-aa38-4fcb-b361-101701df21cf
