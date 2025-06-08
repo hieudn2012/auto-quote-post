@@ -1,17 +1,10 @@
 import axios from "axios";
-import fs from 'fs';
 import puppeteer from 'puppeteer-core';
 import { writeBrowser, writeHistory, writeError, getBrowser } from "./writeLog";
 import { TOKEN } from "../src/config";
 import { each, get } from "lodash";
 
 const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms * 1000));
-
-const ports = [
-  30000,
-  30001,
-  30002,
-]
 
 const changePort = async ({ profileId }: { profileId: string }) => {
   const data = {
@@ -79,8 +72,26 @@ export const sharePost = async ({ profileId, postUrl }: { profileId: string, pos
     });
 
     const page = await browser.newPage();
-    await page.goto(postUrl);
 
+    const views = {
+      small: {
+        width: 1366,
+        height: 768
+      },
+      medium: {
+        width: 1920,
+        height: 1080
+      },
+      large: {
+        width: 1440,
+        height: 900
+      }
+    }
+
+    type ViewKey = keyof typeof views;
+    const randomView = views[Object.keys(views)[Math.floor(Math.random() * Object.keys(views).length)] as ViewKey];
+    await page.setViewport(randomView);
+    await page.goto(postUrl);
     await wait(3);
 
     // find svg with aria-label="Repost"

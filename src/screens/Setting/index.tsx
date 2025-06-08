@@ -18,6 +18,7 @@ export default function Setting() {
       ],
     },
     onSubmit: (values) => {
+      localStorage.setItem("settings", JSON.stringify(values))
       windowInstance.api.saveSettings(values)
     },
   });
@@ -52,7 +53,6 @@ export default function Setting() {
               value={values.token}
               onChange={handleChange}
               label="Token"
-              type="password"
               placeholder="Makueaxgfnjhweyd7sjhaw"
             />
             <Input

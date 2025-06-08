@@ -1,1 +1,3 @@
 ws://127.0.0.1:24143/devtools/browser/47853eac-c734-4818-a88c-077c4ef79182
+ws://127.0.0.1:26329/devtools/browser/07042402-bec0-4493-a166-b6ed6ac77fe6
+ws://127.0.0.1:21426/devtools/browser/1f0925ff-2de5-41c7-acfb-1e683330e1b5

@@ -4,7 +4,7 @@ import { get, sortBy } from "lodash"
 
 const GET_PROFILES = `/browser/v2`
 
-interface Profile {
+export interface Profile {
   id: string
   name: string
   proxy: {
@@ -14,6 +14,7 @@ interface Profile {
     port: number
     autoProxyRegion: string
   }
+  notes: string
 }
 
 const getProfiles = async (): Promise<Profile[]> => {
@@ -24,7 +25,7 @@ const getProfiles = async (): Promise<Profile[]> => {
 }
 
 export const useGetProfiles = () => {
-  return useQuery({
+  return useQuery<Profile[], Error>({
     queryKey: [GET_PROFILES],
     queryFn: getProfiles,
   })

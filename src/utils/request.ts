@@ -1,4 +1,3 @@
-import { TOKEN } from "@/config"
 import axios from "axios"
 
 const request = axios.create({
@@ -6,8 +5,9 @@ const request = axios.create({
 })
 
 request.interceptors.request.use((config) => {
+  const settings = JSON.parse(localStorage.getItem('settings') || '{}')
   config.headers['Content-Type'] = 'application/json'
-  config.headers['Authorization'] = `Bearer ${TOKEN}`
+  config.headers['Authorization'] = `Bearer ${settings.token}`
   return config
 })
 

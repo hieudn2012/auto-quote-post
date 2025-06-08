@@ -1,7 +1,7 @@
 import "electron";
 import "node:url";
 import "node:path";
-import { av, aw, au } from "./main-B-ahlvVB.js";
+import { av, aw, au } from "./main-DijNUz_r.js";
 export {
   av as MAIN_DIST,
   aw as RENDERER_DIST,

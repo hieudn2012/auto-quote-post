@@ -6,8 +6,16 @@ import History from './screens/History'
 import Error from './screens/Error'
 import Setting from './screens/Setting'
 import { RoutePath } from './components/Siderbar'
+import { useEffect } from 'react'
+import { windowInstance } from './types/window'
 
 function App() {
+  useEffect(() => {
+    windowInstance.api.getSettings().then((settings) => {
+      localStorage.setItem('settings', JSON.stringify(settings))
+    })
+  }, [])
+
   return (
     <Router>
       <Routes>
