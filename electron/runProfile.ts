@@ -133,13 +133,16 @@ export const sharePost = async ({ profileId, postUrl }: { profileId: string, pos
       throw new Error('Comment input not found');
     }
     await commentInput?.click();
+    console.log('click comment input');
     await wait(3);
 
     await page.keyboard.type('Hello');
+    console.log('type hello');
     await wait(3);
 
     // close pages only keep last page
     const pages = await browser.pages();
+    console.log('pages', pages?.length);
     each(pages, (page, index) => {
       if (index !== pages.length - 1) {
         page.close();

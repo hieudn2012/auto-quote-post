@@ -2,15 +2,17 @@ import { useGetProfiles } from "@/services/profile.service"
 import Button from "@/components/Button"
 import { Layout } from "@/components/Layout"
 import { windowInstance } from "@/types/window"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import Checkbox from "@/components/Checkbox"
 import useProfileStore from "@/store/profile.store"
 import ProfileStatus from "@/components/ProfileStatus"
+import Stop from "./Stop"
+import Run from "./Run"
 
 export default function Profiles() {
   const { data, isLoading } = useGetProfiles()
   const [selectedProfile, setSelectedProfile] = useState<string[] | null>(null)
-  const { setProfiles, updateProfileStatus } = useProfileStore()
+  const { updateProfileStatus } = useProfileStore()
   const runProfile = async (profileId: string) => {
     await windowInstance.api.runProfile(profileId)
     updateProfileStatus(profileId, "running")
@@ -18,6 +20,8 @@ export default function Profiles() {
 
   const stopProfile = async (profileId: string) => {
     await windowInstance.api.stopProfile(profileId)
+    updateProfileStatus(profileId, "wating-to-stop")
+    await new Promise(resolve => setTimeout(resolve, 10000))
     updateProfileStatus(profileId, "stopped")
   }
 
@@ -57,15 +61,6 @@ export default function Profiles() {
       await new Promise(resolve => setTimeout(resolve, 2000))
     }
   }
-
-  useEffect(() => {
-    const profiles = data?.map(profile => ({
-      id: profile.id,
-      name: profile.name,
-      status: "ready" as const
-    }))
-    setProfiles(profiles ?? [])
-  }, [data, setProfiles])
 
   return (
     <Layout>
@@ -109,8 +104,8 @@ export default function Profiles() {
               </td>
               <td className="py-2">
                 <div className="flex gap-2">
-                  <Button color="success" icon="fa-solid fa-play" onClick={() => runProfile(profile.id)}></Button>
-                  <Button color="error" icon="fa-solid fa-stop" onClick={() => stopProfile(profile.id)}></Button>
+                  <Run id={profile.id} onClick={() => runProfile(profile.id)} />
+                  <Stop onClick={() => stopProfile(profile.id)} />
                   {/* <Button icon="fa-solid fa-share" onClick={() => sharePost(profile.id)}>Share</Button> */}
                 </div>
               </td>

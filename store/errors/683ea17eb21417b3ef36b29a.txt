@@ -1,2 +1,13 @@
 683ea17eb21417b3ef36b29a || Attempted to use detached Frame '6DEB5248DF121F8A090AF9D3E55CF7C7'. || 2025-06-08T08:11:37.033Z
 683ea17eb21417b3ef36b29a || connect ECONNREFUSED 127.0.0.1:26800 || 2025-06-08T08:11:37.035Z
+683ea17eb21417b3ef36b29a || Input file not found || 2025-06-08T08:25:39.686Z
+683ea17eb21417b3ef36b29a || net::ERR_ABORTED at https://www.threads.com/@siukayy.16/post/DKdghD9zi_W || 2025-06-08T08:25:41.905Z
+683ea17eb21417b3ef36b29a || Protocol error (Target.setAutoAttach): Target closed || 2025-06-08T08:25:41.931Z
+683ea17eb21417b3ef36b29a || connect ECONNREFUSED 127.0.0.1:24822 || 2025-06-08T08:25:41.932Z
+683ea17eb21417b3ef36b29a || Protocol error (DOM.describeNode): Session closed. Most likely the page has been closed. || 2025-06-08T08:26:23.550Z
+683ea17eb21417b3ef36b29a || connect ECONNREFUSED 127.0.0.1:28446 || 2025-06-08T08:26:23.554Z
+683ea17eb21417b3ef36b29a || Protocol error (DOM.describeNode): Session closed. Most likely the page has been closed. || 2025-06-08T08:27:35.352Z
+683ea17eb21417b3ef36b29a || connect ECONNREFUSED 127.0.0.1:25078 || 2025-06-08T08:27:35.355Z
+683ea17eb21417b3ef36b29a || Attempted to use detached Frame 'C28CF6E65DF7A6FD6A50D7CAB52E976B'. || 2025-06-08T08:31:41.224Z
+683ea17eb21417b3ef36b29a || connect ECONNREFUSED 127.0.0.1:21320 || 2025-06-08T08:31:41.229Z
+683ea17eb21417b3ef36b29a || proxies.checkErrorGroups.nonfunctional || 2025-06-08T08:42:18.878Z

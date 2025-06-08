@@ -30,7 +30,7 @@ export default function Button({ children, size = 'small', icon, color = 'info',
         `flex items-center gap-2 font-bold bg-transparent border-2 rounded-md outline-none`,
         sizeClasses[size],
         colorClasses[color],
-        'hover:opacity-80'
+        'hover:opacity-80',
       )}
       {...props}
     >

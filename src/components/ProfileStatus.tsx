@@ -14,6 +14,7 @@ export default function ProfileStatus({ id }: ProfileStatusProps) {
     ready: "border-2 border-green-500 text-green-500",
     running: "border-2 border-yellow-500 text-yellow-500",
     stopped: "border-2 border-red-500 text-red-500",
+    "wating-to-stop": "border-2 border-yellow-500 text-yellow-500",
   }
 
   return (

@@ -8,3 +8,63 @@
 683ea17f13f70b76ea64d128 || proxies.checkErrorGroups.nonfunctional || 2025-06-08T08:11:18.621Z
 683ea17f13f70b76ea64d128 || Attempted to use detached Frame '0AE41853454E3A285EF1A6A2AAE51589'. || 2025-06-08T08:11:33.932Z
 683ea17f13f70b76ea64d128 || connect ECONNREFUSED 127.0.0.1:25354 || 2025-06-08T08:11:33.940Z
+683ea17f13f70b76ea64d128 || Navigating frame was detached || 2025-06-08T08:18:00.140Z
+683ea17f13f70b76ea64d128 || connect ECONNREFUSED 127.0.0.1:27330 || 2025-06-08T08:18:00.141Z
+683ea17f13f70b76ea64d128 || net::ERR_ABORTED at https://www.threads.com/@siukayy.16/post/DKdghD9zi_W || 2025-06-08T08:19:14.764Z
+683ea17f13f70b76ea64d128 || Protocol error (Target.setDiscoverTargets): Target closed || 2025-06-08T08:19:14.801Z
+683ea17f13f70b76ea64d128 || connect ECONNREFUSED 127.0.0.1:20906 || 2025-06-08T08:19:14.803Z
+683ea17f13f70b76ea64d128 || Navigation timeout of 30000 ms exceeded || 2025-06-08T08:22:37.516Z
+683ea17f13f70b76ea64d128 || Navigation timeout of 30000 ms exceeded || 2025-06-08T08:23:07.626Z
+683ea17f13f70b76ea64d128 || Navigation timeout of 30000 ms exceeded || 2025-06-08T08:23:37.761Z
+683ea17f13f70b76ea64d128 || Navigating frame was detached || 2025-06-08T08:25:00.765Z
+683ea17f13f70b76ea64d128 || connect ECONNREFUSED 127.0.0.1:21088 || 2025-06-08T08:25:00.765Z
+683ea17f13f70b76ea64d128 || proxies.checkErrorGroups.nonfunctional || 2025-06-08T08:26:53.974Z
+683ea17f13f70b76ea64d128 || net::ERR_ABORTED at https://www.threads.com/@siukayy.16/post/DKdghD9zi_W || 2025-06-08T08:27:01.414Z
+683ea17f13f70b76ea64d128 || Protocol error (Target.setDiscoverTargets): Target closed || 2025-06-08T08:27:01.443Z
+683ea17f13f70b76ea64d128 || connect ECONNREFUSED 127.0.0.1:23367 || 2025-06-08T08:27:01.445Z
+683ea17f13f70b76ea64d128 || Attempted to use detached Frame '2B83B74A3F1AEF7BC4DF2612746733AD'. || 2025-06-08T08:31:25.870Z
+683ea17f13f70b76ea64d128 || connect ECONNREFUSED 127.0.0.1:22178 || 2025-06-08T08:31:25.874Z
+683ea17f13f70b76ea64d128 || Tab target session is not defined. || 2025-06-08T08:35:44.520Z
+683ea17f13f70b76ea64d128 || connect ECONNREFUSED 127.0.0.1:24972 || 2025-06-08T08:35:44.524Z
+683ea17f13f70b76ea64d128 || proxies.checkErrorGroups.nonfunctional || 2025-06-08T08:36:07.387Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-08T08:37:00.524Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-08T08:37:00.529Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-08T08:37:00.880Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-08T08:37:00.883Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-08T08:37:01.224Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-08T08:37:01.226Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-08T08:37:01.663Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-08T08:37:01.665Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-08T08:37:02.074Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-08T08:37:02.075Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-08T08:37:02.422Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-08T08:37:02.443Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-08T08:37:02.764Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-08T08:37:02.804Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-08T08:37:03.124Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-08T08:37:03.179Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-08T08:37:03.475Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-08T08:37:03.525Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-08T08:37:03.826Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-08T08:37:03.867Z
+683ea17f13f70b76ea64d128 || Error in getting profile info || 2025-06-08T08:37:04.677Z
+683ea17f13f70b76ea64d128 || Error in getting profile info || 2025-06-08T08:37:05.355Z
+683ea17f13f70b76ea64d128 || Navigating frame was detached || 2025-06-08T08:37:15.491Z
+683ea17f13f70b76ea64d128 || connect ECONNREFUSED 127.0.0.1:29526 || 2025-06-08T08:37:15.495Z
+683ea17f13f70b76ea64d128 || Navigating frame was detached || 2025-06-08T08:39:39.126Z
+683ea17f13f70b76ea64d128 || connect ECONNREFUSED 127.0.0.1:21162 || 2025-06-08T08:39:39.128Z
+683ea17f13f70b76ea64d128 || Navigating frame was detached || 2025-06-08T08:39:58.823Z
+683ea17f13f70b76ea64d128 || connect ECONNREFUSED 127.0.0.1:23940 || 2025-06-08T08:39:58.825Z
+683ea17f13f70b76ea64d128 || Navigating frame was detached || 2025-06-08T08:41:25.664Z
+683ea17f13f70b76ea64d128 || connect ECONNREFUSED 127.0.0.1:28107 || 2025-06-08T08:41:25.666Z
+683ea17f13f70b76ea64d128 || proxies.checkErrorGroups.nonfunctional || 2025-06-08T08:48:36.082Z
+683ea17f13f70b76ea64d128 || Input file not found || 2025-06-08T08:51:31.246Z
+683ea17f13f70b76ea64d128 || Network.enable timed out. Increase the 'protocolTimeout' setting in launch/connect calls for a higher timeout if needed. || 2025-06-08T08:55:12.586Z
+683ea17f13f70b76ea64d128 || Input file not found || 2025-06-08T08:55:36.176Z
+683ea17f13f70b76ea64d128 || Network.enable timed out. Increase the 'protocolTimeout' setting in launch/connect calls for a higher timeout if needed. || 2025-06-08T08:59:21.381Z
+683ea17f13f70b76ea64d128 || Quote button not found || 2025-06-08T08:59:46.723Z
+683ea17f13f70b76ea64d128 || Navigation timeout of 30000 ms exceeded || 2025-06-08T09:00:16.804Z
+683ea17f13f70b76ea64d128 || net::ERR_ABORTED at https://www.threads.com/@siukayy.16/post/DKdghD9zi_W || 2025-06-08T09:00:37.725Z
+683ea17f13f70b76ea64d128 || Protocol error (Target.setAutoAttach): Target closed || 2025-06-08T09:00:37.777Z
+683ea17f13f70b76ea64d128 || connect ECONNREFUSED 127.0.0.1:22403 || 2025-06-08T09:00:37.791Z
+683ea17f13f70b76ea64d128 || Quote button not found || 2025-06-08T09:19:24.661Z
