@@ -68,3 +68,25 @@
 683ea17f13f70b76ea64d128 || Protocol error (Target.setAutoAttach): Target closed || 2025-06-08T09:00:37.777Z
 683ea17f13f70b76ea64d128 || connect ECONNREFUSED 127.0.0.1:22403 || 2025-06-08T09:00:37.791Z
 683ea17f13f70b76ea64d128 || Quote button not found || 2025-06-08T09:19:24.661Z
+683ea17f13f70b76ea64d128 || Navigation timeout of 30000 ms exceeded || 2025-06-08T13:16:53.630Z
+683ea17f13f70b76ea64d128 || Navigation timeout of 30000 ms exceeded || 2025-06-08T13:17:23.726Z
+683ea17f13f70b76ea64d128 || Navigation timeout of 30000 ms exceeded || 2025-06-08T13:17:53.825Z
+683ea17f13f70b76ea64d128 || Navigation timeout of 30000 ms exceeded || 2025-06-08T13:18:23.926Z
+683ea17f13f70b76ea64d128 || Navigation timeout of 30000 ms exceeded || 2025-06-08T13:42:55.058Z
+683ea17f13f70b76ea64d128 || Navigation timeout of 30000 ms exceeded || 2025-06-08T13:43:25.161Z
+683ea17f13f70b76ea64d128 || Attempted to use detached Frame '031285E4F305B33BCF948587E9A1A6F7'. || 2025-06-08T13:43:37.377Z
+683ea17f13f70b76ea64d128 || connect ECONNREFUSED 127.0.0.1:20213 || 2025-06-08T13:43:37.381Z
+683ea17f13f70b76ea64d128 || proxies.checkErrorGroups.nonfunctional || 2025-06-08T13:44:02.200Z
+683ea17f13f70b76ea64d128 || Navigation timeout of 30000 ms exceeded || 2025-06-08T13:44:38.407Z
+683ea17f13f70b76ea64d128 || Navigation timeout of 30000 ms exceeded || 2025-06-08T13:45:08.528Z
+683ea17f13f70b76ea64d128 || Navigation timeout of 30000 ms exceeded || 2025-06-08T13:45:38.646Z
+683ea17f13f70b76ea64d128 || Navigating frame was detached || 2025-06-08T13:46:02.815Z
+683ea17f13f70b76ea64d128 || connect ECONNREFUSED 127.0.0.1:28262 || 2025-06-08T13:46:02.819Z
+683ea17f13f70b76ea64d128 || proxies.checkErrorGroups.nonfunctional || 2025-06-08T13:52:18.935Z
+683ea17f13f70b76ea64d128 || net::ERR_CONNECTION_CLOSED at https://www.threads.com/@siukayy.16/post/DKdghD9zi_W || 2025-06-08T14:01:06.777Z
+683ea17f13f70b76ea64d128 || Protocol error (DOM.describeNode): Session closed. Most likely the page has been closed. || 2025-06-08T14:01:20.477Z
+683ea17f13f70b76ea64d128 || connect ECONNREFUSED 127.0.0.1:20773 || 2025-06-08T14:01:20.481Z
+683ea17f13f70b76ea64d128 || Protocol error (DOM.describeNode): Session closed. Most likely the page has been closed. || 2025-06-08T14:04:01.788Z
+683ea17f13f70b76ea64d128 || connect ECONNREFUSED 127.0.0.1:26834 || 2025-06-08T14:04:01.791Z
+683ea17f13f70b76ea64d128 || Quote button not found || 2025-06-08T14:36:44.027Z
+683ea17f13f70b76ea64d128 || Navigation timeout of 30000 ms exceeded || 2025-06-08T14:40:06.428Z

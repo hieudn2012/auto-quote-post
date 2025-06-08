@@ -3,17 +3,22 @@ import puppeteer from 'puppeteer-core';
 import { writeBrowser, writeHistory, writeError, getBrowser } from "./writeLog";
 import { TOKEN } from "../src/config";
 import { each, get } from "lodash";
+import { sendToRenderer } from "./main";
 
 const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms * 1000));
 
+const ports = [30000, 30001, 30002];
+
 const changePort = async ({ profileId }: { profileId: string }) => {
+  const port = ports[Math.floor(Math.random() * ports.length)];
+  sendToRenderer('profile-status', { profileId, message: `Change port to ${port}` });
   const data = {
     autoProxyRegion: "us",
     changeIpUrl: "",
     host: "51.81.186.144",
     mode: "socks5",
     password: "",
-    port: 30001,
+    port,
     torProxyRegion: "us",
     username: ""
   }
@@ -27,6 +32,7 @@ const changePort = async ({ profileId }: { profileId: string }) => {
 }
 
 const startProfile = async (profileId: string) => {
+  sendToRenderer('profile-status', { profileId, message: 'Start profile' });
   return axios.post('http://localhost:36912/browser/start-profile', {
     profileId,
     sync: true
@@ -38,6 +44,7 @@ const startProfile = async (profileId: string) => {
 }
 
 export const stopProfile = async (profileId: string) => {
+  sendToRenderer('profile-status', { profileId, message: 'Stop profile' });
   return axios.post('http://localhost:36912/browser/stop-profile', {
     profileId
   }, {
@@ -59,6 +66,7 @@ export const runProfile = async (profileId: string) => {
 
   } catch (error) {
     await changePort({ profileId });
+    await wait(2);
     writeError({ profileId, error: get(error, 'response.data', 'Unknown error') });
     await runProfile(profileId);
   }
@@ -101,6 +109,7 @@ export const sharePost = async ({ profileId, postUrl }: { profileId: string, pos
       throw new Error('Repost button not found');
     }
     await svg?.click();
+    sendToRenderer('profile-status', { profileId, message: 'Click repost' });
     console.log('click repost');
     await wait(5);
 
@@ -111,6 +120,7 @@ export const sharePost = async ({ profileId, postUrl }: { profileId: string, pos
       throw new Error('Quote button not found');
     }
     await svgQuote?.click();
+    sendToRenderer('profile-status', { profileId, message: 'Click quote' });
     console.log('click quote');
     await wait(3);
     // find input with type = file
@@ -123,6 +133,7 @@ export const sharePost = async ({ profileId, postUrl }: { profileId: string, pos
     console.log('input found');
     // upload image '/Users/admin/Desktop/Screenshot 2025-05-28 at 14.17.19.png' to input
     await input?.uploadFile('/Users/admin/Desktop/Screenshot 2025-06-05 at 18.43.56.png');
+    sendToRenderer('profile-status', { profileId, message: 'Upload image' });
     console.log('upload image');
     await wait(5);
 
@@ -133,15 +144,18 @@ export const sharePost = async ({ profileId, postUrl }: { profileId: string, pos
       throw new Error('Comment input not found');
     }
     await commentInput?.click();
+    sendToRenderer('profile-status', { profileId, message: 'Click comment input' });
     console.log('click comment input');
     await wait(3);
 
     await page.keyboard.type('Hello');
+    sendToRenderer('profile-status', { profileId, message: 'Type hello' });
     console.log('type hello');
     await wait(3);
 
     // close pages only keep last page
     const pages = await browser.pages();
+    sendToRenderer('profile-status', { profileId, message: 'Close pages' });
     console.log('pages', pages?.length);
     each(pages, (page, index) => {
       if (index !== pages.length - 1) {
@@ -151,7 +165,8 @@ export const sharePost = async ({ profileId, postUrl }: { profileId: string, pos
   } catch (error) {
     const message = get(error, 'message', 'Unknown error');
     writeError({ profileId, error: message });
-    if (message.includes('connect ECONNREFUSED')) {
+    sendToRenderer('profile-status', { profileId, message: 'Error: ' + message });
+    if (message.includes('connect ECONNREFUSED') || message.includes('Navigation timeout')) {
       return;
     }
     await sharePost({ profileId, postUrl });

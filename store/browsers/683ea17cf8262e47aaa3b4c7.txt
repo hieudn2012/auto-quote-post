@@ -6,3 +6,11 @@ ws://127.0.0.1:26196/devtools/browser/a12f4cde-8cca-44f7-aba3-0b07724eb6ee
 ws://127.0.0.1:25621/devtools/browser/0ff24873-47fd-4cad-bf75-9505d9084e73
 ws://127.0.0.1:25826/devtools/browser/4d277b8e-035e-42a8-bd75-2d576b76ffd0
 ws://127.0.0.1:21969/devtools/browser/6eff9966-63db-4bc0-a52b-dce60d7794d9
+ws://127.0.0.1:27740/devtools/browser/1b5feba1-585e-43ba-96a6-046f1f32c5a8
+ws://127.0.0.1:23813/devtools/browser/2429d3ef-e105-494b-908f-cd0ad8337bab
+ws://127.0.0.1:22242/devtools/browser/40945cf9-42a6-4b69-a015-9a2ddb9a9e24
+ws://127.0.0.1:29270/devtools/browser/456eec19-ca49-4cea-b790-ebf9c6bfcd15
+ws://127.0.0.1:21844/devtools/browser/57ff5f38-2571-4782-82ec-143f72bb31d3
+ws://127.0.0.1:23150/devtools/browser/bf5ae68a-d9fc-4ba5-991c-2f4f17925f66
+ws://127.0.0.1:27203/devtools/browser/4d199a5f-7be6-4d33-8679-fe4d2a443633
+ws://127.0.0.1:29779/devtools/browser/cedca867-42e9-4340-be25-596f8c6fbe78

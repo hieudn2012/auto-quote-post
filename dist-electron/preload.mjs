@@ -24,9 +24,11 @@ electron.contextBridge.exposeInMainWorld("api", {
   getCurrentTime: () => electron.ipcRenderer.invoke("get-current-time"),
   runProfile: (profileId) => electron.ipcRenderer.invoke("run-profile", profileId),
   stopProfile: (profileId) => electron.ipcRenderer.invoke("stop-profile", profileId),
-  sharePost: (profileId) => electron.ipcRenderer.invoke("share-post", profileId),
   getAllError: () => electron.ipcRenderer.invoke("get-all-error"),
   getAllHistory: () => electron.ipcRenderer.invoke("get-all-history"),
   getSettings: () => electron.ipcRenderer.invoke("get-settings"),
   saveSettings: (settings) => electron.ipcRenderer.invoke("save-settings", settings)
+});
+electron.contextBridge.exposeInMainWorld("sendToRenderer", (channel, data) => {
+  electron.ipcRenderer.send(channel, data);
 });

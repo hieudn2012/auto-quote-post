@@ -68,10 +68,6 @@ ipcMain.handle('stop-profile', async (_event, profileId: string) => {
   stopProfile(profileId)
 })
 
-ipcMain.handle('share-post', async (_event, profileId: string) => {
-  sharePost(profileId)
-})
-
 ipcMain.handle('get-all-error', async () => {
   return getAllError()
 })
@@ -105,5 +101,11 @@ app.on('activate', () => {
     createWindow()
   }
 })
+
+export function sendToRenderer<T>(channel: string, data: T) {
+  if (win && win.webContents) {
+    win.webContents.send(channel, data);
+  }
+}
 
 app.whenReady().then(createWindow)

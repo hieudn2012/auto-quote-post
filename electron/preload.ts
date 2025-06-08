@@ -28,9 +28,12 @@ contextBridge.exposeInMainWorld('api', {
   getCurrentTime: () => ipcRenderer.invoke('get-current-time'),
   runProfile: (profileId: string) => ipcRenderer.invoke('run-profile', profileId),
   stopProfile: (profileId: string) => ipcRenderer.invoke('stop-profile', profileId),
-  sharePost: (profileId: string) => ipcRenderer.invoke('share-post', profileId),
   getAllError: () => ipcRenderer.invoke('get-all-error'),
   getAllHistory: () => ipcRenderer.invoke('get-all-history'),
   getSettings: () => ipcRenderer.invoke('get-settings'),
   saveSettings: (settings: Setting) => ipcRenderer.invoke('save-settings', settings),
+})
+
+contextBridge.exposeInMainWorld('sendToRenderer', (channel: string, data: any) => {
+  ipcRenderer.send(channel, data)
 })
