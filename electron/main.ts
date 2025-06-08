@@ -3,6 +3,8 @@ import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import { runProfile, sharePost, stopProfile } from './runProfile'
 import { getAllError, getAllHistory } from './writeLog'
+import { getSettings, saveSettings } from './setting'
+import { Setting } from '@/types/window'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -76,6 +78,14 @@ ipcMain.handle('get-all-error', async () => {
 
 ipcMain.handle('get-all-history', async () => {
   return getAllHistory()
+})
+
+ipcMain.handle('get-settings', async () => {
+  return getSettings()
+})
+
+ipcMain.handle('save-settings', async (_event, settings: Setting) => {
+  saveSettings(settings)
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common

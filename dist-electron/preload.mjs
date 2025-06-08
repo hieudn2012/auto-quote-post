@@ -26,5 +26,7 @@ electron.contextBridge.exposeInMainWorld("api", {
   stopProfile: (profileId) => electron.ipcRenderer.invoke("stop-profile", profileId),
   sharePost: (profileId) => electron.ipcRenderer.invoke("share-post", profileId),
   getAllError: () => electron.ipcRenderer.invoke("get-all-error"),
-  getAllHistory: () => electron.ipcRenderer.invoke("get-all-history")
+  getAllHistory: () => electron.ipcRenderer.invoke("get-all-history"),
+  getSettings: () => electron.ipcRenderer.invoke("get-settings"),
+  saveSettings: (settings) => electron.ipcRenderer.invoke("save-settings", settings)
 });

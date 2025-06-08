@@ -1,3 +1,4 @@
+import { Setting } from '@/types/window'
 import { ipcRenderer, contextBridge } from 'electron'
 
 // --------- Expose some API to the Renderer process ---------
@@ -30,4 +31,6 @@ contextBridge.exposeInMainWorld('api', {
   sharePost: (profileId: string) => ipcRenderer.invoke('share-post', profileId),
   getAllError: () => ipcRenderer.invoke('get-all-error'),
   getAllHistory: () => ipcRenderer.invoke('get-all-history'),
+  getSettings: () => ipcRenderer.invoke('get-settings'),
+  saveSettings: (settings: Setting) => ipcRenderer.invoke('save-settings', settings),
 })
