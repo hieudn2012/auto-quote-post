@@ -136,7 +136,6 @@ export const sharePost = async ({ profileId, postUrl }: { profileId: string, pos
     });
   } catch (error) {
     const message = get(error, 'message', 'Unknown error');
-    console.log(message, 'message');
     writeError({ profileId, error: message });
     if (message.includes('connect ECONNREFUSED')) {
       return;

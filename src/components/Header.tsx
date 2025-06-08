@@ -15,7 +15,7 @@ export const Header = () => {
       case RoutePath.Error:
         return "Error"
       case RoutePath.Settings:
-        return "Settings"
+        return "Global Settings"
     }
   }
 

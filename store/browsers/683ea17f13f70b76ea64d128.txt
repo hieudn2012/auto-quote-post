@@ -26,3 +26,4 @@ ws://127.0.0.1:27200/devtools/browser/71cf6cbd-704a-4996-ae52-cd1bdbd0094b
 ws://127.0.0.1:23014/devtools/browser/e3aad10d-e8f4-4ae1-b033-933a04abeeb8
 ws://127.0.0.1:21847/devtools/browser/0cfede83-fb13-45aa-8ebd-e611d69f925c
 ws://127.0.0.1:27125/devtools/browser/cd34034a-4dd2-4222-bdc4-ea0983534c13
+ws://127.0.0.1:22515/devtools/browser/ef131b7a-335d-4689-bf2d-1b104281c343

@@ -11,7 +11,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* <Route path={RoutePath.Dashboard} element={<Dashboard />} /> */}
+        <Route path="/" element={<Setting />} />
         <Route path={RoutePath.Profiles} element={<Profiles />} />
         <Route path={RoutePath.History} element={<History />} />
         <Route path={RoutePath.Error} element={<Error />} />
