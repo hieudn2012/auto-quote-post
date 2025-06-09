@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-type ProfileStatus = 'ready' | 'running' | 'wating-to-stop' | 'stopped'
+type ProfileStatus = 'ready' | 'running' | 'wating-to-stop' | 'stopped' | 'done'
 
 interface Profile {
   id: string

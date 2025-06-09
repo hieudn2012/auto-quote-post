@@ -90,3 +90,4 @@
 683ea17f13f70b76ea64d128 || connect ECONNREFUSED 127.0.0.1:26834 || 2025-06-08T14:04:01.791Z
 683ea17f13f70b76ea64d128 || Quote button not found || 2025-06-08T14:36:44.027Z
 683ea17f13f70b76ea64d128 || Navigation timeout of 30000 ms exceeded || 2025-06-08T14:40:06.428Z
+683ea17f13f70b76ea64d128 || proxies.checkErrorGroups.nonfunctional || 2025-06-09T01:21:25.353Z

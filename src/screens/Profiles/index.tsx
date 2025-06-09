@@ -11,7 +11,6 @@ import Run from "./Run"
 import { IpcRendererEvent } from "electron"
 
 export default function Profiles() {
-  console.log('Profiles component rendering')
   const { data, isLoading } = useGetProfiles()
   const [selectedProfile, setSelectedProfile] = useState<string[] | null>(null)
   const { updateProfileStatus } = useProfileStore()
@@ -73,10 +72,16 @@ export default function Profiles() {
       if (messageElement) {
         messageElement.innerHTML = data.message
       }
-      if (data.message.includes('Close pages')) {
+      if (data.message.includes('Done! 🎉')) {
+        updateProfileStatus(data.profileId, "done")
         if (messageElement) {
           messageElement.style.fontWeight = 'bold'
-          messageElement.style.color = 'red'
+          messageElement.style.color = 'green'
+        }
+      } else {
+        if (messageElement) {
+          messageElement.style.fontWeight = 'normal'
+          messageElement.style.color = 'inherit'
         }
       }
     }
@@ -84,7 +89,7 @@ export default function Profiles() {
     return () => {
       windowInstance?.ipcRenderer?.off('profile-status', handler)
     }
-  }, [data]) // Thêm data vào dependency array để xem nó có phải nguyên nhân không
+  }, [data, updateProfileStatus])
 
   return (
     <Layout>

@@ -68,3 +68,9 @@ ws://127.0.0.1:28717/devtools/browser/5ac493c4-4a4b-4eb1-bf18-679578b7f682
 ws://127.0.0.1:29253/devtools/browser/5dafbbe3-6f1f-4701-829c-2e8a808d74fa
 ws://127.0.0.1:24139/devtools/browser/e1ac3461-f8ed-4662-bc4e-6457e7dc5cfd
 ws://127.0.0.1:20902/devtools/browser/7a27da58-9968-4768-844d-6a502c7cfd5f
+ws://127.0.0.1:26211/devtools/browser/38619e85-b3af-46df-aa83-3ec808f81610
+ws://127.0.0.1:27016/devtools/browser/4649e079-d3df-4496-ba64-8ba3b672aacc
+ws://127.0.0.1:21739/devtools/browser/31755fe8-7c71-4a05-9dc1-ed0bd913db1d
+ws://127.0.0.1:26385/devtools/browser/12fcfc51-8e83-4eb6-a5ae-827d0aa257d3
+ws://127.0.0.1:26512/devtools/browser/e4c52b9d-2bc6-4f0b-ae0d-f30d51ddf7b0
+ws://127.0.0.1:22146/devtools/browser/70ca48aa-7607-42e4-b05c-eb079a87c7fe

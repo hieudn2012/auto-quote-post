@@ -86,3 +86,5 @@
 683ea17cf8262e47aaa3b4c7 || proxies.checkErrorGroups.nonfunctional || 2025-06-08T14:51:48.545Z
 683ea17cf8262e47aaa3b4c7 || proxies.checkErrorGroups.nonfunctional || 2025-06-08T14:51:59.826Z
 683ea17cf8262e47aaa3b4c7 || proxies.checkErrorGroups.nonfunctional || 2025-06-08T14:52:33.067Z
+683ea17cf8262e47aaa3b4c7 || Input file not found || 2025-06-08T14:53:07.631Z
+683ea17cf8262e47aaa3b4c7 || Navigation timeout of 30000 ms exceeded || 2025-06-09T01:21:46.771Z

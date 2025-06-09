@@ -14,3 +14,9 @@ ws://127.0.0.1:21844/devtools/browser/57ff5f38-2571-4782-82ec-143f72bb31d3
 ws://127.0.0.1:23150/devtools/browser/bf5ae68a-d9fc-4ba5-991c-2f4f17925f66
 ws://127.0.0.1:27203/devtools/browser/4d199a5f-7be6-4d33-8679-fe4d2a443633
 ws://127.0.0.1:29779/devtools/browser/cedca867-42e9-4340-be25-596f8c6fbe78
+ws://127.0.0.1:29269/devtools/browser/ef0e692c-e97d-4488-a89f-5462d927eaec
+ws://127.0.0.1:27569/devtools/browser/70bea0d5-bc1b-44df-9c3a-02f9e45d5dc2
+ws://127.0.0.1:24101/devtools/browser/02a55126-6652-4359-962e-089834b182f6
+ws://127.0.0.1:29574/devtools/browser/70774665-aea1-4df5-87cd-2b0c72468a8f
+ws://127.0.0.1:26361/devtools/browser/8f02c64c-eff3-4c2c-94c4-7edd6d8970eb
+ws://127.0.0.1:26215/devtools/browser/f64476cb-2439-4b06-af59-b94057b077c1

@@ -1,9 +1,8 @@
-import axios from "axios";
 import puppeteer from 'puppeteer-core';
 import { writeBrowser, writeHistory, writeError, getBrowser } from "./writeLog";
-import { TOKEN } from "../src/config";
 import { each, get } from "lodash";
 import { sendToRenderer } from "./main";
+import request from "@/utils/request";
 
 const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms * 1000));
 
@@ -23,34 +22,21 @@ const changePort = async ({ profileId }: { profileId: string }) => {
     username: ""
   }
 
-  return axios.patch(`https://api.gologin.com/browser/${profileId}/proxy`, data, {
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${TOKEN}`
-    }
-  })
+  return request.patch(`/browser/${profileId}/proxy`, data)
 }
 
 const startProfile = async (profileId: string) => {
   sendToRenderer('profile-status', { profileId, message: 'Start profile' });
-  return axios.post('http://localhost:36912/browser/start-profile', {
+  return request.post('/browser/start-profile', {
     profileId,
     sync: true
-  }, {
-    headers: {
-      'Content-Type': 'application/json'
-    }
   })
 }
 
 export const stopProfile = async (profileId: string) => {
   sendToRenderer('profile-status', { profileId, message: 'Stop profile' });
-  return axios.post('http://localhost:36912/browser/stop-profile', {
+  return request.post('/browser/stop-profile', {
     profileId
-  }, {
-    headers: {
-      'Content-Type': 'application/json'
-    }
   })
 }
 
@@ -162,11 +148,19 @@ export const sharePost = async ({ profileId, postUrl }: { profileId: string, pos
         page.close();
       }
     });
+
+    await stopProfile(profileId);
+    await wait(2);
+    sendToRenderer('profile-status', { profileId, message: 'Done! 🎉' });
+
   } catch (error) {
     const message = get(error, 'message', 'Unknown error');
     writeError({ profileId, error: message });
     sendToRenderer('profile-status', { profileId, message: 'Error: ' + message });
-    if (message.includes('connect ECONNREFUSED') || message.includes('Navigation timeout')) {
+    if (message.includes('connect ECONNREFUSED')) {
+      return;
+    }
+    if (message.includes('Navigation timeout')) {
       return;
     }
     await sharePost({ profileId, postUrl });
