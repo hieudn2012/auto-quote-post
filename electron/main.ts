@@ -1,7 +1,7 @@
 import { app, BrowserWindow, ipcMain } from 'electron'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
-import { runProfile, sharePost, stopProfile } from './runProfile'
+import { runProfile, stopProfile } from './runProfile'
 import { getAllError, getAllHistory } from './writeLog'
 import { getSettings, saveSettings } from './setting'
 import { Setting } from '@/types/window'

@@ -91,3 +91,60 @@
 683ea17f13f70b76ea64d128 || Quote button not found || 2025-06-08T14:36:44.027Z
 683ea17f13f70b76ea64d128 || Navigation timeout of 30000 ms exceeded || 2025-06-08T14:40:06.428Z
 683ea17f13f70b76ea64d128 || proxies.checkErrorGroups.nonfunctional || 2025-06-09T01:21:25.353Z
+683ea17f13f70b76ea64d128 || proxies.checkErrorGroups.nonfunctional || 2025-06-12T15:06:05.949Z
+683ea17f13f70b76ea64d128 || proxies.checkErrorGroups.nonfunctional || 2025-06-12T15:06:17.587Z
+683ea17f13f70b76ea64d128 || proxies.checkErrorGroups.nonfunctional || 2025-06-12T15:06:29.257Z
+683ea17f13f70b76ea64d128 || proxies.checkErrorGroups.nonfunctional || 2025-06-12T15:06:40.907Z
+683ea17f13f70b76ea64d128 || proxies.checkErrorGroups.nonfunctional || 2025-06-12T15:06:52.365Z
+683ea17f13f70b76ea64d128 || proxies.checkErrorGroups.nonfunctional || 2025-06-12T15:07:03.850Z
+683ea17f13f70b76ea64d128 || proxies.checkErrorGroups.nonfunctional || 2025-06-12T15:07:15.304Z
+683ea17f13f70b76ea64d128 || proxies.checkErrorGroups.nonfunctional || 2025-06-12T15:07:26.938Z
+683ea17f13f70b76ea64d128 || proxies.checkErrorGroups.nonfunctional || 2025-06-12T15:07:38.559Z
+683ea17f13f70b76ea64d128 || proxies.checkErrorGroups.nonfunctional || 2025-06-12T15:07:49.738Z
+683ea17f13f70b76ea64d128 || proxies.checkErrorGroups.nonfunctional || 2025-06-12T15:08:07.593Z
+683ea17f13f70b76ea64d128 || proxies.checkErrorGroups.nonfunctional || 2025-06-12T15:08:19.123Z
+683ea17f13f70b76ea64d128 || proxies.checkErrorGroups.nonfunctional || 2025-06-12T15:08:30.656Z
+683ea17f13f70b76ea64d128 || proxies.checkErrorGroups.nonfunctional || 2025-06-12T15:08:42.005Z
+683ea17f13f70b76ea64d128 || proxies.checkErrorGroups.nonfunctional || 2025-06-12T15:08:53.565Z
+683ea17f13f70b76ea64d128 || proxies.checkErrorGroups.nonfunctional || 2025-06-12T15:09:05.165Z
+683ea17f13f70b76ea64d128 || proxies.checkErrorGroups.nonfunctional || 2025-06-12T15:09:16.740Z
+683ea17f13f70b76ea64d128 || Navigating frame was detached || 2025-06-12T15:09:33.690Z
+683ea17f13f70b76ea64d128 || connect ECONNREFUSED 127.0.0.1:24893 || 2025-06-12T15:09:33.693Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:11:52.039Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:11:55.027Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:11:57.374Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:11:59.744Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:12:02.089Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:12:04.448Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:12:06.803Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:12:09.329Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:12:11.682Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:12:14.038Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:12:16.388Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:12:18.744Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:12:21.200Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:12:23.556Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:12:26.035Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:12:28.665Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:13:19.753Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:13:22.119Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:13:24.467Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:13:26.825Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:13:29.177Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:13:31.548Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:13:33.928Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:13:36.301Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:13:38.651Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:13:41.009Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:13:43.369Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:13:46.019Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:14:52.152Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:16:16.799Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:16:40.562Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:18:04.241Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:18:16.674Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:19:35.901Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:19:54.777Z
+683ea17f13f70b76ea64d128 || Unknown error || 2025-06-12T15:21:11.194Z
+683ea17f13f70b76ea64d128 || proxies.checkErrorGroups.nonfunctional || 2025-06-12T15:29:37.008Z
+683ea17f13f70b76ea64d128 || Navigation timeout of 30000 ms exceeded || 2025-06-12T15:30:10.594Z

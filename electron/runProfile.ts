@@ -2,7 +2,8 @@ import puppeteer from 'puppeteer-core';
 import { writeBrowser, writeHistory, writeError, getBrowser } from "./writeLog";
 import { each, get } from "lodash";
 import { sendToRenderer } from "./main";
-import request from "@/utils/request";
+import { getRandomImagesFromRandomFolder, getSettings } from "./setting";
+import axios from "axios";
 
 const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms * 1000));
 
@@ -22,12 +23,19 @@ const changePort = async ({ profileId }: { profileId: string }) => {
     username: ""
   }
 
-  return request.patch(`/browser/${profileId}/proxy`, data)
+  const settings = getSettings()
+
+  return axios.patch(`https://api.gologin.com/browser/${profileId}/proxy`, data, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${settings.token}`
+    }
+  })
 }
 
 const startProfile = async (profileId: string) => {
   sendToRenderer('profile-status', { profileId, message: 'Start profile' });
-  return request.post('/browser/start-profile', {
+  return axios.post('http://localhost:36912/browser/start-profile', {
     profileId,
     sync: true
   })
@@ -35,7 +43,7 @@ const startProfile = async (profileId: string) => {
 
 export const stopProfile = async (profileId: string) => {
   sendToRenderer('profile-status', { profileId, message: 'Stop profile' });
-  return request.post('/browser/stop-profile', {
+  return axios.post('http://localhost:36912/browser/stop-profile', {
     profileId
   })
 }
@@ -117,8 +125,15 @@ export const sharePost = async ({ profileId, postUrl }: { profileId: string, pos
     }
 
     console.log('input found');
-    // upload image '/Users/admin/Desktop/Screenshot 2025-05-28 at 14.17.19.png' to input
-    await input?.uploadFile('/Users/admin/Desktop/Screenshot 2025-06-05 at 18.43.56.png');
+    const images = getRandomImagesFromRandomFolder();
+    each(images, async (image) => {
+      await input?.uploadFile(image);
+      sendToRenderer('profile-status', { profileId, message: `Upload image ${image}` });
+      console.log(`upload image ${image}`);
+      await wait(5);
+    });
+
+
     sendToRenderer('profile-status', { profileId, message: 'Upload image' });
     console.log('upload image');
     await wait(5);
@@ -149,8 +164,8 @@ export const sharePost = async ({ profileId, postUrl }: { profileId: string, pos
       }
     });
 
-    await stopProfile(profileId);
-    await wait(2);
+    // await stopProfile(profileId);
+    // await wait(2);
     sendToRenderer('profile-status', { profileId, message: 'Done! 🎉' });
 
   } catch (error) {

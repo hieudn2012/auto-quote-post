@@ -99,3 +99,7 @@
 683ea17eb21417b3ef36b29a || proxies.checkErrorGroups.nonfunctional || 2025-06-09T01:21:25.931Z
 683ea17eb21417b3ef36b29a || proxies.checkErrorGroups.nonfunctional || 2025-06-09T01:21:42.783Z
 683ea17eb21417b3ef36b29a || Navigation timeout of 30000 ms exceeded || 2025-06-09T01:22:16.724Z
+683ea17eb21417b3ef36b29a || proxies.checkErrorGroups.nonfunctional || 2025-06-12T15:26:00.286Z
+683ea17eb21417b3ef36b29a || proxies.checkErrorGroups.nonfunctional || 2025-06-12T15:26:19.406Z
+683ea17eb21417b3ef36b29a || proxies.checkErrorGroups.nonfunctional || 2025-06-12T15:26:36.229Z
+683ea17eb21417b3ef36b29a || proxies.checkErrorGroups.nonfunctional || 2025-06-12T15:26:53.006Z
