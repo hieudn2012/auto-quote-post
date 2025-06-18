@@ -41,15 +41,19 @@ export const Siderbar = () => {
 
   return (
     <div>
+      <div className="text-md font-medium p-2">
+        <p className="font-bold text-center">Administrator</p>
+      </div>
+      <div className="border-b border-gray-200 mb-5" />
       {sidebarItems.map((item) => (
         <div
-          key={item.path} className="py-2 px-4 hover:bg-gray-700 cursor-pointer rounded-md flex items-center gap-2"
+          key={item.path} className="py-2 hover:text-primary cursor-pointer rounded-md flex items-center gap-2"
           onClick={() => navigate(item.path)}
         >
-          <div className="text-xl w-7">
+          <div className="text-md w-5">
             <i className={item.icon}></i>
           </div>
-          <div className="text-md font-bold">{item.label}</div>
+          <div className="text-md font-medium">{item.label}</div>
         </div>
       ))}
     </div>

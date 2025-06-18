@@ -6,8 +6,10 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Montserrat', 'sans-serif'],
-        serif: ['Space Grotesk', 'sans-serif'],
+        sans: ['monospace', 'sans-serif'],
+      },
+      colors: {
+        primary: '#F7CE5B',
       },
     },
   },

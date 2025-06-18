@@ -27,4 +27,5 @@ dist-electron
 
 release
 
+/store
 store

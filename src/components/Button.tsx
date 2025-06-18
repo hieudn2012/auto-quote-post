@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes, ReactNode } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 type ButtonSize = 'small' | 'medium' | 'large'
-type ButtonColor = 'info' | 'success' | 'warning' | 'error'
+type ButtonColor = 'primary' | 'info' | 'success' | 'warning' | 'error'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children?: ReactNode
@@ -11,7 +11,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   color?: ButtonColor
 }
 
-export default function Button({ children, size = 'small', icon, color = 'info', ...props }: ButtonProps) {
+export default function Button({ children, size = 'small', icon, color = 'primary', ...props }: ButtonProps) {
   const sizeClasses = {
     small: 'text-xs px-2 py-1',
     medium: 'text-sm px-4 py-[6px]',
@@ -19,6 +19,7 @@ export default function Button({ children, size = 'small', icon, color = 'info',
   }
 
   const colorClasses = {
+    primary: 'bg-primary text-white',
     info: 'bg-blue-500 text-white',
     success: 'bg-green-500 text-white',
     warning: 'bg-yellow-500 text-white',

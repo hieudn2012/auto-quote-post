@@ -9,12 +9,14 @@ import ProfileStatus from "@/components/ProfileStatus"
 import Stop from "./Stop"
 import Run from "./Run"
 import { IpcRendererEvent } from "electron"
+import Item from "./Item"
+import SettingModal from "./SettingModal"
 
 export default function Profiles() {
   const { data, isLoading } = useGetProfiles()
   const [selectedProfile, setSelectedProfile] = useState<string[] | null>(null)
   const { updateProfileStatus } = useProfileStore()
-
+  const [isSettingModalOpen, setIsSettingModalOpen] = useState(false)
   // Memoize các hàm callback để tránh tạo function mới mỗi lần render
   const runProfile = useCallback(async (profileId: string) => {
     await windowInstance.api.runProfile(profileId)
@@ -101,53 +103,20 @@ export default function Profiles() {
           <Button color="error" icon="fa-solid fa-stop" onClick={stopProfiles}>Stop selected</Button>
         </div>
       </div>
-      <table className="w-full table-auto text-left">
-        <thead>
-          <tr>
-            <th className="p-2">
-              <Checkbox checked={selectedProfile?.length === data?.length} onChange={selectAllProfiles} />
-            </th>
-            <th className="p-2">Name</th>
-            <th className="p-2">Notes</th>
-            <th className="p-2">Port</th>
-            <th className="p-2 w-[150px]">Status</th>
-            <th className="p-2 w-1/4">Message</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data?.map((profile) => (
-            <tr key={profile.id} className="border-b border-gray-200 text-sm">
-              <td className="p-2">
-                <Checkbox
-                  checked={selectedProfile?.includes(profile.id) ?? false}
-                  onChange={() => selectProfile(profile.id)}
-                />
-              </td>
-              <td className="p-2">{profile.name}</td>
-              <td className="p-2">
-                <div
-                  dangerouslySetInnerHTML={{ __html: profile.notes }}
-                />
-              </td>
-              <td className="p-2">{profile.proxy.port}</td>
-              <td className="p-2">
-                <ProfileStatus id={profile.id} />
-              </td>
-              <td className="p-2 text-sm">
-                <span id={`profile-message-${profile.id}`}></span>
-              </td>
-              <td className="p-2">
-                <div className="flex gap-2">
-                  <Run id={profile.id} onClick={() => runProfile(profile.id)} />
-                  <Stop onClick={() => stopProfile(profile.id)} />
-                  {/* <Button icon="fa-solid fa-share" onClick={() => sharePost(profile.id)}>Share</Button> */}
-                </div>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+
+      <div className="flex flex-col gap-2">
+        {data?.map((profile) => (
+          <Item
+            key={profile.id}
+            profile={profile} selected={selectedProfile?.includes(profile.id) ?? false}
+            onSelect={() => selectProfile(profile.id)}
+            onRun={() => runProfile(profile.id)}
+            onStop={() => stopProfile(profile.id)}
+            onSetting={() => setIsSettingModalOpen(true)}
+          />
+        ))}
+      </div>
+      <SettingModal isOpen={isSettingModalOpen} onClose={() => setIsSettingModalOpen(false)} />
     </Layout>
   )
 }

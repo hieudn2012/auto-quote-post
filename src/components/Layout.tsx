@@ -1,4 +1,3 @@
-import { Header } from "./Header"
 import { Siderbar } from "./Siderbar"
 
 interface LayoutProps {
@@ -7,16 +6,15 @@ interface LayoutProps {
 
 export const Layout = ({ children }: LayoutProps) => {
   return (
-    <div className="flex min-h-screen">
-      <div className="w-64 bg-gray-800 text-white p-4">
-        <Siderbar />
-      </div>
-      <div className="flex-1 h-screen">
-        <div className="h-16 bg-white shadow-md px-6 flex items-center">
-          <Header />
+    <div className="min-h-screen p-4 bg-gray-50">
+      <div className="flex rounded-lg h-[calc(100vh-32px)] gap-2 overflow-hidden">
+        <div className="w-64 bg-white p-4 rounded-lg">
+          <Siderbar />
         </div>
-        <div className="p-6 h-[calc(100vh-64px)] w-[calc(100vw-256px)] overflow-auto">
-          {children}
+        <div className="flex-1 bg-white rounded-lg">
+          <div className="p-6 overflow-auto h-full">
+            {children}
+          </div>
         </div>
       </div>
     </div>

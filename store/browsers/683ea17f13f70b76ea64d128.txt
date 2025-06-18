@@ -81,3 +81,4 @@ ws://127.0.0.1:25597/devtools/browser/83294fe5-e3e9-4a11-942a-9f35db44e390
 ws://127.0.0.1:20266/devtools/browser/6e2bd511-f9f3-490e-9795-15930f06f003
 ws://127.0.0.1:25323/devtools/browser/923b4fab-a194-4c13-85bd-f9bbfdce7911
 ws://127.0.0.1:25122/devtools/browser/73513ed2-4fdd-4df3-9fcb-1a1366ad0933
+ws://127.0.0.1:24902/devtools/browser/50ee1e02-7aaa-444c-a3d7-af657606e50f

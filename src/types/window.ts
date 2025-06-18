@@ -18,7 +18,15 @@ export interface WindowInstance {
 export interface Setting {
   working_directory: string
   token: string
-  captions: string[]
+  captions: {
+    id: string
+    label: string
+    caption: string
+  }[]
+  profiles: {
+    id: string
+    caption_ids: string[]
+  }[]
 }
 
 export const windowInstance = window as unknown as WindowInstance

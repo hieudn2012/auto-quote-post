@@ -7,7 +7,7 @@ export default function Checkbox({ checked, onChange }: { checked: boolean, onCh
     <HeadlessCheckbox
       checked={checked}
       onChange={onChange}
-      className={twMerge("group block size-4 rounded border bg-white data-checked:bg-blue-500", checked && "bg-blue-500")}
+      className={twMerge("group block size-4 rounded border bg-white data-checked:bg-primary", checked && "bg-primary")}
     />
   )
 }
