@@ -9,6 +9,7 @@ import { map } from "lodash";
 import { v4 as uuidv4 } from 'uuid';
 import { Collapse } from "./Collapse";
 import { FolderInput } from "@/components/FolderInput";
+import { toast } from "react-toastify";
 
 export default function Setting() {
   const { values, handleChange, handleSubmit, setValues } = useFormik<SettingType>({
@@ -23,6 +24,7 @@ export default function Setting() {
     onSubmit: (values) => {
       localStorage.setItem("settings", JSON.stringify(values))
       windowInstance.api.saveSettings(values)
+      toast.success("Settings saved")
     },
   });
 
@@ -53,6 +55,12 @@ export default function Setting() {
     });
   };
 
+  const removeMediaFolder = (id: string) => {
+    setValues({
+      ...values,
+      media_folders: values.media_folders.filter((folder) => folder.id !== id),
+    });
+  };
   useEffect(() => {
     windowInstance.api.getSettings().then((settings) => {
       setValues(settings)
@@ -124,13 +132,24 @@ export default function Setting() {
             <div className="flex flex-col gap-2">
               {map(values.media_folders, (folder, index) => (
                 <div key={folder.id} className="flex items-center gap-2">
-                  <div className="flex-1">
-                    <Input
-                      name={`media_folders[${index}].name`}
-                      value={folder.name}
-                      onChange={handleChange}
-                      label={`Name ${index + 1}`}
-                    />
+                  <div className="flex-1 flex items-center gap-2">
+                    <div className="mt-4">
+                      <Button
+                        color="error"
+                        type="button"
+                        size="small"
+                        icon="fas fa-trash"
+                        onClick={() => removeMediaFolder(folder.id)}
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <Input
+                        name={`media_folders[${index}].name`}
+                        value={folder.name}
+                        onChange={handleChange}
+                        label={`Name ${index + 1}`}
+                      />
+                    </div>
                   </div>
                   <div className="flex-1">
                     <FolderInput
