@@ -1,63 +1,7 @@
 {
   "working_directory": "/Users/admin/Desktop/untitled folder 2",
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODNlYTBmOTkzNTk4YmY2MzEyOWQ2MDMiLCJ0eXBlIjoiZGV2Iiwiand0aWQiOiI2ODNlYTM1ZDI1OTM5YTk0YWM3ODliNzMifQ.LAhYVmCNhFNt0CdMmE2CwGOqDt4541SAHmghaMnvp8o",
-  "captions": [
-    {
-      "id": "5068eba8-5e94-4dea-bcd6-4d09de624673",
-      "label": "",
-      "caption": "caption 1 test"
-    },
-    {
-      "id": "78f85c74-cc18-4b8c-ae99-b314d2706a9b",
-      "label": "",
-      "caption": "caption 2 test"
-    }
-  ],
-  "profiles": [
-    {
-      "id": "683ea17f13f70b76ea64d128",
-      "caption_ids": [
-        "5068eba8-5e94-4dea-bcd6-4d09de624673",
-        "78f85c74-cc18-4b8c-ae99-b314d2706a9b"
-      ],
-      "media_folder_ids": [
-        "0bd8d45e-7701-4ba8-911e-53166e654a8c",
-        "c269ff00-9ecf-4a6a-a471-7c38f3251d90"
-      ]
-    },
-    {
-      "id": "683ea17eb21417b3ef36b29a",
-      "caption_ids": [
-        "5068eba8-5e94-4dea-bcd6-4d09de624673",
-        "78f85c74-cc18-4b8c-ae99-b314d2706a9b"
-      ],
-      "media_folder_ids": [
-        "0bd8d45e-7701-4ba8-911e-53166e654a8c",
-        "c269ff00-9ecf-4a6a-a471-7c38f3251d90"
-      ]
-    },
-    {
-      "id": "683ea17cf8262e47aaa3b4c7",
-      "caption_ids": [
-        "5068eba8-5e94-4dea-bcd6-4d09de624673",
-        "78f85c74-cc18-4b8c-ae99-b314d2706a9b"
-      ],
-      "media_folder_ids": [
-        "0bd8d45e-7701-4ba8-911e-53166e654a8c",
-        "c269ff00-9ecf-4a6a-a471-7c38f3251d90"
-      ]
-    }
-  ],
-  "media_folders": [
-    {
-      "id": "0bd8d45e-7701-4ba8-911e-53166e654a8c",
-      "name": "f1",
-      "path": "/Users/admin/Desktop/F1"
-    },
-    {
-      "id": "c269ff00-9ecf-4a6a-a471-7c38f3251d90",
-      "name": "f2",
-      "path": "/Users/admin/Desktop/F2"
-    }
-  ]
+  "captions": [],
+  "profiles": [],
+  "media_folders": []
 }
