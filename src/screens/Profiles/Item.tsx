@@ -1,10 +1,10 @@
 import Checkbox from "@/components/Checkbox";
-import ProfileStatus from "@/components/ProfileStatus";
+// import ProfileStatus from "@/components/ProfileStatus";
 import { Profile } from "@/services/profile.service"
 import Stop from "./Stop";
 import Run from "./Run";
 import Setting from "./Setting";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { windowInstance } from "@/types/window";
 import { ProfileSetting } from "@/types/window";
 import { size } from "lodash";
@@ -44,9 +44,9 @@ const Item = ({ profile, selected, onSelect, onRun, onStop, onSetting }: ItemPro
           <div dangerouslySetInnerHTML={{ __html: profile.notes }} />
         </div>
         <div className="text-sm font-medium w-[50px]">{profile.proxy.port}</div>
-        <div className="text-sm font-medium w-[100px]">
+        {/* <div className="text-sm font-medium w-[100px]">
           <ProfileStatus id={profile.id} />
-        </div>
+        </div> */}
         <div>
           {!isInvalid ? <i className="fa-solid fa-exclamation-triangle text-red-500" /> : <i className="fa-solid fa-check-circle text-green-500" />}
         </div>

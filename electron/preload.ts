@@ -34,6 +34,8 @@ contextBridge.exposeInMainWorld('api', {
   getSettingByProfileId: (profileId: string) => ipcRenderer.invoke('get-setting-by-profile-id', profileId),
   saveSettings: (settings: Setting) => ipcRenderer.invoke('save-settings', settings),
   openSelectFolder: () => ipcRenderer.invoke('open-select-folder'),
+  syncProfile: () => ipcRenderer.invoke('sync-profile'),
+  getProfilesFromJson: () => ipcRenderer.invoke('get-profiles-from-json'),
 })
 
 contextBridge.exposeInMainWorld('sendToRenderer', (channel: string, data: any) => {

@@ -7,7 +7,7 @@ import { getSettings, saveSettings, getSettingByProfileId } from './setting'
 import { Setting } from '@/types/window'
 import { init } from './init'
 import { openSelectFolder } from './openSelectFolder'
-
+import { getProfilesFromJson, syncProfile } from './syncProfile'
 // Suppress macOS text input context warnings
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true'
 
@@ -96,6 +96,14 @@ ipcMain.handle('open-select-folder', async () => {
 
 ipcMain.handle('get-setting-by-profile-id', async (_event, profileId: string) => {
   return getSettingByProfileId(profileId)
+})
+
+ipcMain.handle('sync-profile', async () => {
+  return syncProfile()
+})
+
+ipcMain.handle('get-profiles-from-json', async () => {
+  return getProfilesFromJson()
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common

@@ -29,7 +29,9 @@ electron.contextBridge.exposeInMainWorld("api", {
   getSettings: () => electron.ipcRenderer.invoke("get-settings"),
   getSettingByProfileId: (profileId) => electron.ipcRenderer.invoke("get-setting-by-profile-id", profileId),
   saveSettings: (settings) => electron.ipcRenderer.invoke("save-settings", settings),
-  openSelectFolder: () => electron.ipcRenderer.invoke("open-select-folder")
+  openSelectFolder: () => electron.ipcRenderer.invoke("open-select-folder"),
+  syncProfile: () => electron.ipcRenderer.invoke("sync-profile"),
+  getProfilesFromJson: () => electron.ipcRenderer.invoke("get-profiles-from-json")
 });
 electron.contextBridge.exposeInMainWorld("sendToRenderer", (channel, data) => {
   electron.ipcRenderer.send(channel, data);

@@ -1,3 +1,4 @@
+import { Profile } from '@/services/profile.service'
 import { IpcRendererEvent } from 'electron'
 
 export interface WindowInstance {
@@ -10,6 +11,8 @@ export interface WindowInstance {
     getSettingByProfileId: (profileId: string) => Promise<ProfileSetting>
     saveSettings: (settings: Setting) => Promise<void>
     openSelectFolder: () => Promise<{ filePaths: string[], canceled: boolean }>
+    syncProfile: () => Promise<Profile[]>
+    getProfilesFromJson: () => Promise<Profile[]>
   }
   ipcRenderer?: {
     on: (channel: string, listener: (event: IpcRendererEvent, ...args: any[]) => void) => void

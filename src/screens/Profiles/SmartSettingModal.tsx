@@ -33,12 +33,17 @@ export default function SettingModal({ isOpen, onClose, profile_ids }: SettingMo
     captions: [],
     profiles: [],
     media_folders: [],
+    url: "",
   })
 
-  const handleSave = (values: { caption_ids: string[], media_folder_ids: string[] }) => {
+  const handleSave = async (values: { caption_ids: string[], media_folder_ids: string[] }) => {
+    const settings = await windowInstance.api.getSettings()
+    const newProfiles = profile_ids.map((id) => ({ id, caption_ids: values.caption_ids, media_folder_ids: values.media_folder_ids }))
+    const oldProfiles = settings.profiles.filter((profile) => !profile_ids.includes(profile.id))
+
     windowInstance.api.saveSettings({
       ...settings,
-      profiles: profile_ids.map((id) => ({ id, caption_ids: values.caption_ids, media_folder_ids: values.media_folder_ids })).filter((profile) => profile.caption_ids.length > 0 && profile.media_folder_ids.length > 0),
+      profiles: [...oldProfiles, ...newProfiles],
     })
   }
 

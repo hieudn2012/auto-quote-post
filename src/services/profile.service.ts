@@ -15,6 +15,7 @@ export interface Profile {
     autoProxyRegion: string
   }
   notes: string
+  folders: string[]
 }
 
 export interface GetProfileParams {

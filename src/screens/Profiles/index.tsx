@@ -1,4 +1,3 @@
-import { useGetProfiles } from "@/services/profile.service"
 import Button from "@/components/Button"
 import { Layout } from "@/components/Layout"
 import { windowInstance } from "@/types/window"
@@ -9,10 +8,14 @@ import Item from "./Item"
 import SettingModal from "./SettingModal"
 import { SmartSettings } from "./SmartSettings"
 import SmartSettingModal from "./SmartSettingModal"
+import SyncProfile from "./SyncProfile"
+import { Profile } from "@/services/profile.service"
+import { filter, map } from "lodash"
+import { Folders } from "./Folders"
 
 export default function Profiles() {
-  const [page, setPage] = useState(1)
-  const { data, isLoading } = useGetProfiles({ page })
+  const [selectedFolder, setSelectedFolder] = useState<string>("")
+  const [profiles, setProfiles] = useState<Profile[]>([])
   const [selectedProfile, setSelectedProfile] = useState<string[] | null>(null)
   const { updateProfileStatus } = useProfileStore()
   const [isSettingModalOpen, setIsSettingModalOpen] = useState(false)
@@ -31,15 +34,6 @@ export default function Profiles() {
     await new Promise(resolve => setTimeout(resolve, 10000))
     updateProfileStatus(profileId, "stopped")
   }, [updateProfileStatus])
-
-  const selectAllProfiles = useCallback((checked: boolean) => {
-    if (checked) {
-      const profileIds = data?.map(profile => profile.id) ?? []
-      setSelectedProfile(profileIds)
-    } else {
-      setSelectedProfile(null)
-    }
-  }, [data])
 
   const selectProfile = useCallback((profileId: string) => {
     if (!selectedProfile) {
@@ -70,7 +64,6 @@ export default function Profiles() {
   }, [selectedProfile, stopProfile])
 
   useEffect(() => {
-    console.log('Effect running - data changed:', data)
     const handler = (_event: IpcRendererEvent, data: { profileId: string; message: string }) => {
       const messageElement = document.getElementById(`profile-message-${data.profileId}`)
       if (messageElement) {
@@ -93,22 +86,32 @@ export default function Profiles() {
     return () => {
       windowInstance?.ipcRenderer?.off('profile-status', handler)
     }
-  }, [data, updateProfileStatus])
+  }, [updateProfileStatus])
+
+  useEffect(() => {
+    windowInstance.api.getProfilesFromJson().then((profiles) => {
+      setProfiles(profiles)
+    })
+  }, [])
 
   return (
     <Layout>
-      {isLoading && <div>Loading...</div>}
       <div className="flex items-center justify-between gap-2 mb-2">
         <div className="text-sm text-gray-500">Selected: <strong>{selectedProfile?.length ?? 0}</strong></div>
         <div className="flex items-center gap-2">
+          <SyncProfile />
           <SmartSettings onClick={() => setIsSmartSettingModalOpen(true)} />
           <Button color="success" icon="fa-solid fa-play" onClick={runProfiles}>Run selected</Button>
           <Button color="error" icon="fa-solid fa-stop" onClick={stopProfiles}>Stop selected</Button>
         </div>
       </div>
 
+      <div className="mb-2">
+        <Folders profiles={profiles} selectedFolder={selectedFolder} onSelect={setSelectedFolder} />
+      </div>
+
       <div className="flex flex-col gap-2">
-        {data?.map((profile) => (
+        {map(filter(profiles, (profile) => selectedFolder === "" ? true : profile.folders.includes(selectedFolder)), (profile) => (
           <Item
             key={profile.id}
             profile={profile} selected={selectedProfile?.includes(profile.id) ?? false}
@@ -121,12 +124,6 @@ export default function Profiles() {
             }}
           />
         ))}
-
-        <div className="flex items-center gap-2 justify-center">
-          <Button color="primary" icon="fa-solid fa-chevron-left" onClick={() => setPage(page - 1)}>Previous</Button>
-          <div className="text-sm text-gray-500">Page {page}</div>
-          <Button color="primary" icon="fa-solid fa-chevron-right" onClick={() => setPage(page + 1)}>Next</Button>
-        </div>
       </div>
       <SettingModal isOpen={isSettingModalOpen} onClose={() => setIsSettingModalOpen(false)} profile_id={selectedProfileId ?? ""} />
       <SmartSettingModal isOpen={isSmartSettingModalOpen} onClose={() => setIsSmartSettingModalOpen(false)} profile_ids={selectedProfile ?? []} />

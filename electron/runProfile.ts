@@ -200,6 +200,10 @@ export const sharePost = async ({ profileId, postUrl }: { profileId: string, pos
       return;
     }
     if (message.includes('Navigation timeout')) {
+      // close browser
+      await stopProfile(profileId);
+      await changePort({ profileId });
+      sendToRenderer('profile-status', { profileId, message: 'Network error, change port...' });
       return;
     }
     if (retryCount >= 5) {
