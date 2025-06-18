@@ -27,6 +27,7 @@ electron.contextBridge.exposeInMainWorld("api", {
   getAllError: () => electron.ipcRenderer.invoke("get-all-error"),
   getAllHistory: () => electron.ipcRenderer.invoke("get-all-history"),
   getSettings: () => electron.ipcRenderer.invoke("get-settings"),
+  getSettingByProfileId: (profileId) => electron.ipcRenderer.invoke("get-setting-by-profile-id", profileId),
   saveSettings: (settings) => electron.ipcRenderer.invoke("save-settings", settings),
   openSelectFolder: () => electron.ipcRenderer.invoke("open-select-folder")
 });

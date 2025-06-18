@@ -3,20 +3,21 @@ import Button from "@/components/Button"
 import { Layout } from "@/components/Layout"
 import { windowInstance } from "@/types/window"
 import { useEffect, useState, useCallback } from "react"
-import Checkbox from "@/components/Checkbox"
 import useProfileStore from "@/store/profile.store"
-import ProfileStatus from "@/components/ProfileStatus"
-import Stop from "./Stop"
-import Run from "./Run"
 import { IpcRendererEvent } from "electron"
 import Item from "./Item"
 import SettingModal from "./SettingModal"
+import { SmartSettings } from "./SmartSettings"
+import SmartSettingModal from "./SmartSettingModal"
 
 export default function Profiles() {
   const { data, isLoading } = useGetProfiles()
   const [selectedProfile, setSelectedProfile] = useState<string[] | null>(null)
   const { updateProfileStatus } = useProfileStore()
   const [isSettingModalOpen, setIsSettingModalOpen] = useState(false)
+  const [isSmartSettingModalOpen, setIsSmartSettingModalOpen] = useState(false)
+  const [selectedProfileId, setSelectedProfileId] = useState<string | null>(null)
+
   // Memoize các hàm callback để tránh tạo function mới mỗi lần render
   const runProfile = useCallback(async (profileId: string) => {
     await windowInstance.api.runProfile(profileId)
@@ -99,7 +100,8 @@ export default function Profiles() {
       <div className="flex items-center justify-between gap-2 mb-2">
         <div className="text-sm text-gray-500">Selected: <strong>{selectedProfile?.length ?? 0}</strong></div>
         <div className="flex items-center gap-2">
-          <Button color="warning" icon="fa-solid fa-play" onClick={runProfiles}>Run selected</Button>
+          <SmartSettings onClick={() => setIsSmartSettingModalOpen(true)} />
+          <Button color="success" icon="fa-solid fa-play" onClick={runProfiles}>Run selected</Button>
           <Button color="error" icon="fa-solid fa-stop" onClick={stopProfiles}>Stop selected</Button>
         </div>
       </div>
@@ -112,11 +114,15 @@ export default function Profiles() {
             onSelect={() => selectProfile(profile.id)}
             onRun={() => runProfile(profile.id)}
             onStop={() => stopProfile(profile.id)}
-            onSetting={() => setIsSettingModalOpen(true)}
+            onSetting={() => {
+              setSelectedProfileId(profile.id)
+              setIsSettingModalOpen(true)
+            }}
           />
         ))}
       </div>
-      <SettingModal isOpen={isSettingModalOpen} onClose={() => setIsSettingModalOpen(false)} />
+      <SettingModal isOpen={isSettingModalOpen} onClose={() => setIsSettingModalOpen(false)} profile_id={selectedProfileId ?? ""} />
+      <SmartSettingModal isOpen={isSmartSettingModalOpen} onClose={() => setIsSmartSettingModalOpen(false)} profile_ids={selectedProfile ?? []} />
     </Layout>
   )
 }

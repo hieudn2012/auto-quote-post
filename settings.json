@@ -13,7 +13,29 @@
       "caption": "caption 2 test"
     }
   ],
-  "profiles": [],
+  "profiles": [
+    {
+      "id": "683ea17f13f70b76ea64d128",
+      "caption_ids": [
+        "5068eba8-5e94-4dea-bcd6-4d09de624673",
+        "78f85c74-cc18-4b8c-ae99-b314d2706a9b"
+      ],
+      "media_folder_ids": [
+        "09431be4-d555-459b-a065-fd9eeb42bd1f",
+        "027d1ba2-3a6b-46a5-a3e6-a9ca76f033c2"
+      ]
+    },
+    {
+      "id": "683ea17eb21417b3ef36b29a",
+      "caption_ids": [
+        "5068eba8-5e94-4dea-bcd6-4d09de624673",
+        "78f85c74-cc18-4b8c-ae99-b314d2706a9b"
+      ],
+      "media_folder_ids": [
+        "09431be4-d555-459b-a065-fd9eeb42bd1f"
+      ]
+    }
+  ],
   "media_folders": [
     {
       "id": "09431be4-d555-459b-a065-fd9eeb42bd1f",

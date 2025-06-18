@@ -14,7 +14,10 @@ export default function Stop({ onClick }: StopProps) {
     <Button
       color="error"
       icon="fa-solid fa-stop"
-      onClick={handleClick}
+      onClick={(e) => {
+        e.stopPropagation()
+        handleClick()
+      }}
     />
   )
 }

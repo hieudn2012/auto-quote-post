@@ -7,6 +7,7 @@ export interface WindowInstance {
     getAllError: () => Promise<string[]>
     getAllHistory: () => Promise<string[]>
     getSettings: () => Promise<Setting>
+    getSettingByProfileId: (profileId: string) => Promise<ProfileSetting>
     saveSettings: (settings: Setting) => Promise<void>
     openSelectFolder: () => Promise<{ filePaths: string[], canceled: boolean }>
   }
@@ -14,6 +15,12 @@ export interface WindowInstance {
     on: (channel: string, listener: (event: IpcRendererEvent, ...args: any[]) => void) => void
     off: (channel: string, listener: (event: IpcRendererEvent, ...args: any[]) => void) => void
   }
+}
+
+export interface ProfileSetting {
+  id: string
+  caption_ids: string[]
+  media_folder_ids: string[]
 }
 
 export interface Setting {
@@ -24,10 +31,7 @@ export interface Setting {
     label: string
     caption: string
   }[]
-  profiles: {
-    id: string
-    caption_ids: string[]
-  }[]
+  profiles: ProfileSetting[]
   media_folders: {
     id: string
     name: string

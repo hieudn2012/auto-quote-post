@@ -8,14 +8,14 @@ import { useEffect, useState } from "react";
 interface SettingModalProps {
   isOpen: boolean
   onClose: () => void
-  profile_id: string
+  profile_ids: string[]
 }
 
 const shortenCaption = (caption: string) => {
   return caption.length > 20 ? caption.slice(0, 20) + "..." : caption
 }
 
-export default function SettingModal({ isOpen, onClose, profile_id }: SettingModalProps) {
+export default function SettingModal({ isOpen, onClose, profile_ids }: SettingModalProps) {
   const { values, setFieldValue, handleSubmit } = useFormik({
     initialValues: {
       media_folder_ids: [],
@@ -38,30 +38,15 @@ export default function SettingModal({ isOpen, onClose, profile_id }: SettingMod
   const handleSave = (values: { caption_ids: string[], media_folder_ids: string[] }) => {
     windowInstance.api.saveSettings({
       ...settings,
-      profiles: settings.profiles.map((profile) => ({
-        ...profile,
-        caption_ids: profile.id === profile_id ? values.caption_ids : profile.caption_ids,
-        media_folder_ids: profile.id === profile_id ? values.media_folder_ids : profile.media_folder_ids,
-      })),
+      profiles: profile_ids.map((id) => ({ id, caption_ids: values.caption_ids, media_folder_ids: values.media_folder_ids })).filter((profile) => profile.caption_ids.length > 0 && profile.media_folder_ids.length > 0),
     })
   }
 
   useEffect(() => {
-    if (isOpen) {
-      windowInstance.api.getSettings().then((settings) => {
-        setSettings(settings)
-        
-        const profile = settings.profiles.find(p => p.id === profile_id)
-        if (profile) {
-          setFieldValue("media_folder_ids", profile.media_folder_ids || [])
-          setFieldValue("caption_ids", profile.caption_ids || [])
-        } else {
-          setFieldValue("media_folder_ids", [])
-          setFieldValue("caption_ids", [])
-        }
-      })
-    }
-  }, [isOpen, profile_id, setFieldValue])
+    windowInstance.api.getSettings().then((settings) => {
+      setSettings(settings)
+    })
+  }, [])
 
   return (
     <Modal title="Smart Setting" isOpen={isOpen} onClose={onClose}>

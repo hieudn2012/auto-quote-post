@@ -15,7 +15,10 @@ export default function Run({ id, onClick }: RunProps) {
     <Button
       color="success"
       icon="fa-solid fa-play"
-      onClick={onClick}
+      onClick={(e) => {
+        e.stopPropagation()
+        onClick()
+      }}
       disabled={profile?.status === "running" || profile?.status === "wating-to-stop"}
     />
   )

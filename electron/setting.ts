@@ -5,8 +5,6 @@ import path from 'path'
 export const getSettings = (): Setting => {
   const path = `settings.json`
   const settings = fs.readFileSync(path, 'utf8')
-  console.log(settings, 'settings');
-
   return JSON.parse(settings)
 }
 
@@ -31,13 +29,14 @@ export const getFirstCaption = () => {
   return settings.captions[0]
 }
 
-export const getWorkingDirectory = () => {
+export const getWorkingDirectory = (profileId: string) => {
+  const setting = getSettingByProfileId(profileId)
   const settings = getSettings()
   return settings.working_directory
 }
 
-export const getRandomImagesFromRandomFolder = () => {
-  const workingDirectory = getWorkingDirectory()
+export const getRandomImagesFromRandomFolder = (profileId: string) => {
+  const workingDirectory = getWorkingDirectory(profileId)
 
   const photosPath = fs.readdirSync(`${workingDirectory}/photos`)
   // fillter ignore .DS_Store
@@ -58,4 +57,9 @@ export const getRandomImagesFromRandomFolder = () => {
     })
 
   return imageFiles.map(file => `${workingDirectory}/photos/${randomFolder}/${file}`)
+}
+
+export const getSettingByProfileId = (profileId: string) => {
+  const settings = getSettings()
+  return settings.profiles.find((profile) => profile.id === profileId)
 }

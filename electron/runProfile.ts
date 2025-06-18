@@ -2,7 +2,7 @@ import puppeteer from 'puppeteer-core';
 import { writeBrowser, writeHistory, writeError, getBrowser } from "./writeLog";
 import { each, get } from "lodash";
 import { sendToRenderer } from "./main";
-import { getRandomImagesFromRandomFolder, getSettings } from "./setting";
+import { getRandomImagesFromRandomFolder, getSettings, getSettingByProfileId } from "./setting";
 import axios from "axios";
 
 const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms * 1000));
@@ -68,6 +68,10 @@ export const runProfile = async (profileId: string) => {
 
 export const sharePost = async ({ profileId, postUrl }: { profileId: string, postUrl: string }) => {
   try {
+    const setting = await getSettingByProfileId(profileId);
+    const randomFolder = setting?.media_folder_ids[Math.floor(Math.random() * setting?.media_folder_ids.length)];
+    const randomCaption = setting?.caption_ids[Math.floor(Math.random() * setting?.caption_ids.length)];
+
     const wsUrl = getBrowser(profileId);
     const browser = await puppeteer.connect({
       browserWSEndpoint: wsUrl
@@ -149,9 +153,9 @@ export const sharePost = async ({ profileId, postUrl }: { profileId: string, pos
     console.log('click comment input');
     await wait(3);
 
-    await page.keyboard.type('Hello');
-    sendToRenderer('profile-status', { profileId, message: 'Type hello' });
-    console.log('type hello');
+    await page.keyboard.type(randomCaption as string);
+    sendToRenderer('profile-status', { profileId, message: `Type ${randomCaption}` });
+    console.log(`type ${randomCaption}`);
     await wait(3);
 
     // close pages only keep last page

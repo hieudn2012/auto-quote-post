@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import { runProfile, stopProfile } from './runProfile'
 import { getAllError, getAllHistory } from './writeLog'
-import { getSettings, saveSettings } from './setting'
+import { getSettings, saveSettings, getSettingByProfileId } from './setting'
 import { Setting } from '@/types/window'
 import { init } from './init'
 import { openSelectFolder } from './openSelectFolder'
@@ -88,6 +88,10 @@ ipcMain.handle('save-settings', async (_event, settings: Setting) => {
 
 ipcMain.handle('open-select-folder', async () => {
   return openSelectFolder()
+})
+
+ipcMain.handle('get-setting-by-profile-id', async (_event, profileId: string) => {
+  return getSettingByProfileId(profileId)
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
