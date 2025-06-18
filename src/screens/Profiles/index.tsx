@@ -11,7 +11,8 @@ import { SmartSettings } from "./SmartSettings"
 import SmartSettingModal from "./SmartSettingModal"
 
 export default function Profiles() {
-  const { data, isLoading } = useGetProfiles()
+  const [page, setPage] = useState(1)
+  const { data, isLoading } = useGetProfiles({ page })
   const [selectedProfile, setSelectedProfile] = useState<string[] | null>(null)
   const { updateProfileStatus } = useProfileStore()
   const [isSettingModalOpen, setIsSettingModalOpen] = useState(false)
@@ -120,6 +121,12 @@ export default function Profiles() {
             }}
           />
         ))}
+
+        <div className="flex items-center gap-2 justify-center">
+          <Button color="primary" icon="fa-solid fa-chevron-left" onClick={() => setPage(page - 1)}>Previous</Button>
+          <div className="text-sm text-gray-500">Page {page}</div>
+          <Button color="primary" icon="fa-solid fa-chevron-right" onClick={() => setPage(page + 1)}>Next</Button>
+        </div>
       </div>
       <SettingModal isOpen={isSettingModalOpen} onClose={() => setIsSettingModalOpen(false)} profile_id={selectedProfileId ?? ""} />
       <SmartSettingModal isOpen={isSmartSettingModalOpen} onClose={() => setIsSmartSettingModalOpen(false)} profile_ids={selectedProfile ?? []} />

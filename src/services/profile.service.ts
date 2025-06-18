@@ -17,16 +17,20 @@ export interface Profile {
   notes: string
 }
 
-const getProfiles = async (): Promise<Profile[]> => {
-  const data = await request.get(GET_PROFILES)
+export interface GetProfileParams {
+  page: number
+}
+
+const getProfiles = async (params: GetProfileParams): Promise<Profile[]> => {
+  const data = await request.get(GET_PROFILES, { params })
   const sortedProfiles = sortBy(get(data, 'profiles', []), 'name').reverse()
 
   return sortedProfiles
 }
 
-export const useGetProfiles = () => {
+export const useGetProfiles = (params: GetProfileParams) => {
   return useQuery<Profile[], Error>({
-    queryKey: [GET_PROFILES],
-    queryFn: getProfiles,
+    queryKey: [GET_PROFILES, params],
+    queryFn: () => getProfiles(params),
   })
 }
