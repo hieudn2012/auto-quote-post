@@ -7,6 +7,10 @@ import { getSettings, saveSettings, getSettingByProfileId } from './setting'
 import { Setting } from '@/types/window'
 import { init } from './init'
 import { openSelectFolder } from './openSelectFolder'
+
+// Suppress macOS text input context warnings
+process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true'
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // The built directory structure

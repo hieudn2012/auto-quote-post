@@ -21,8 +21,8 @@
         "78f85c74-cc18-4b8c-ae99-b314d2706a9b"
       ],
       "media_folder_ids": [
-        "09431be4-d555-459b-a065-fd9eeb42bd1f",
-        "027d1ba2-3a6b-46a5-a3e6-a9ca76f033c2"
+        "0bd8d45e-7701-4ba8-911e-53166e654a8c",
+        "c269ff00-9ecf-4a6a-a471-7c38f3251d90"
       ]
     },
     {
@@ -32,20 +32,32 @@
         "78f85c74-cc18-4b8c-ae99-b314d2706a9b"
       ],
       "media_folder_ids": [
-        "09431be4-d555-459b-a065-fd9eeb42bd1f"
+        "0bd8d45e-7701-4ba8-911e-53166e654a8c",
+        "c269ff00-9ecf-4a6a-a471-7c38f3251d90"
+      ]
+    },
+    {
+      "id": "683ea17cf8262e47aaa3b4c7",
+      "caption_ids": [
+        "5068eba8-5e94-4dea-bcd6-4d09de624673",
+        "78f85c74-cc18-4b8c-ae99-b314d2706a9b"
+      ],
+      "media_folder_ids": [
+        "0bd8d45e-7701-4ba8-911e-53166e654a8c",
+        "c269ff00-9ecf-4a6a-a471-7c38f3251d90"
       ]
     }
   ],
   "media_folders": [
     {
-      "id": "09431be4-d555-459b-a065-fd9eeb42bd1f",
-      "name": "Media 1",
-      "path": "/Users/admin/Desktop/node/node_modules"
+      "id": "0bd8d45e-7701-4ba8-911e-53166e654a8c",
+      "name": "f1",
+      "path": "/Users/admin/Desktop/F1"
     },
     {
-      "id": "027d1ba2-3a6b-46a5-a3e6-a9ca76f033c2",
-      "name": "Media 2",
-      "path": "/Users/admin/Desktop/node/node_modules"
+      "id": "c269ff00-9ecf-4a6a-a471-7c38f3251d90",
+      "name": "f2",
+      "path": "/Users/admin/Desktop/F2"
     }
   ]
 }

@@ -1,5 +1,5 @@
 import puppeteer from 'puppeteer-core';
-import { writeBrowser, writeHistory, writeError, getBrowser } from "./writeLog";
+import { writeBrowser, getBrowser } from "./writeLog";
 import { each, get } from "lodash";
 import { sendToRenderer } from "./main";
 import { getRandomImagesFromRandomFolder, getSettings, getSettingByProfileId } from "./setting";
@@ -53,7 +53,6 @@ export const runProfile = async (profileId: string) => {
     const { data } = await startProfile(profileId);
     const wsUrl = data.wsUrl;
 
-    writeHistory({ profileId, message: 'Start run profile', dateTime: new Date().toISOString() });
     writeBrowser({ profileId, wsUrl });
 
     await sharePost({ profileId, postUrl: 'https://www.threads.com/@siukayy.16/post/DKdghD9zi_W' });
@@ -61,7 +60,6 @@ export const runProfile = async (profileId: string) => {
   } catch (error) {
     await changePort({ profileId });
     await wait(2);
-    writeError({ profileId, error: get(error, 'response.data', 'Unknown error') });
     await runProfile(profileId);
   }
 }
@@ -69,12 +67,18 @@ export const runProfile = async (profileId: string) => {
 export const sharePost = async ({ profileId, postUrl }: { profileId: string, postUrl: string }) => {
   try {
     const setting = await getSettingByProfileId(profileId);
-    const randomFolder = setting?.media_folder_ids[Math.floor(Math.random() * setting?.media_folder_ids.length)];
-    const randomCaption = setting?.caption_ids[Math.floor(Math.random() * setting?.caption_ids.length)];
+    const settings = getSettings();
+    const randomCaptionId = setting?.caption_ids[Math.floor(Math.random() * setting?.caption_ids.length)];
+    const randomCaption = settings.captions.find(caption => caption.id === randomCaptionId)?.caption || '';
 
     const wsUrl = getBrowser(profileId);
     const browser = await puppeteer.connect({
       browserWSEndpoint: wsUrl
+    });
+
+    // browser reset pages to 1
+    await browser.pages().then(pages => {
+      pages.forEach(page => page.close());
     });
 
     const page = await browser.newPage();
@@ -129,7 +133,7 @@ export const sharePost = async ({ profileId, postUrl }: { profileId: string, pos
     }
 
     console.log('input found');
-    const images = getRandomImagesFromRandomFolder();
+    const images = getRandomImagesFromRandomFolder(profileId);
     each(images, async (image) => {
       await input?.uploadFile(image);
       sendToRenderer('profile-status', { profileId, message: `Upload image ${image}` });
@@ -168,13 +172,23 @@ export const sharePost = async ({ profileId, postUrl }: { profileId: string, pos
       }
     });
 
-    // await stopProfile(profileId);
-    // await wait(2);
+    // find post div with class name = "xc26acl x6s0dn4 x78zum5 xl56j7k x6ikm8r x10wlt62 xf7dkkf xv54qhq xlyipyv xp07o12"
+    const post = await page.$('div[class*="xc26acl x6s0dn4 x78zum5 xl56j7k x6ikm8r x10wlt62 xf7dkkf xv54qhq xlyipyv xp07o12"]');
+    await wait(3);
+    if (!post) {
+      throw new Error('Post not found');
+    }
+    await post?.click();
+    sendToRenderer('profile-status', { profileId, message: 'Click post' });
+    console.log('click post');
+    await wait(10);
+    await stopProfile(profileId);
+    await wait(2);
+
     sendToRenderer('profile-status', { profileId, message: 'Done! 🎉' });
 
   } catch (error) {
     const message = get(error, 'message', 'Unknown error');
-    writeError({ profileId, error: message });
     sendToRenderer('profile-status', { profileId, message: 'Error: ' + message });
     if (message.includes('connect ECONNREFUSED')) {
       return;

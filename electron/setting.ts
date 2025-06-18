@@ -32,13 +32,16 @@ export const getFirstCaption = () => {
 export const getWorkingDirectory = (profileId: string) => {
   const setting = getSettingByProfileId(profileId)
   const settings = getSettings()
-  return settings.working_directory
+  const folderIds = setting?.media_folder_ids || []
+  const randomFolderId = folderIds[Math.floor(Math.random() * folderIds.length)]
+  const folder = settings.media_folders.find((elm) => elm.id === randomFolderId)
+  return folder?.path || ''
 }
 
 export const getRandomImagesFromRandomFolder = (profileId: string) => {
   const workingDirectory = getWorkingDirectory(profileId)
 
-  const photosPath = fs.readdirSync(`${workingDirectory}/photos`)
+  const photosPath = fs.readdirSync(`${workingDirectory}`)
   // fillter ignore .DS_Store
   const filteredPhotosPath = photosPath.filter(item => item !== '.DS_Store')
 
@@ -50,13 +53,13 @@ export const getRandomImagesFromRandomFolder = (profileId: string) => {
   const randomFolder = filteredPhotosPath[Math.floor(Math.random() * filteredPhotosPath.length)]
 
   // Get all image files from the selected folder
-  const imageFiles = fs.readdirSync(`${workingDirectory}/photos/${randomFolder}`)
+  const imageFiles = fs.readdirSync(`${workingDirectory}/${randomFolder}`)
     .filter(file => {
       const ext = path.extname(file).toLowerCase()
       return ['.png', '.jpg', '.jpeg', '.gif', '.webp'].includes(ext)
     })
 
-  return imageFiles.map(file => `${workingDirectory}/photos/${randomFolder}/${file}`)
+  return imageFiles.map(file => `${workingDirectory}/${randomFolder}/${file}`)
 }
 
 export const getSettingByProfileId = (profileId: string) => {

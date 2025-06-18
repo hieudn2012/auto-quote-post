@@ -50,7 +50,7 @@ const Item = ({ profile, selected, onSelect, onRun, onStop, onSetting }: ItemPro
         <div>
           {!isInvalid ? <i className="fa-solid fa-exclamation-triangle text-red-500" /> : <i className="fa-solid fa-check-circle text-green-500" />}
         </div>
-        <div className="flex-1" id={`profile-message-${profile.id}`}></div>
+        <div className="flex-1 text-sm" id={`profile-message-${profile.id}`}></div>
         <div className="flex gap-2">
           <Setting onClick={() => onSetting(profile)} />
           <Run id={profile.id} onClick={() => onRun(profile)} />

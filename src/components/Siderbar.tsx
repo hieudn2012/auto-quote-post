@@ -19,16 +19,16 @@ const sidebarItems = [
     path: RoutePath.Profiles,
     icon: "fas fa-user",
   },
-  {
-    label: "History",
-    path: RoutePath.History,
-    icon: "fas fa-history",
-  },
-  {
-    label: "Error",
-    path: RoutePath.Error,
-    icon: "fas fa-exclamation-triangle",
-  },
+  // {
+  //   label: "History",
+  //   path: RoutePath.History,
+  //   icon: "fas fa-history",
+  // },
+  // {
+  //   label: "Error",
+  //   path: RoutePath.Error,
+  //   icon: "fas fa-exclamation-triangle",
+  // },
   {
     label: "Settings",
     path: RoutePath.Settings,
