@@ -32,6 +32,7 @@ contextBridge.exposeInMainWorld('api', {
   getAllHistory: () => ipcRenderer.invoke('get-all-history'),
   getSettings: () => ipcRenderer.invoke('get-settings'),
   saveSettings: (settings: Setting) => ipcRenderer.invoke('save-settings', settings),
+  openSelectFolder: () => ipcRenderer.invoke('open-select-folder'),
 })
 
 contextBridge.exposeInMainWorld('sendToRenderer', (channel: string, data: any) => {

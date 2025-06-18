@@ -5,6 +5,8 @@ import path from 'path'
 export const getSettings = (): Setting => {
   const path = `settings.json`
   const settings = fs.readFileSync(path, 'utf8')
+  console.log(settings, 'settings');
+
   return JSON.parse(settings)
 }
 

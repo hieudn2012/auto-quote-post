@@ -3,20 +3,27 @@
   "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2ODNlYTBmOTkzNTk4YmY2MzEyOWQ2MDMiLCJ0eXBlIjoiZGV2Iiwiand0aWQiOiI2ODNlYTM1ZDI1OTM5YTk0YWM3ODliNzMifQ.LAhYVmCNhFNt0CdMmE2CwGOqDt4541SAHmghaMnvp8o",
   "captions": [
     {
-      "id": "cdc91e47-e905-451e-9063-e3990d0ca875",
+      "id": "5068eba8-5e94-4dea-bcd6-4d09de624673",
       "label": "",
-      "caption": "Here are 10 of the best Google Fonts for UI/UX design, based on readability, versatility, modern aesthetics, and popularity among designers:"
+      "caption": "caption 1 test"
     },
     {
-      "id": "c9a20beb-33a8-4d3c-a336-2927e45c5132",
+      "id": "78f85c74-cc18-4b8c-ae99-b314d2706a9b",
       "label": "",
-      "caption": "Designed for interfaces, highly readable at all sizes, modern and professional.\nGoogle’s default for Android, balanced and highly legible.\nRounded, clean lines, great for both web and mobile UI.\nNeutral and versatile, optimized for web and mobile readability."
-    },
-    {
-      "id": "057b9a70-546b-4bdd-8c82-4aa53632cd4a",
-      "label": "",
-      "caption": "Would you like a recommended pair (heading + body) for a specific type of app (e.g., fintech, e-commerce, health, social)?"
+      "caption": "caption 2 test"
     }
   ],
-  "profiles": []
+  "profiles": [],
+  "media_folders": [
+    {
+      "id": "09431be4-d555-459b-a065-fd9eeb42bd1f",
+      "name": "Media 1",
+      "path": "/Users/admin/Desktop/node/node_modules"
+    },
+    {
+      "id": "027d1ba2-3a6b-46a5-a3e6-a9ca76f033c2",
+      "name": "Media 2",
+      "path": "/Users/admin/Desktop/node/node_modules"
+    }
+  ]
 }

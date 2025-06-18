@@ -9,6 +9,7 @@ lerna-debug.log*
 
 node_modules
 dist
+store*
 dist-ssr
 *.local
 
@@ -26,6 +27,3 @@ dist-ssr
 dist-electron
 
 release
-
-/store
-store

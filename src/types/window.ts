@@ -8,6 +8,7 @@ export interface WindowInstance {
     getAllHistory: () => Promise<string[]>
     getSettings: () => Promise<Setting>
     saveSettings: (settings: Setting) => Promise<void>
+    openSelectFolder: () => Promise<{ filePaths: string[], canceled: boolean }>
   }
   ipcRenderer?: {
     on: (channel: string, listener: (event: IpcRendererEvent, ...args: any[]) => void) => void
@@ -26,6 +27,11 @@ export interface Setting {
   profiles: {
     id: string
     caption_ids: string[]
+  }[]
+  media_folders: {
+    id: string
+    name: string
+    path: string
   }[]
 }
 

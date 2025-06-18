@@ -5,7 +5,8 @@ import { runProfile, stopProfile } from './runProfile'
 import { getAllError, getAllHistory } from './writeLog'
 import { getSettings, saveSettings } from './setting'
 import { Setting } from '@/types/window'
-
+import { init } from './init'
+import { openSelectFolder } from './openSelectFolder'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 // The built directory structure
@@ -29,6 +30,7 @@ process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL ? path.join(process.env.APP_ROOT, 
 let win: BrowserWindow | null
 
 function createWindow() {
+  init()
   win = new BrowserWindow({
     width: 1440,
     height: 900,
@@ -84,6 +86,10 @@ ipcMain.handle('save-settings', async (_event, settings: Setting) => {
   saveSettings(settings)
 })
 
+ipcMain.handle('open-select-folder', async () => {
+  return openSelectFolder()
+})
+
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
@@ -100,6 +106,7 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow()
   }
+  init()
 })
 
 export function sendToRenderer<T>(channel: string, data: T) {
