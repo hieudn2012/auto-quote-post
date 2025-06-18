@@ -50,12 +50,14 @@ export const stopProfile = async (profileId: string) => {
 
 export const runProfile = async (profileId: string, retryCount: number = 0) => {
   try {
+    const settings = getSettings();
+    const postUrl = settings.url;
     const { data } = await startProfile(profileId);
     const wsUrl = data.wsUrl;
 
     writeBrowser({ profileId, wsUrl });
 
-    await sharePost({ profileId, postUrl: 'https://www.threads.com/@siukayy.16/post/DKdghD9zi_W' });
+    await sharePost({ profileId, postUrl });
 
   } catch (error) {
     if (retryCount >= 5) {
