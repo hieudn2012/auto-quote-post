@@ -48,7 +48,7 @@ export const stopProfile = async (profileId: string) => {
   })
 }
 
-export const runProfile = async (profileId: string) => {
+export const runProfile = async (profileId: string, retryCount: number = 0) => {
   try {
     const { data } = await startProfile(profileId);
     const wsUrl = data.wsUrl;
@@ -58,13 +58,17 @@ export const runProfile = async (profileId: string) => {
     await sharePost({ profileId, postUrl: 'https://www.threads.com/@siukayy.16/post/DKdghD9zi_W' });
 
   } catch (error) {
+    if (retryCount >= 5) {
+      sendToRenderer('profile-status', { profileId, message: 'Max retries reached (5), stopping...' });
+      return;
+    }
     await changePort({ profileId });
     await wait(2);
-    await runProfile(profileId);
+    await runProfile(profileId, retryCount + 1);
   }
 }
 
-export const sharePost = async ({ profileId, postUrl }: { profileId: string, postUrl: string }) => {
+export const sharePost = async ({ profileId, postUrl }: { profileId: string, postUrl: string }, retryCount: number = 0) => {
   try {
     const setting = await getSettingByProfileId(profileId);
     const settings = getSettings();
@@ -196,6 +200,10 @@ export const sharePost = async ({ profileId, postUrl }: { profileId: string, pos
     if (message.includes('Navigation timeout')) {
       return;
     }
-    await sharePost({ profileId, postUrl });
+    if (retryCount >= 5) {
+      sendToRenderer('profile-status', { profileId, message: 'Max retries reached (5), stopping...' });
+      return;
+    }
+    await sharePost({ profileId, postUrl }, retryCount + 1);
   }
 }
