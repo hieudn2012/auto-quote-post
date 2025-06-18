@@ -14,6 +14,7 @@ export default function Setting() {
   const { values, handleChange, handleSubmit, setValues } = useFormik<SettingType>({
     initialValues: {
       working_directory: "",
+      url: "",
       token: "",
       captions: [],
       profiles: [],
@@ -70,6 +71,13 @@ export default function Setting() {
                 onChange={handleChange}
                 label="Token"
                 placeholder="Makueaxgfnjhweyd7sjhaw"
+              />
+              <Input
+                name="url"
+                value={values.url}
+                onChange={handleChange}
+                label="URL"
+                placeholder="https://threads.net"
               />
               {/* <Input
                 name="working_directory"

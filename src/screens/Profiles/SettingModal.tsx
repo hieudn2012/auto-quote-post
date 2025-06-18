@@ -29,6 +29,7 @@ export default function SettingModal({ isOpen, onClose, profile_id }: SettingMod
 
   const [settings, setSettings] = useState<Setting>({
     working_directory: "",
+    url: "",
     token: "",
     captions: [],
     profiles: [],

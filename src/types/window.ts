@@ -25,6 +25,7 @@ export interface ProfileSetting {
 
 export interface Setting {
   working_directory: string
+  url: string
   token: string
   captions: {
     id: string
