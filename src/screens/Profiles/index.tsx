@@ -10,7 +10,7 @@ import { SmartSettings } from "./SmartSettings"
 import SmartSettingModal from "./SmartSettingModal"
 import SyncProfile from "./SyncProfile"
 import { Profile } from "@/services/profile.service"
-import { filter, map } from "lodash"
+import { filter, map, sortBy } from "lodash"
 import { Folders } from "./Folders"
 
 export default function Profiles() {
@@ -63,6 +63,17 @@ export default function Profiles() {
     }
   }, [selectedProfile, stopProfile])
 
+  const listProfiles = filter(profiles, (profile) => selectedFolder === "" ? true : profile.folders.includes(selectedFolder))
+  const sortByName = sortBy(listProfiles, 'name').reverse()
+
+  const selectAllProfiles = useCallback(() => {
+    setSelectedProfile(map(listProfiles, 'id'))
+  }, [listProfiles])
+
+  const unselectAllProfiles = useCallback(() => {
+    setSelectedProfile([])
+  }, [])
+
   useEffect(() => {
     const handler = (_event: IpcRendererEvent, data: { profileId: string; message: string }) => {
       const messageElement = document.getElementById(`profile-message-${data.profileId}`)
@@ -94,6 +105,8 @@ export default function Profiles() {
     })
   }, [])
 
+
+
   return (
     <Layout>
       <div className="flex items-center justify-between gap-2 mb-2">
@@ -110,8 +123,13 @@ export default function Profiles() {
         <Folders profiles={profiles} selectedFolder={selectedFolder} onSelect={setSelectedFolder} />
       </div>
 
+      <div className="flex gap-2 mb-2">
+        <Button icon="fa-solid fa-check" color="success" onClick={selectAllProfiles}>Select all</Button>
+        <Button icon="fa-solid fa-xmark" color="error" onClick={unselectAllProfiles}>Unselect all</Button>
+      </div>
+
       <div className="flex flex-col gap-2">
-        {map(filter(profiles, (profile) => selectedFolder === "" ? true : profile.folders.includes(selectedFolder)), (profile) => (
+        {map(sortByName, (profile) => (
           <Item
             key={profile.id}
             profile={profile} selected={selectedProfile?.includes(profile.id) ?? false}
