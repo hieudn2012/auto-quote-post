@@ -1,5 +1,8 @@
 import { Setting } from '@/types/window'
 import { ipcRenderer, contextBridge } from 'electron'
+import { InvokeChannel } from './types'
+
+const invoke = ipcRenderer.invoke as <T extends InvokeChannel>(channel: T, ...args: unknown[]) => Promise<ReturnType<typeof ipcRenderer.invoke>>
 
 // --------- Expose some API to the Renderer process ---------
 contextBridge.exposeInMainWorld('ipcRenderer', {
@@ -25,19 +28,17 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
 })
 
 contextBridge.exposeInMainWorld('api', {
-  getCurrentTime: () => ipcRenderer.invoke('get-current-time'),
-  runProfile: (profileId: string) => ipcRenderer.invoke('run-profile', profileId),
-  stopProfile: (profileId: string) => ipcRenderer.invoke('stop-profile', profileId),
-  getAllError: () => ipcRenderer.invoke('get-all-error'),
-  getAllHistory: () => ipcRenderer.invoke('get-all-history'),
-  getSettings: () => ipcRenderer.invoke('get-settings'),
-  getSettingByProfileId: (profileId: string) => ipcRenderer.invoke('get-setting-by-profile-id', profileId),
-  saveSettings: (settings: Setting) => ipcRenderer.invoke('save-settings', settings),
-  openSelectFolder: () => ipcRenderer.invoke('open-select-folder'),
-  syncProfile: () => ipcRenderer.invoke('sync-profile'),
-  getProfilesFromJson: () => ipcRenderer.invoke('get-profiles-from-json'),
+  getCurrentTime: () => invoke(InvokeChannel.GET_CURRENT_TIME),
+  runProfile: (profileId: string) => invoke(InvokeChannel.RUN_PROFILE, profileId),
+  stopProfile: (profileId: string) => invoke(InvokeChannel.STOP_PROFILE, profileId),
+  getSettings: () => invoke(InvokeChannel.GET_SETTINGS),
+  getSettingByProfileId: (profileId: string) => invoke(InvokeChannel.GET_SETTING_BY_PROFILE_ID, profileId),
+  saveSettings: (settings: Setting) => invoke(InvokeChannel.SAVE_SETTINGS, settings),
+  openSelectFolder: () => invoke(InvokeChannel.OPEN_SELECT_FOLDER),
+  syncProfile: () => invoke(InvokeChannel.SYNC_PROFILE),
+  getProfilesFromJson: () => invoke(InvokeChannel.GET_PROFILES_FROM_JSON),
 })
 
-contextBridge.exposeInMainWorld('sendToRenderer', (channel: string, data: any) => {
+contextBridge.exposeInMainWorld('sendToRenderer', (channel: string, data: unknown) => {
   ipcRenderer.send(channel, data)
 })

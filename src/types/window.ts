@@ -5,8 +5,6 @@ export interface WindowInstance {
   api: {
     runProfile: (profileId: string) => Promise<void>
     stopProfile: (profileId: string) => Promise<void>
-    getAllError: () => Promise<string[]>
-    getAllHistory: () => Promise<string[]>
     getSettings: () => Promise<Setting>
     getSettingByProfileId: (profileId: string) => Promise<ProfileSetting>
     saveSettings: (settings: Setting) => Promise<void>

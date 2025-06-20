@@ -1,16 +1,28 @@
 import { Setting } from "@/types/window"
 import fs from 'node:fs'
 import path from 'path'
+import { app } from 'electron'
+
+export const getFolderSystem = () => {
+  const appPath = app.getPath('userData')
+  return {
+    root: appPath,
+    settings: path.join(appPath, 'settings.json'),
+    profiles: path.join(appPath, 'profiles.json'),
+    store: path.join(appPath, 'store'),
+    browsers: path.join(appPath, 'store', 'browsers'),
+  }
+}
 
 export const getSettings = (): Setting => {
-  const path = `settings.json`
-  const settings = fs.readFileSync(path, 'utf8')
+  const folderSystem = getFolderSystem()
+  const settings = fs.readFileSync(folderSystem.settings, 'utf8')
   return JSON.parse(settings)
 }
 
 export const saveSettings = (settings: Setting) => {
   try {
-    const settingPath = `settings.json`
+    const folderSystem = getFolderSystem()
     // create photos folder if not exists
     const photosPath = path.join(settings.working_directory, 'photos')
 
@@ -18,7 +30,7 @@ export const saveSettings = (settings: Setting) => {
       fs.mkdirSync(photosPath, { recursive: true })
     }
 
-    fs.writeFileSync(settingPath, JSON.stringify(settings, null, 2))
+    fs.writeFileSync(folderSystem.settings, JSON.stringify(settings, null, 2))
   } catch (error) {
     console.error(error)
   }

@@ -6,30 +6,8 @@ import History from './screens/History'
 import Error from './screens/Error'
 import Setting from './screens/Setting'
 import { RoutePath } from './components/Siderbar'
-import { useEffect } from 'react'
-import { windowInstance } from './types/window'
-import useProfileStore from './store/profile.store'
-import { useGetProfiles } from './services/profile.service'
 
 function App() {
-  const { setProfiles } = useProfileStore()
-  const { data } = useGetProfiles()
-
-  useEffect(() => {
-    windowInstance.api.getSettings().then((settings) => {
-      localStorage.setItem('settings', JSON.stringify(settings))
-    })
-  }, [])
-
-  useEffect(() => {
-    const profiles = data?.map(profile => ({
-      id: profile.id,
-      name: profile.name,
-      status: "ready" as const
-    }))
-    setProfiles(profiles ?? [])
-  }, [data, setProfiles])
-
   return (
     <Router>
       <Routes>

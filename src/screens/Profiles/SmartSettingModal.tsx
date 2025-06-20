@@ -3,6 +3,7 @@ import Modal from "@/components/Modal";
 import { MultipleSelect } from "@/components/MultipleSelect";
 import { Setting, windowInstance } from "@/types/window";
 import { useFormik } from "formik";
+import { map } from "lodash";
 import { useEffect, useState } from "react";
 
 interface SettingModalProps {
@@ -58,7 +59,7 @@ export default function SettingModal({ isOpen, onClose, profile_ids }: SettingMo
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-2">
           <MultipleSelect
-            options={settings.media_folders.map((folder) => ({
+            options={map(settings.media_folders, (folder) => ({
               label: folder.name,
               value: folder.id,
             }))}
@@ -66,7 +67,7 @@ export default function SettingModal({ isOpen, onClose, profile_ids }: SettingMo
             onChange={(value) => setFieldValue("media_folder_ids", value)}
           />
           <MultipleSelect
-            options={settings.captions.map((caption) => ({
+            options={map(settings.captions, (caption) => ({
               label: shortenCaption(caption.caption),
               value: caption.id,
             }))}

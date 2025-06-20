@@ -2,12 +2,12 @@ import { app, BrowserWindow, ipcMain } from 'electron'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import { runProfile, stopProfile } from './runProfile'
-import { getAllError, getAllHistory } from './writeLog'
 import { getSettings, saveSettings, getSettingByProfileId } from './setting'
 import { Setting } from '@/types/window'
 import { init } from './init'
 import { openSelectFolder } from './openSelectFolder'
 import { getProfilesFromJson, syncProfile } from './syncProfile'
+import { InvokeChannel } from './types'
 // Suppress macOS text input context warnings
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true'
 
@@ -59,50 +59,42 @@ function createWindow() {
   }
 }
 
-
+const handle = ipcMain.handle as <T extends InvokeChannel>(channel: T, listener: (...args: any[]) => Promise<any> | any) => void
 
 // Đăng ký IPC handler
-ipcMain.handle('get-current-time', async () => {
+handle(InvokeChannel.GET_CURRENT_TIME, async () => {
   console.log('get-current-time')
 })
 
-ipcMain.handle('run-profile', async (_event, profileId: string) => {
+handle(InvokeChannel.RUN_PROFILE, async (_event, profileId: string) => {
   runProfile(profileId)
 })
 
-ipcMain.handle('stop-profile', async (_event, profileId: string) => {
+handle(InvokeChannel.STOP_PROFILE, async (_event, profileId: string) => {
   stopProfile(profileId)
 })
 
-ipcMain.handle('get-all-error', async () => {
-  return getAllError()
-})
-
-ipcMain.handle('get-all-history', async () => {
-  return getAllHistory()
-})
-
-ipcMain.handle('get-settings', async () => {
+handle(InvokeChannel.GET_SETTINGS, async () => {
   return getSettings()
 })
 
-ipcMain.handle('save-settings', async (_event, settings: Setting) => {
+handle(InvokeChannel.SAVE_SETTINGS, async (_event, settings: Setting) => {
   saveSettings(settings)
 })
 
-ipcMain.handle('open-select-folder', async () => {
+handle(InvokeChannel.OPEN_SELECT_FOLDER, async () => {
   return openSelectFolder()
 })
 
-ipcMain.handle('get-setting-by-profile-id', async (_event, profileId: string) => {
+handle(InvokeChannel.GET_SETTING_BY_PROFILE_ID, async (_event, profileId: string) => {
   return getSettingByProfileId(profileId)
 })
 
-ipcMain.handle('sync-profile', async () => {
+handle(InvokeChannel.SYNC_PROFILE, async () => {
   return syncProfile()
 })
 
-ipcMain.handle('get-profiles-from-json', async () => {
+handle(InvokeChannel.GET_PROFILES_FROM_JSON, async () => {
   return getProfilesFromJson()
 })
 

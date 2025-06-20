@@ -1,6 +1,6 @@
 import axios from "axios";
 import { get } from "lodash";
-import { getSettings } from "./setting";
+import { getFolderSystem, getSettings } from "./setting";
 import fs from "node:fs";
 
 export interface Profile {
@@ -46,7 +46,8 @@ export const syncProfile = async () => {
     const profiles = [...page1, ...page2, ...page3, ...page4, ...page5, ...page6, ...page7, ...page8, ...page9, ...page10]
 
     // save to file json
-    fs.writeFileSync('profiles.json', JSON.stringify(profiles, null, 2))
+    const folderSystem = getFolderSystem()
+    fs.writeFileSync(folderSystem.profiles, JSON.stringify(profiles, null, 2))
 
     return profiles
   } catch (error) {
@@ -56,7 +57,8 @@ export const syncProfile = async () => {
 
 export const getProfilesFromJson = async () => {
   try {
-    const data = fs.readFileSync('profiles.json', 'utf8')
+    const folderSystem = getFolderSystem()
+    const data = fs.readFileSync(folderSystem.profiles, 'utf8')
     return JSON.parse(data)
   } catch (error) {
     return []
