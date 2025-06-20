@@ -56,7 +56,7 @@ export const getRandomImagesFromRandomFolder = (profileId: string) => {
   const imageFiles = fs.readdirSync(`${workingDirectory}/${randomFolder}`)
     .filter(file => {
       const ext = path.extname(file).toLowerCase()
-      return ['.png', '.jpg', '.jpeg', '.gif', '.webp'].includes(ext)
+      return ['.png', '.jpg', '.jpeg', '.gif', '.webp', '.mp4'].includes(ext)
     })
 
   return imageFiles.map(file => `${workingDirectory}/${randomFolder}/${file}`)
