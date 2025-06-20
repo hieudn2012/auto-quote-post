@@ -22,4 +22,14 @@ export const init = () => {
   if (!fs.existsSync(profilesJson)) {
     fs.writeFileSync(profilesJson, JSON.stringify([]))
   }
+
+  const storeFolder = folderSystem.store
+  if (!fs.existsSync(storeFolder)) {
+    fs.mkdirSync(storeFolder, { recursive: true })
+  }
+
+  const browsersFolder = folderSystem.browsers
+  if (!fs.existsSync(browsersFolder)) {
+    fs.mkdirSync(browsersFolder, { recursive: true })
+  }
 }

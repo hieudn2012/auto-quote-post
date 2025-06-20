@@ -25,9 +25,7 @@ dist-ssr
 *.sw?
 
 dist-electron
-
 release
 
 settings.json
 profiles.json
-dist-electron
