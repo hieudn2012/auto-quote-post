@@ -25,6 +25,8 @@ export const getSettings = (): Setting => {
     profiles: [],
     captions: [],
     media_folders: [],
+    urls: [],
+    groups: [],
   }
   const setting = JSON.parse(settings)
   return { ...defaultSettings, ...setting }
@@ -47,7 +49,10 @@ export const getFirstCaption = () => {
 export const getWorkingDirectory = (profileId: string) => {
   const setting = getSettingByProfileId(profileId)
   const settings = getSettings()
-  const folderIds = setting?.media_folder_ids || []
+  const group_id = setting?.group_id
+  const group = settings.groups.find((elm) => elm.id === group_id)
+
+  const folderIds = group?.media_folder_ids || []
   const randomFolderId = folderIds[Math.floor(Math.random() * folderIds.length)]
   const folder = settings.media_folders.find((elm) => elm.id === randomFolderId)
   return folder?.path || ''

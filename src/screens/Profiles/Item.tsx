@@ -7,7 +7,6 @@ import Setting from "./Setting";
 import { useEffect, useState } from "react";
 import { windowInstance } from "@/types/window";
 import { ProfileSetting } from "@/types/window";
-import { size } from "lodash";
 interface ItemProps {
   profile: Profile;
   selected: boolean;
@@ -26,9 +25,7 @@ const Item = ({ profile, selected, onSelect, onRun, onStop, onSetting }: ItemPro
     })
   }, [profile.id])
 
-  const hasMediaFolder = size(setting?.media_folder_ids) > 0
-  const hasCaption = size(setting?.caption_ids) > 0
-  const isInvalid = hasMediaFolder && hasCaption
+  const isValid = !!setting?.group_id
 
   return (
     <div
@@ -48,7 +45,7 @@ const Item = ({ profile, selected, onSelect, onRun, onStop, onSetting }: ItemPro
           <ProfileStatus id={profile.id} />
         </div> */}
         <div>
-          {!isInvalid ? <i className="fa-solid fa-exclamation-triangle text-red-500" /> : <i className="fa-solid fa-check-circle text-green-500" />}
+          {isValid ? <i className="fa-solid fa-check-circle text-green-500" /> : <i className="fa-solid fa-exclamation-triangle text-red-500" />}
         </div>
         <div className="flex-1 text-sm" id={`profile-message-${profile.id}`}></div>
         <div className="flex gap-2">

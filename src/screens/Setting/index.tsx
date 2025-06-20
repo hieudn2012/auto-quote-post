@@ -10,8 +10,15 @@ import { v4 as uuidv4 } from 'uuid';
 import { Collapse } from "./Collapse";
 import { FolderInput } from "@/components/FolderInput";
 import { toast } from "react-toastify";
+import { MultipleSelect } from "@/components/MultipleSelect";
+import { useGetSettings } from "@/services/setting.service";
+
+const shortenCaption = (caption: string) => {
+  return caption.length > 30 ? caption.slice(0, 10) + "..." + caption.slice(-10) : caption
+}
 
 export default function Setting() {
+  const { captions, media_folders, urls } = useGetSettings()
   const { values, handleChange, handleSubmit, setValues } = useFormik<SettingType>({
     initialValues: {
       working_directory: "",
@@ -20,6 +27,8 @@ export default function Setting() {
       captions: [],
       profiles: [],
       media_folders: [],
+      urls: [],
+      groups: [],
     },
     onSubmit: (values) => {
       localStorage.setItem("settings", JSON.stringify(values))
@@ -61,6 +70,36 @@ export default function Setting() {
       media_folders: values.media_folders.filter((folder) => folder.id !== id),
     });
   };
+
+  const addUrl = () => {
+    setValues({
+      ...values,
+      urls: [...values.urls, { id: uuidv4(), label: "", value: "" }],
+    });
+  };
+
+  const removeUrl = (id: string) => {
+    setValues({
+      ...values,
+      urls: values.urls.filter((url) => url.id !== id),
+    });
+  };
+
+  const addGroup = () => {
+    setValues({
+      ...values,
+      groups: [...values.groups, { id: uuidv4(), caption_ids: [], media_folder_ids: [], url_ids: [], name: "" }],
+    });
+  };
+
+  const removeGroup = (id: string) => {
+    setValues({
+      ...values,
+      groups: values.groups.filter((group) => group.id !== id),
+    });
+  };
+
+
   useEffect(() => {
     windowInstance.api.getSettings().then((settings) => {
       setValues(settings)
@@ -109,6 +148,7 @@ export default function Setting() {
                     />
                   </div>
                   <Button
+                    color="error"
                     type="button"
                     size="small"
                     icon="fas fa-trash"
@@ -133,15 +173,7 @@ export default function Setting() {
               {map(values.media_folders, (folder, index) => (
                 <div key={folder.id} className="flex items-center gap-2">
                   <div className="flex-1 flex items-center gap-2">
-                    <div className="mt-4">
-                      <Button
-                        color="error"
-                        type="button"
-                        size="small"
-                        icon="fas fa-trash"
-                        onClick={() => removeMediaFolder(folder.id)}
-                      />
-                    </div>
+
                     <div className="flex-1">
                       <Input
                         name={`media_folders[${index}].name`}
@@ -151,15 +183,149 @@ export default function Setting() {
                       />
                     </div>
                   </div>
+                  <div className="flex-1 flex items-center gap-2">
+                    <div className="flex-1">
+                      <FolderInput
+                        name={`media_folders[${index}].path`}
+                        value={folder.path}
+                        label={`Path ${index + 1}`}
+                        onChange={(value) => {
+                          setValues({
+                            ...values,
+                            media_folders: values.media_folders.map((folder, i) => i === index ? { ...folder, path: value } : folder),
+                          })
+                        }}
+                      />
+                    </div>
+                    <div className="mt-5">
+                      <Button
+                        color="error"
+                        type="button"
+                        size="small"
+                        icon="fas fa-trash"
+                        onClick={() => removeMediaFolder(folder.id)}
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
+              <div className="flex justify-start">
+                <Button
+                  type="button"
+                  size="small"
+                  icon="fas fa-plus"
+                  onClick={addMediaFolder}
+                >
+                  Add
+                </Button>
+              </div>
+            </div>
+          </Collapse>
+          <Collapse title="URLs">
+            <div className="flex flex-col gap-2">
+              {map(values.urls, (url, index) => (
+                <div key={url.id} className="flex items-center gap-2">
                   <div className="flex-1">
-                    <FolderInput
-                      name={`media_folders[${index}].path`}
-                      value={folder.path}
-                      label={`Path ${index + 1}`}
+                    <Input
+                      name={`urls[${index}].label`}
+                      value={url.label}
+                      onChange={handleChange}
+                      label="Label"
+                    />
+                  </div>
+                  <div className="flex-1 flex items-center gap-2">
+                    <div className="flex-1">
+                      <Input
+                        name={`urls[${index}].value`}
+                        value={url.value}
+                        onChange={handleChange}
+                        label="Value"
+                      />
+                    </div>
+                    <div className="mt-4">
+                      <Button
+                        color="error"
+                        type="button"
+                        size="small"
+                        icon="fas fa-trash"
+                        onClick={() => removeUrl(url.id)}
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))}
+              <div className="flex justify-start">
+                <Button
+                  type="button"
+                  size="small"
+                  icon="fas fa-plus"
+                  onClick={addUrl}
+                >
+                  Add
+                </Button>
+              </div>
+            </div>
+          </Collapse>
+          <Collapse title="Groups">
+            <div className="flex flex-col gap-10">
+              {map(values.groups, (group, index) => (
+                <div key={group.id} className="w-full">
+                  <div className="flex mb-2 w-full justify-between">
+                    <p className="text-xl font-bold text-center text-gray-700">{group.name}</p>
+                    <Button
+                      color="error"
+                      type="button"
+                      size="small"
+                      icon="fas fa-trash"
+                      onClick={() => removeGroup(group.id)}
+                    />
+                  </div>
+                  <div key={group.id} className="grid grid-cols-2 items-center gap-2">
+                    <Input
+                      name={`groups[${index}].name`}
+                      value={group.name}
+                      onChange={handleChange}
+                      label="Name"
+                    />
+                    <MultipleSelect
+                      label={`URLs`}
+                      value={group.url_ids}
+                      options={urls.map((url) => ({
+                        label: url.label,
+                        value: url.id,
+                      }))}
                       onChange={(value) => {
                         setValues({
                           ...values,
-                          media_folders: values.media_folders.map((folder, i) => i === index ? { ...folder, path: value } : folder),
+                          groups: values.groups.map((group, i) => i === index ? { ...group, url_ids: value } : group),
+                        })
+                      }}
+                    />
+                    <MultipleSelect
+                      label={`Captions`}
+                      value={group.caption_ids}
+                      options={captions.map((caption) => ({
+                        label: shortenCaption(caption.caption),
+                        value: caption.id,
+                      }))}
+                      onChange={(value) => {
+                        setValues({
+                          ...values,
+                          groups: values.groups.map((group, i) => i === index ? { ...group, caption_ids: value } : group),
+                        })
+                      }}
+                    />
+                    <MultipleSelect
+                      label={`Media Folders`}
+                      value={group.media_folder_ids}
+                      options={media_folders.map((folder) => ({
+                        label: folder.name,
+                        value: folder.id,
+                      }))}
+                      onChange={(value) => {
+                        setValues({
+                          ...values,
+                          groups: values.groups.map((group, i) => i === index ? { ...group, media_folder_ids: value } : group),
                         })
                       }}
                     />
@@ -171,7 +337,7 @@ export default function Setting() {
                   type="button"
                   size="small"
                   icon="fas fa-plus"
-                  onClick={addMediaFolder}
+                  onClick={addGroup}
                 >
                   Add
                 </Button>

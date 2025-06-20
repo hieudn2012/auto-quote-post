@@ -20,8 +20,15 @@ export interface WindowInstance {
 
 export interface ProfileSetting {
   id: string
+  group_id: string
+}
+
+export interface GroupSetting {
+  id: string
+  name: string
   caption_ids: string[]
   media_folder_ids: string[]
+  url_ids: string[]
 }
 
 export interface Setting {
@@ -39,6 +46,12 @@ export interface Setting {
     name: string
     path: string
   }[]
+  urls: {
+    id: string
+    label: string
+    value: string
+  }[]
+  groups: GroupSetting[]
 }
 
 export const windowInstance = window as unknown as WindowInstance
