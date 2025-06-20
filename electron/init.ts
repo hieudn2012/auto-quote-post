@@ -32,4 +32,9 @@ export const init = () => {
   if (!fs.existsSync(browsersFolder)) {
     fs.mkdirSync(browsersFolder, { recursive: true })
   }
+
+  const historyFile = folderSystem.history
+  if (!fs.existsSync(historyFile)) {
+    fs.writeFileSync(historyFile, '')
+  }
 }

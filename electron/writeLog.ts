@@ -24,3 +24,10 @@ export const getBrowser = (profileId: string) => {
   const lines = fs.readFileSync(browserPath, 'utf8').split('\n');
   return lines[lines.length - 2];
 }
+
+export const writeHistory = ({ profileId, postUrl }: { profileId: string, postUrl: string }) => {
+  const folderSystem = getFolderSystem()
+  const historyPath = `${folderSystem.history}`;
+  const content = `${profileId} || ${postUrl}\n || ${new Date().toISOString()}\n`;
+  fs.appendFileSync(historyPath, content);
+}

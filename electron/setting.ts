@@ -12,6 +12,7 @@ export const getFolderSystem = () => {
     profiles: path.join(appPath, 'profiles.json'),
     store: path.join(appPath, 'store'),
     browsers: path.join(appPath, 'store', 'browsers'),
+    history: path.join(appPath, 'store', 'histories.txt'),
   }
 }
 
