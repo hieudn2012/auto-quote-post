@@ -1,23 +1,17 @@
-import { useEffect, useState } from "react"
-import { Setting, windowInstance } from "@/types/window"
+import useSettingStore from "@/store/setting.store"
+import { windowInstance } from "@/types/window"
+import { useEffect } from "react"
 
-export const useGetSettings = () => {
-  const [settings, setSettings] = useState<Setting>({
-    working_directory: '',
-    url: '',
-    token: '',
-    captions: [],
-    profiles: [],
-    media_folders: [],
-    urls: [],
-    groups: [],
-  })
-  
+export const useSetting = () => {
+  const { settings, setSettings } = useSettingStore()
+
   useEffect(() => {
+    console.log('call useEffect');
+    
     windowInstance.api.getSettings().then((data) => {
       setSettings(data)
     })
-  }, [])
+  }, [setSettings])
 
-  return settings
+  return { settings, setSettings }
 }

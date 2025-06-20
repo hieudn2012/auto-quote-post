@@ -2,7 +2,7 @@ import puppeteer from 'puppeteer-core';
 import { writeBrowser, getBrowser } from "./writeLog";
 import { each, get } from "lodash";
 import { sendToRenderer } from "./main";
-import { getRandomImagesFromRandomFolder, getSettings, getSettingByProfileId } from "./setting";
+import { getSettings, getSettingByProfileId } from "./setting";
 import axios from "axios";
 
 const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms * 1000));
@@ -50,8 +50,8 @@ export const stopProfile = async (profileId: string) => {
 
 export const runProfile = async (profileId: string, retryCount: number = 0) => {
   try {
-    const settings = getSettings();
-    const postUrl = settings.url;
+    const setting = getSettingByProfileId(profileId);
+    const postUrl = setting.url?.value || '';
     const { data } = await startProfile(profileId);
     const wsUrl = data.wsUrl;
 
@@ -60,6 +60,8 @@ export const runProfile = async (profileId: string, retryCount: number = 0) => {
     await sharePost({ profileId, postUrl });
 
   } catch (error) {
+    console.log(error);
+
     if (retryCount >= 5) {
       sendToRenderer('profile-status', { profileId, message: 'Max retries reached (5), stopping...' });
       return;
@@ -74,7 +76,8 @@ export const sharePost = async ({ profileId, postUrl }: { profileId: string, pos
   try {
     const setting = getSettingByProfileId(profileId);
     const settings = getSettings();
-    const randomCaptionId = setting?.caption_ids[Math.floor(Math.random() * setting?.caption_ids.length)];
+
+    const randomCaptionId = setting?.caption_ids?.[Math.floor(Math.random() * setting?.caption_ids.length)];
     const randomCaption = settings.captions.find(caption => caption.id === randomCaptionId)?.caption || '';
 
     const wsUrl = getBrowser(profileId);
@@ -139,7 +142,7 @@ export const sharePost = async ({ profileId, postUrl }: { profileId: string, pos
     }
 
     console.log('input found');
-    const images = getRandomImagesFromRandomFolder(profileId);
+    const images = setting.files;
     each(images, async (image) => {
       await input?.uploadFile(image);
       sendToRenderer('profile-status', { profileId, message: `Upload image ${image}` });
@@ -194,6 +197,8 @@ export const sharePost = async ({ profileId, postUrl }: { profileId: string, pos
     sendToRenderer('profile-status', { profileId, message: 'Done! 🎉' });
 
   } catch (error) {
+    console.log(error);
+    
     const message = get(error, 'message', 'Unknown error');
     sendToRenderer('profile-status', { profileId, message: 'Error: ' + message });
     if (message.includes('connect ECONNREFUSED')) {

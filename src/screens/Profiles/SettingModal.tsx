@@ -1,13 +1,12 @@
 import Button from "@/components/Button";
 import Modal from "@/components/Modal";
 import { Select } from "@/components/Select";
-import { useGetSettings } from "@/services/setting.service";
 import { windowInstance } from "@/types/window";
 import { useFormik } from "formik";
 import { map } from "lodash";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-
+import { useSetting } from "@/services/setting.service";
 interface SettingModalProps {
   isOpen: boolean
   onClose: () => void
@@ -25,7 +24,7 @@ export default function SettingModal({ isOpen, onClose, profile_id }: SettingMod
     }
   })
 
-  const { groups, profiles } = useGetSettings()
+  const { settings, setSettings } = useSetting()
 
   const handleSave = async (values: { group_id: string }) => {
     const settings = await windowInstance.api.getSettings()
@@ -37,10 +36,12 @@ export default function SettingModal({ isOpen, onClose, profile_id }: SettingMod
         group_id: values.group_id,
       }
       const newProfiles = [...settings.profiles, newProfile]
-      windowInstance.api.saveSettings({
+      const result = {
         ...settings,
         profiles: newProfiles,
-      })
+      }
+      setSettings(result)
+      windowInstance.api.saveSettings(result)
       toast.success("Profile settings created")
       return
     }
@@ -49,10 +50,12 @@ export default function SettingModal({ isOpen, onClose, profile_id }: SettingMod
       ...profile,
       group_id: profile.id === profile_id ? values.group_id : profile.group_id,
     }))
-    windowInstance.api.saveSettings({
+    const result = {
       ...settings,
       profiles: newProfiles,
-    })
+    }
+    setSettings(result)
+    windowInstance.api.saveSettings(result)
     toast.success("Profile settings saved")
   }
 
@@ -65,14 +68,14 @@ export default function SettingModal({ isOpen, onClose, profile_id }: SettingMod
         }
       })
     }
-  }, [isOpen, profile_id, setFieldValue, profiles])
+  }, [isOpen, profile_id, setFieldValue, settings])
 
   return (
     <Modal title="Smart Setting" isOpen={isOpen} onClose={onClose}>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-2">
           <Select
-            options={map(groups, (group) => ({
+            options={map(settings.groups, (group) => ({
               label: group.name,
               value: group.id,
             }))}

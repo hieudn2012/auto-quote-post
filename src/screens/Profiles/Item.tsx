@@ -4,9 +4,8 @@ import { Profile } from "@/services/profile.service"
 import Stop from "./Stop";
 import Run from "./Run";
 import Setting from "./Setting";
-import { useEffect, useState } from "react";
-import { windowInstance } from "@/types/window";
-import { ProfileSetting } from "@/types/window";
+import { Setting as SettingType } from "@/types/window";
+import { find } from "lodash";
 interface ItemProps {
   profile: Profile;
   selected: boolean;
@@ -14,18 +13,12 @@ interface ItemProps {
   onRun: (profile: Profile) => void;
   onStop: (profile: Profile) => void;
   onSetting: (profile: Profile) => void;
+  settings: SettingType;
 }
 
-const Item = ({ profile, selected, onSelect, onRun, onStop, onSetting }: ItemProps) => {
-  const [setting, setSetting] = useState<ProfileSetting | null>(null)
-
-  useEffect(() => {
-    windowInstance.api.getSettingByProfileId(profile.id).then((setting) => {
-      setSetting(setting)
-    })
-  }, [profile.id])
-
-  const isValid = !!setting?.group_id
+const Item = ({ profile, selected, onSelect, onRun, onStop, onSetting, settings }: ItemProps) => {
+  const profileSetting = find(settings.profiles, { id: profile.id })
+  const isValid = !!profileSetting?.group_id
 
   return (
     <div

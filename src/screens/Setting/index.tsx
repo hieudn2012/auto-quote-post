@@ -11,14 +11,14 @@ import { Collapse } from "./Collapse";
 import { FolderInput } from "@/components/FolderInput";
 import { toast } from "react-toastify";
 import { MultipleSelect } from "@/components/MultipleSelect";
-import { useGetSettings } from "@/services/setting.service";
+import { useSetting } from "@/services/setting.service";
 
 const shortenCaption = (caption: string) => {
   return caption.length > 30 ? caption.slice(0, 10) + "..." + caption.slice(-10) : caption
 }
 
 export default function Setting() {
-  const { captions, media_folders, urls } = useGetSettings()
+  const { settings, setSettings } = useSetting()
   const { values, handleChange, handleSubmit, setValues } = useFormik<SettingType>({
     initialValues: {
       working_directory: "",
@@ -31,7 +31,7 @@ export default function Setting() {
       groups: [],
     },
     onSubmit: (values) => {
-      localStorage.setItem("settings", JSON.stringify(values))
+      setSettings(values)
       windowInstance.api.saveSettings(values)
       toast.success("Settings saved")
     },
@@ -290,7 +290,7 @@ export default function Setting() {
                     <MultipleSelect
                       label={`URLs`}
                       value={group.url_ids}
-                      options={urls.map((url) => ({
+                      options={settings.urls.map((url) => ({
                         label: url.label,
                         value: url.id,
                       }))}
@@ -304,7 +304,7 @@ export default function Setting() {
                     <MultipleSelect
                       label={`Captions`}
                       value={group.caption_ids}
-                      options={captions.map((caption) => ({
+                      options={settings.captions.map((caption) => ({
                         label: shortenCaption(caption.caption),
                         value: caption.id,
                       }))}
@@ -318,7 +318,7 @@ export default function Setting() {
                     <MultipleSelect
                       label={`Media Folders`}
                       value={group.media_folder_ids}
-                      options={media_folders.map((folder) => ({
+                      options={settings.media_folders.map((folder) => ({
                         label: folder.name,
                         value: folder.id,
                       }))}

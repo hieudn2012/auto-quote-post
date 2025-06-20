@@ -12,7 +12,7 @@ export const Layout = ({ children }: LayoutProps) => {
           <Siderbar />
         </div>
         <div className="flex-1 bg-white rounded-lg">
-          <div className="p-6 overflow-auto h-full">
+          <div className="p-6 overflow-auto h-full fade-in">
             {children}
           </div>
         </div>

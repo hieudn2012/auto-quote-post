@@ -12,8 +12,9 @@ import SyncProfile from "./SyncProfile"
 import { Profile } from "@/services/profile.service"
 import { filter, map, sortBy } from "lodash"
 import { Folders } from "./Folders"
-
+import { useSetting } from "@/services/setting.service"
 export default function Profiles() {
+  const { settings } = useSetting()
   const [selectedFolder, setSelectedFolder] = useState<string>("")
   const [profiles, setProfiles] = useState<Profile[]>([])
   const [selectedProfile, setSelectedProfile] = useState<string[] | null>(null)
@@ -140,6 +141,7 @@ export default function Profiles() {
               setSelectedProfileId(profile.id)
               setIsSettingModalOpen(true)
             }}
+            settings={settings}
           />
         ))}
       </div>

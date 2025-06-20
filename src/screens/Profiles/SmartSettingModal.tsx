@@ -1,11 +1,10 @@
 import Button from "@/components/Button";
 import Modal from "@/components/Modal";
 import { Select } from "@/components/Select";
-import { useGetSettings } from "@/services/setting.service";
 import { windowInstance } from "@/types/window";
 import { useFormik } from "formik";
 import { map } from "lodash";
-
+import { useSetting } from "@/services/setting.service";
 interface SettingModalProps {
   isOpen: boolean
   onClose: () => void
@@ -23,17 +22,19 @@ export default function SettingModal({ isOpen, onClose, profile_ids }: SettingMo
     }
   })
 
-  const { groups } = useGetSettings()
+  const { settings, setSettings } = useSetting()
 
   const handleSave = async (values: { group_id: string }) => {
     const settings = await windowInstance.api.getSettings()
     const newProfiles = profile_ids.map((id) => ({ id, group_id: values.group_id }))
     const oldProfiles = settings.profiles.filter((profile) => !profile_ids.includes(profile.id))
 
-    windowInstance.api.saveSettings({
+    const result = {
       ...settings,
       profiles: [...oldProfiles, ...newProfiles],
-    })
+    }
+    setSettings(result)
+    windowInstance.api.saveSettings(result)
   }
 
   return (
@@ -41,7 +42,7 @@ export default function SettingModal({ isOpen, onClose, profile_ids }: SettingMo
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-2">
           <Select
-            options={map(groups, (group) => ({
+            options={map(settings.groups, (group) => ({
               label: group.name,
               value: group.id,
             }))}

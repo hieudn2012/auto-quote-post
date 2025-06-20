@@ -46,43 +46,46 @@ export const getFirstCaption = () => {
   return settings.captions[0]
 }
 
-export const getWorkingDirectory = (profileId: string) => {
-  const setting = getSettingByProfileId(profileId)
-  const settings = getSettings()
-  const group_id = setting?.group_id
-  const group = settings.groups.find((elm) => elm.id === group_id)
-
-  const folderIds = group?.media_folder_ids || []
-  const randomFolderId = folderIds[Math.floor(Math.random() * folderIds.length)]
-  const folder = settings.media_folders.find((elm) => elm.id === randomFolderId)
-  return folder?.path || ''
-}
-
-export const getRandomImagesFromRandomFolder = (profileId: string) => {
-  const workingDirectory = getWorkingDirectory(profileId)
-
-  const photosPath = fs.readdirSync(`${workingDirectory}`)
-  // fillter ignore .DS_Store
-  const filteredPhotosPath = photosPath.filter(item => item !== '.DS_Store')
-
-  if (filteredPhotosPath.length === 0) {
-    return []
-  }
-
-  // Randomly select a folder
-  const randomFolder = filteredPhotosPath[Math.floor(Math.random() * filteredPhotosPath.length)]
-
-  // Get all image files from the selected folder
-  const imageFiles = fs.readdirSync(`${workingDirectory}/${randomFolder}`)
-    .filter(file => {
-      const ext = path.extname(file).toLowerCase()
-      return ['.png', '.jpg', '.jpeg', '.gif', '.webp', '.mp4'].includes(ext)
-    })
-
-  return imageFiles.map(file => `${workingDirectory}/${randomFolder}/${file}`)
-}
-
 export const getSettingByProfileId = (profileId: string) => {
   const settings = getSettings()
-  return find(settings.profiles, (profile) => profile.id === profileId)
+  const group_id = find(settings.profiles, (profile) => profile.id === profileId)?.group_id
+  const group = find(settings.groups, (group) => group.id === group_id)
+
+  const url_ids = group?.url_ids
+  const caption_ids = group?.caption_ids
+  const media_folder_ids = group?.media_folder_ids
+
+  const randomUrlId = url_ids?.[Math.floor(Math.random() * url_ids.length)]
+  const randomCaptionId = caption_ids?.[Math.floor(Math.random() * caption_ids.length)]
+  const randomMediaFolderId = media_folder_ids?.[Math.floor(Math.random() * media_folder_ids.length)]
+
+  const url = find(settings.urls, (url) => url.id === randomUrlId)
+  const caption = find(settings.captions, (caption) => caption.id === randomCaptionId)
+  const media_folder = find(settings.media_folders, (media_folder) => media_folder.id === randomMediaFolderId)
+
+  // in media_folder have many folder, each folder have many images or videos
+  const media_folder_path = media_folder?.path || ''
+  
+  // Get all folders in media_folder_path
+  const folders = fs.readdirSync(media_folder_path, { withFileTypes: true })
+    .filter(dirent => dirent.isDirectory())
+    .map(dirent => dirent.name)
+  
+  // Randomly select one folder
+  const randomFolder = folders[Math.floor(Math.random() * folders.length)]
+  const selectedFolderPath = path.join(media_folder_path, randomFolder)
+  
+  // Get all files from selected folder
+  const folderFiles = fs.readdirSync(selectedFolderPath)
+    .filter(file => ['.png', '.jpg', '.jpeg', '.gif', '.webp', '.mp4'].includes(path.extname(file)))
+    .slice(0, 5) // Max 5 files
+    .map(file => path.join(selectedFolderPath, file))
+  
+  return {
+    ...group,
+    url,
+    caption,
+    media_folder,
+    files: folderFiles
+  }
 }
