@@ -2,6 +2,7 @@ import { Setting } from "@/types/window"
 import fs from 'node:fs'
 import path from 'path'
 import { app } from 'electron'
+import { find } from "lodash"
 
 export const getFolderSystem = () => {
   const appPath = app.getPath('userData')
@@ -17,19 +18,21 @@ export const getFolderSystem = () => {
 export const getSettings = (): Setting => {
   const folderSystem = getFolderSystem()
   const settings = fs.readFileSync(folderSystem.settings, 'utf8')
-  return JSON.parse(settings)
+  const defaultSettings: Setting = {
+    working_directory: '',
+    token: '',
+    url: '',
+    profiles: [],
+    captions: [],
+    media_folders: [],
+  }
+  const setting = JSON.parse(settings)
+  return { ...defaultSettings, ...setting }
 }
 
 export const saveSettings = (settings: Setting) => {
   try {
     const folderSystem = getFolderSystem()
-    // create photos folder if not exists
-    const photosPath = path.join(settings.working_directory, 'photos')
-
-    if (!fs.existsSync(photosPath)) {
-      fs.mkdirSync(photosPath, { recursive: true })
-    }
-
     fs.writeFileSync(folderSystem.settings, JSON.stringify(settings, null, 2))
   } catch (error) {
     console.error(error)
@@ -76,5 +79,5 @@ export const getRandomImagesFromRandomFolder = (profileId: string) => {
 
 export const getSettingByProfileId = (profileId: string) => {
   const settings = getSettings()
-  return settings.profiles.find((profile) => profile.id === profileId)
+  return find(settings.profiles, (profile) => profile.id === profileId)
 }

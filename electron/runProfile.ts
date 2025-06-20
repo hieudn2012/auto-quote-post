@@ -72,7 +72,7 @@ export const runProfile = async (profileId: string, retryCount: number = 0) => {
 
 export const sharePost = async ({ profileId, postUrl }: { profileId: string, postUrl: string }, retryCount: number = 0) => {
   try {
-    const setting = await getSettingByProfileId(profileId);
+    const setting = getSettingByProfileId(profileId);
     const settings = getSettings();
     const randomCaptionId = setting?.caption_ids[Math.floor(Math.random() * setting?.caption_ids.length)];
     const randomCaption = settings.captions.find(caption => caption.id === randomCaptionId)?.caption || '';
