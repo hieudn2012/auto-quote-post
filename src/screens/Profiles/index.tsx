@@ -12,6 +12,7 @@ import SyncProfile from "./SyncProfile"
 import { filter, map, sortBy } from "lodash"
 import { Folders } from "./Folders"
 import useSettingStore from "@/store/setting.store"
+import { Column, CustomShowColumn } from "./CustomShowColumn"
 
 export default function Profiles() {
   const { settings } = useSettingStore()
@@ -21,6 +22,7 @@ export default function Profiles() {
   const [isSettingModalOpen, setIsSettingModalOpen] = useState(false)
   const [isSmartSettingModalOpen, setIsSmartSettingModalOpen] = useState(false)
   const [selectedProfileId, setSelectedProfileId] = useState<string | null>(null)
+  const [checkedColumns, setCheckedColumns] = useState<Column[]>([Column.NAME, Column.NOTES, Column.PROXY, Column.GROUP, Column.LAST_POST])
 
   // Memoize các hàm callback để tránh tạo function mới mỗi lần render
   const runProfile = useCallback(async (profileId: string) => {
@@ -110,6 +112,9 @@ export default function Profiles() {
       <div className="mb-2">
         <Folders profiles={profiles} selectedFolder={selectedFolder} onSelect={setSelectedFolder} />
       </div>
+      <div className="mb-2 flex justify-end">
+        <CustomShowColumn checkedColumns={checkedColumns} onApply={setCheckedColumns} />
+      </div>
 
       <div className="flex gap-2 mb-2">
         <Button icon="fa-solid fa-check" color="success" onClick={selectAllProfiles}>Select all</Button>
@@ -129,6 +134,7 @@ export default function Profiles() {
               setIsSettingModalOpen(true)
             }}
             settings={settings}
+            checkedColumns={checkedColumns}
           />
         ))}
       </div>

@@ -28,6 +28,6 @@ export const getBrowser = (profileId: string) => {
 export const writeHistory = ({ profileId, postUrl }: { profileId: string, postUrl: string }) => {
   const folderSystem = getFolderSystem()
   const historyPath = `${folderSystem.history}`;
-  const content = `${profileId} || ${postUrl}\n || ${new Date().toISOString()}\n`;
+  const content = `${profileId} || ${postUrl} || ${new Date().toISOString()}\n`;
   fs.appendFileSync(historyPath, content);
 }

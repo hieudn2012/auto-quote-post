@@ -1,16 +1,11 @@
 import Button from "@/components/Button"
-import useProfileStore from "@/store/profile.store" 
-import { find } from "lodash"
 
 interface RunProps {
-  id: string
   onClick: () => void
+  id: string
 }
 
-export default function Run({ id, onClick }: RunProps) {
-  const { profiles } = useProfileStore()
-  const profile = find(profiles, { id })
-
+export default function Run({ onClick }: RunProps) {
   return (
     <Button
       color="success"
@@ -19,7 +14,6 @@ export default function Run({ id, onClick }: RunProps) {
         e.stopPropagation()
         onClick()
       }}
-      disabled={profile?.status === "running" || profile?.status === "wating-to-stop"}
     />
   )
 }
