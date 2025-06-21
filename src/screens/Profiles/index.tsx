@@ -9,16 +9,15 @@ import SettingModal from "./SettingModal"
 import { SmartSettings } from "./SmartSettings"
 import SmartSettingModal from "./SmartSettingModal"
 import SyncProfile from "./SyncProfile"
-import { Profile } from "@/services/profile.service"
 import { filter, map, sortBy } from "lodash"
 import { Folders } from "./Folders"
-import { useSetting } from "@/services/setting.service"
+import useSettingStore from "@/store/setting.store"
+
 export default function Profiles() {
-  const { settings } = useSetting()
+  const { settings } = useSettingStore()
+  const { profiles } = useProfileStore()
   const [selectedFolder, setSelectedFolder] = useState<string>("")
-  const [profiles, setProfiles] = useState<Profile[]>([])
   const [selectedProfile, setSelectedProfile] = useState<string[] | null>(null)
-  const { updateProfileStatus } = useProfileStore()
   const [isSettingModalOpen, setIsSettingModalOpen] = useState(false)
   const [isSmartSettingModalOpen, setIsSmartSettingModalOpen] = useState(false)
   const [selectedProfileId, setSelectedProfileId] = useState<string | null>(null)
@@ -26,15 +25,11 @@ export default function Profiles() {
   // Memoize các hàm callback để tránh tạo function mới mỗi lần render
   const runProfile = useCallback(async (profileId: string) => {
     await windowInstance.api.runProfile(profileId)
-    updateProfileStatus(profileId, "running")
-  }, [updateProfileStatus])
+  }, [])
 
   const stopProfile = useCallback(async (profileId: string) => {
     await windowInstance.api.stopProfile(profileId)
-    updateProfileStatus(profileId, "wating-to-stop")
-    await new Promise(resolve => setTimeout(resolve, 10000))
-    updateProfileStatus(profileId, "stopped")
-  }, [updateProfileStatus])
+  }, [])
 
   const selectProfile = useCallback((profileId: string) => {
     if (!selectedProfile) {
@@ -82,7 +77,6 @@ export default function Profiles() {
         messageElement.innerHTML = data.message
       }
       if (data.message.includes('Done! 🎉')) {
-        updateProfileStatus(data.profileId, "done")
         if (messageElement) {
           messageElement.style.fontWeight = 'bold'
           messageElement.style.color = 'green'
@@ -98,14 +92,7 @@ export default function Profiles() {
     return () => {
       windowInstance?.ipcRenderer?.off('profile-status', handler)
     }
-  }, [updateProfileStatus])
-
-  useEffect(() => {
-    windowInstance.api.getProfilesFromJson().then((profiles) => {
-      setProfiles(profiles)
-    })
   }, [])
-
 
 
   return (

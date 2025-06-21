@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import request from "@/utils/request"
-import { get, sortBy } from "lodash"
+import { find, get, sortBy } from "lodash"
+import useProfileStore from "@/store/profile.store"
 
 const GET_PROFILES = `/browser/v2`
 
@@ -34,4 +35,9 @@ export const useGetProfiles = (params: GetProfileParams) => {
     queryKey: [GET_PROFILES, params],
     queryFn: () => getProfiles(params),
   })
+}
+
+export const useGetProfileById = (id: string) => {
+  const { profiles } = useProfileStore()
+  return find(profiles, (profile) => profile.id === id)
 }

@@ -4,7 +4,7 @@ import { Select } from "@/components/Select";
 import { windowInstance } from "@/types/window";
 import { useFormik } from "formik";
 import { map } from "lodash";
-import { useSetting } from "@/services/setting.service";
+import useSettingStore from "@/store/setting.store";
 interface SettingModalProps {
   isOpen: boolean
   onClose: () => void
@@ -22,7 +22,7 @@ export default function SettingModal({ isOpen, onClose, profile_ids }: SettingMo
     }
   })
 
-  const { settings, setSettings } = useSetting()
+  const { settings, setSettings } = useSettingStore()
 
   const handleSave = async (values: { group_id: string }) => {
     const settings = await windowInstance.api.getSettings()

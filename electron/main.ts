@@ -8,6 +8,7 @@ import { init } from './init'
 import { openSelectFolder } from './openSelectFolder'
 import { getProfilesFromJson, syncProfile } from './syncProfile'
 import { InvokeChannel } from './types'
+import { getHistory } from './history'
 // Suppress macOS text input context warnings
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true'
 
@@ -96,6 +97,10 @@ handle(InvokeChannel.SYNC_PROFILE, async () => {
 
 handle(InvokeChannel.GET_PROFILES_FROM_JSON, async () => {
   return getProfilesFromJson()
+})
+
+handle(InvokeChannel.GET_HISTORY, async () => {
+  return getHistory()
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common

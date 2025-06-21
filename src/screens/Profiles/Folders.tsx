@@ -11,12 +11,14 @@ export const Folders = ({ profiles, selectedFolder, onSelect }: FoldersProps) =>
   const listFolders = uniq(map(profiles, 'folders').flat())
 
   return (
-    <div className="flex gap-2">
-      <div className={twMerge("px-4 py-1 border border-gray-200 rounded-md cursor-pointer hover:bg-gray-300", selectedFolder === "" && "bg-gray-500")} onClick={() => onSelect("")}>
+    <div className="flex gap-2 flex-wrap">
+      <div className={twMerge("flex items-center gap-2 px-4 py-1 border border-gray-200 rounded-md cursor-pointer hover:border-primary", selectedFolder === "" && "border-primary")} onClick={() => onSelect("")}>
+        {selectedFolder === "" && <i className="fa-solid fa-check-circle text-green-500" />}
         All
       </div>
       {map(listFolders, (folder, index) => (
-        <div key={index} className={twMerge("px-4 py-1 border border-gray-200 rounded-md cursor-pointer hover:bg-gray-300", selectedFolder === folder && "bg-gray-500")} onClick={() => onSelect(folder)}>
+        <div key={index} className={twMerge("flex items-center gap-2 px-4 py-1 border border-gray-200 rounded-md cursor-pointer hover:border-primary", selectedFolder === folder && "border-primary")} onClick={() => onSelect(folder)}>
+          {selectedFolder === folder && <i className="fa-solid fa-check-circle text-green-500" />}
           {folder}
         </div>
       ))}

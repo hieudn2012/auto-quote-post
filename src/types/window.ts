@@ -11,6 +11,7 @@ export interface WindowInstance {
     openSelectFolder: () => Promise<{ filePaths: string[], canceled: boolean }>
     syncProfile: () => Promise<Profile[]>
     getProfilesFromJson: () => Promise<Profile[]>
+    getHistory: () => Promise<History[]>
   }
   ipcRenderer?: {
     on: (channel: string, listener: (event: IpcRendererEvent, ...args: any[]) => void) => void
@@ -52,6 +53,12 @@ export interface Setting {
     value: string
   }[]
   groups: GroupSetting[]
+}
+
+export interface History {
+  profile_id: string
+  post_url: string
+  created_at: string
 }
 
 export const windowInstance = window as unknown as WindowInstance

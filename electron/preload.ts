@@ -37,6 +37,7 @@ contextBridge.exposeInMainWorld('api', {
   openSelectFolder: () => invoke(InvokeChannel.OPEN_SELECT_FOLDER),
   syncProfile: () => invoke(InvokeChannel.SYNC_PROFILE),
   getProfilesFromJson: () => invoke(InvokeChannel.GET_PROFILES_FROM_JSON),
+  getHistory: () => invoke(InvokeChannel.GET_HISTORY),
 })
 
 contextBridge.exposeInMainWorld('sendToRenderer', (channel: string, data: unknown) => {

@@ -18,6 +18,7 @@ interface ItemProps {
 
 const Item = ({ profile, selected, onSelect, onRun, onStop, onSetting, settings }: ItemProps) => {
   const profileSetting = find(settings.profiles, { id: profile.id })
+  const groupSetting = find(settings.groups, { id: profileSetting?.group_id })
   const isValid = !!profileSetting?.group_id
 
   return (
@@ -34,9 +35,9 @@ const Item = ({ profile, selected, onSelect, onRun, onStop, onSetting, settings 
           <div dangerouslySetInnerHTML={{ __html: profile.notes }} />
         </div>
         <div className="text-sm font-medium w-[50px]">{profile.proxy.port}</div>
-        {/* <div className="text-sm font-medium w-[100px]">
-          <ProfileStatus id={profile.id} />
-        </div> */}
+        <div className="text-sm font-medium w-[100px]">
+          {groupSetting?.name || '-'}
+        </div>
         <div>
           {isValid ? <i className="fa-solid fa-check-circle text-green-500" /> : <i className="fa-solid fa-exclamation-triangle text-red-500" />}
         </div>

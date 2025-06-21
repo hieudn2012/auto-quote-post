@@ -11,14 +11,14 @@ import { Collapse } from "./Collapse";
 import { FolderInput } from "@/components/FolderInput";
 import { toast } from "react-toastify";
 import { MultipleSelect } from "@/components/MultipleSelect";
-import { useSetting } from "@/services/setting.service";
+import useSettingStore from "@/store/setting.store";
 
 const shortenCaption = (caption: string) => {
   return caption.length > 30 ? caption.slice(0, 10) + "..." + caption.slice(-10) : caption
 }
 
 export default function Setting() {
-  const { settings, setSettings } = useSetting()
+  const { settings, setSettings } = useSettingStore()
   const { values, handleChange, handleSubmit, setValues } = useFormik<SettingType>({
     initialValues: {
       working_directory: "",
