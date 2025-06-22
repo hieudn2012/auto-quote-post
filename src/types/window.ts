@@ -30,6 +30,16 @@ export interface GroupSetting {
   caption_ids: string[]
   media_folder_ids: string[]
   url_ids: string[]
+  proxy_id: string
+}
+
+export interface Proxy {
+  id: string
+  name: string
+  host: string
+  port: number
+  username: string
+  password: string
 }
 
 export interface Setting {
@@ -53,6 +63,7 @@ export interface Setting {
     value: string
   }[]
   groups: GroupSetting[]
+  proxies: Proxy[]
 }
 
 export interface History {

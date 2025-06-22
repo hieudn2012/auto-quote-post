@@ -12,6 +12,7 @@ import { FolderInput } from "@/components/FolderInput";
 import { toast } from "react-toastify";
 import { MultipleSelect } from "@/components/MultipleSelect";
 import useSettingStore from "@/store/setting.store";
+import { Select } from "@/components/Select";
 
 const shortenCaption = (caption: string) => {
   return caption.length > 30 ? caption.slice(0, 10) + "..." + caption.slice(-10) : caption
@@ -29,6 +30,7 @@ export default function Setting() {
       media_folders: [],
       urls: [],
       groups: [],
+      proxies: [],
     },
     onSubmit: (values) => {
       setSettings(values)
@@ -88,7 +90,7 @@ export default function Setting() {
   const addGroup = () => {
     setValues({
       ...values,
-      groups: [...values.groups, { id: uuidv4(), caption_ids: [], media_folder_ids: [], url_ids: [], name: "" }],
+      groups: [...values.groups, { id: uuidv4(), caption_ids: [], media_folder_ids: [], url_ids: [], name: "", proxy_id: "" }],
     });
   };
 
@@ -96,6 +98,20 @@ export default function Setting() {
     setValues({
       ...values,
       groups: values.groups.filter((group) => group.id !== id),
+    });
+  };
+
+  const addProxy = () => {
+    setValues({
+      ...values,
+      proxies: [...values.proxies, { id: uuidv4(), name: "", host: "", port: 0, username: "", password: "" }],
+    });
+  };
+
+  const removeProxy = (id: string) => {
+    setValues({
+      ...values,
+      proxies: values.proxies.filter((proxy) => proxy.id !== id),
     });
   };
 
@@ -119,20 +135,6 @@ export default function Setting() {
                 label="Token"
                 placeholder="Makueaxgfnjhweyd7sjhaw"
               />
-              <Input
-                name="url"
-                value={values.url}
-                onChange={handleChange}
-                label="URL"
-                placeholder="https://threads.net"
-              />
-              {/* <Input
-                name="working_directory"
-                value={values.working_directory}
-                onChange={handleChange}
-                label="Working Directory"
-                placeholder="/Users/admin/Desktop/Threads"
-              /> */}
             </div>
           </Collapse>
           <Collapse title="Captions">
@@ -266,6 +268,44 @@ export default function Setting() {
               </div>
             </div>
           </Collapse>
+          <Collapse title="Proxies">
+            <div className="flex flex-col gap-2">
+              {map(values.proxies, (proxy, index) => (
+                <div key={proxy.id} className="grid grid-cols-5 gap-2">
+                  <Input name={`proxies[${index}].name`} value={proxy.name} onChange={handleChange} label="Name" />
+                  <Input name={`proxies[${index}].host`} placeholder="127.0.0.1" value={proxy.host} onChange={handleChange} label="Host" />
+                  <Input name={`proxies[${index}].port`} placeholder="30001" value={proxy.port} onChange={handleChange} label="Port" />
+                  <Input name={`proxies[${index}].username`} placeholder="Username" value={proxy.username} onChange={handleChange} label="Username" />
+                  <div className="flex items-center gap-2">
+                    <Input
+                      type="password"
+                      name={`proxies[${index}].password`}
+                      placeholder="Password"
+                      value={proxy.password}
+                      onChange={handleChange}
+                      label="Password" />
+                    <Button
+                      color="error"
+                      type="button"
+                      size="small"
+                      icon="fas fa-trash"
+                      onClick={() => removeProxy(proxy.id)}
+                    />
+                  </div>
+                </div>
+              ))}
+              <div className="flex justify-start">
+                <Button
+                  type="button"
+                  size="small"
+                  icon="fas fa-plus"
+                  onClick={addProxy}
+                >
+                  Add
+                </Button>
+              </div>
+            </div>
+          </Collapse>
           <Collapse title="Groups">
             <div className="flex flex-col gap-10">
               {map(values.groups, (group, index) => (
@@ -280,12 +320,26 @@ export default function Setting() {
                       onClick={() => removeGroup(group.id)}
                     />
                   </div>
-                  <div key={group.id} className="grid grid-cols-2 items-center gap-2">
+                  <div key={group.id} className="grid grid-cols-3 items-center gap-2">
                     <Input
                       name={`groups[${index}].name`}
                       value={group.name}
                       onChange={handleChange}
                       label="Name"
+                    />
+                    <Select
+                      label={`Proxy`}
+                      value={group.proxy_id}
+                      options={settings.proxies.map((proxy) => ({
+                        label: proxy.name,
+                        value: proxy.id,
+                      }))}
+                      onChange={(value) => {
+                        setValues({
+                          ...values,
+                          groups: values.groups.map((group, i) => i === index ? { ...group, proxy_id: value } : group),
+                        })
+                      }}
                     />
                     <MultipleSelect
                       label={`URLs`}
@@ -301,34 +355,36 @@ export default function Setting() {
                         })
                       }}
                     />
-                    <MultipleSelect
-                      label={`Captions`}
-                      value={group.caption_ids}
-                      options={settings.captions.map((caption) => ({
-                        label: shortenCaption(caption.caption),
-                        value: caption.id,
-                      }))}
-                      onChange={(value) => {
-                        setValues({
-                          ...values,
-                          groups: values.groups.map((group, i) => i === index ? { ...group, caption_ids: value } : group),
-                        })
-                      }}
-                    />
-                    <MultipleSelect
-                      label={`Media Folders`}
-                      value={group.media_folder_ids}
-                      options={settings.media_folders.map((folder) => ({
-                        label: folder.name,
-                        value: folder.id,
-                      }))}
-                      onChange={(value) => {
-                        setValues({
-                          ...values,
-                          groups: values.groups.map((group, i) => i === index ? { ...group, media_folder_ids: value } : group),
-                        })
-                      }}
-                    />
+                    <div className="col-span-3 grid grid-cols-2 gap-2">
+                      <MultipleSelect
+                        label={`Captions`}
+                        value={group.caption_ids}
+                        options={settings.captions.map((caption) => ({
+                          label: shortenCaption(caption.caption),
+                          value: caption.id,
+                        }))}
+                        onChange={(value) => {
+                          setValues({
+                            ...values,
+                            groups: values.groups.map((group, i) => i === index ? { ...group, caption_ids: value } : group),
+                          })
+                        }}
+                      />
+                      <MultipleSelect
+                        label={`Media Folders`}
+                        value={group.media_folder_ids}
+                        options={settings.media_folders.map((folder) => ({
+                          label: folder.name,
+                          value: folder.id,
+                        }))}
+                        onChange={(value) => {
+                          setValues({
+                            ...values,
+                            groups: values.groups.map((group, i) => i === index ? { ...group, media_folder_ids: value } : group),
+                          })
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
               ))}

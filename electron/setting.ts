@@ -28,6 +28,7 @@ export const getSettings = (): Setting => {
     media_folders: [],
     urls: [],
     groups: [],
+    proxies: [],
   }
   const setting = JSON.parse(settings)
   return { ...defaultSettings, ...setting }

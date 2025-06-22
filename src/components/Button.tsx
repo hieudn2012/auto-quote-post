@@ -19,11 +19,11 @@ export default function Button({ children, size = 'small', icon, color = 'primar
   }
 
   const colorClasses = {
-    primary: 'bg-primary text-white',
-    info: 'bg-blue-500 text-white',
-    success: 'bg-green-500 text-white',
-    warning: 'bg-yellow-500 text-white',
-    error: 'bg-red-500 text-white'
+    primary: 'bg-gradient-to-r from-blue-500 to-purple-600 text-white',
+    info: 'bg-gradient-to-r from-blue-400 to-cyan-500 text-white',
+    success: 'bg-gradient-to-r from-green-400 to-emerald-500 text-white',
+    warning: 'bg-gradient-to-r from-yellow-400 to-orange-500 text-white',
+    error: 'bg-gradient-to-r from-red-400 to-pink-500 text-white'
   }
   return (
     <button
@@ -31,7 +31,7 @@ export default function Button({ children, size = 'small', icon, color = 'primar
         `flex items-center gap-2 font-bold bg-transparent border-2 rounded-md outline-none`,
         sizeClasses[size],
         colorClasses[color],
-        'hover:opacity-80',
+        'hover:opacity-80 transition-opacity duration-200',
       )}
       {...props}
     >
