@@ -1,10 +1,14 @@
 import Button from "@/components/Button";
 import { windowInstance } from "@/types/window";
-import { toast } from "react-toastify";
+import { toastSuccess } from "@/components/Toast";
+import { useProvider } from "@/Providers/useProvider";
+
 export default function SyncProfile() {
+  const { loadApp } = useProvider()
   const handleSyncProfile = () => {
     windowInstance.api.syncProfile().then(() => {
-      toast.success("Sync profile success, please refresh page")
+      toastSuccess("Sync profile success, loading app...")
+      loadApp()
     })
   }
 

@@ -2,7 +2,8 @@ import { useState } from "react"
 import Button from "@/components/Button"
 import { Select } from "@/components/Select"
 import { ClearHistoryType, windowInstance } from "@/types/window"
-
+import { useProvider } from "@/Providers/useProvider"
+import { toastSuccess } from "@/components/Toast"
 const options = [
   {
     label: "All",
@@ -34,10 +35,13 @@ const options = [
   },
 ]
 export const Clear = () => {
+  const { loadApp } = useProvider()
   const [selected, setSelected] = useState<ClearHistoryType>(ClearHistoryType.LAST_3_DAYS)
 
   const handleClear = () => {
     windowInstance.api.clearHistory(selected)
+    toastSuccess("History cleared, loading app...")
+    loadApp()
   }
 
   return (

@@ -9,10 +9,10 @@ import { map } from "lodash";
 import { v4 as uuidv4 } from 'uuid';
 import { Collapse } from "./Collapse";
 import { FolderInput } from "@/components/FolderInput";
-import { toast } from "react-toastify";
 import { MultipleSelect } from "@/components/MultipleSelect";
 import useSettingStore from "@/store/setting.store";
 import { Select } from "@/components/Select";
+import { toastSuccess } from "@/components/Toast";
 
 const shortenCaption = (caption: string) => {
   return caption.length > 30 ? caption.slice(0, 10) + "..." + caption.slice(-10) : caption
@@ -35,7 +35,7 @@ export default function Setting() {
     onSubmit: (values) => {
       setSettings(values)
       windowInstance.api.saveSettings(values)
-      toast.success("Settings saved")
+      toastSuccess("Settings saved")
     },
   });
 
@@ -58,8 +58,6 @@ export default function Setting() {
   };
 
   const addMediaFolder = () => {
-    console.log(values.media_folders, 'values.media_folders')
-
     setValues({
       ...values,
       media_folders: [...values.media_folders, { id: uuidv4(), name: "", path: "" }],

@@ -5,6 +5,7 @@ import { windowInstance } from "@/types/window";
 import { useFormik } from "formik";
 import { map } from "lodash";
 import useSettingStore from "@/store/setting.store";
+import { toastSuccess, toastError } from "@/components/Toast";
 interface SettingModalProps {
   isOpen: boolean
   onClose: () => void
@@ -17,8 +18,14 @@ export default function SettingModal({ isOpen, onClose, profile_ids }: SettingMo
       group_id: "",
     },
     onSubmit: (values) => {
+      if (profile_ids.length === 0) {
+        toastError("No profiles selected")
+        return
+      }
+
       handleSave(values)
       onClose()
+      toastSuccess(`${profile_ids.length} profiles updated`)
     }
   })
 

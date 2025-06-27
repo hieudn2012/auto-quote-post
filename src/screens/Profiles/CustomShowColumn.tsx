@@ -20,9 +20,6 @@ interface CustomShowColumnProps {
 export const CustomShowColumn = ({ checkedColumns, onApply }: CustomShowColumnProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
-  console.log(checkedColumns, 'checkedColumns');
-
-
   const {
     values,
     setFieldValue,

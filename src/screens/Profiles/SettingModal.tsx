@@ -5,8 +5,8 @@ import { windowInstance } from "@/types/window";
 import { useFormik } from "formik";
 import { map } from "lodash";
 import { useEffect } from "react";
-import { toast } from "react-toastify";
 import useSettingStore from "@/store/setting.store";
+import { toastSuccess } from "@/components/Toast";
 
 interface SettingModalProps {
   isOpen: boolean
@@ -43,7 +43,7 @@ export default function SettingModal({ isOpen, onClose, profile_id }: SettingMod
       }
       setSettings(result)
       windowInstance.api.saveSettings(result)
-      toast.success("Profile settings created")
+      toastSuccess("Profile settings created")
       return
     }
 
@@ -57,7 +57,7 @@ export default function SettingModal({ isOpen, onClose, profile_id }: SettingMod
     }
     setSettings(result)
     windowInstance.api.saveSettings(result)
-    toast.success("Profile settings saved")
+    toastSuccess("Profile settings saved")
   }
 
   useEffect(() => {

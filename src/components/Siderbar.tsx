@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom"
-
+import { useNavigate, useLocation } from "react-router-dom"
+import { twMerge } from "tailwind-merge"
 export enum RoutePath {
   // Dashboard = "/",
   Profiles = "/profiles",
@@ -38,6 +38,7 @@ const sidebarItems = [
 
 export const Siderbar = () => {
   const navigate = useNavigate()
+  const { pathname } = useLocation()
 
   return (
     <div>
@@ -47,7 +48,7 @@ export const Siderbar = () => {
       <div className="border-b border-gray-200 mb-5" />
       {sidebarItems.map((item) => (
         <div
-          key={item.path} className="py-2 hover:text-primary cursor-pointer rounded-md flex items-center gap-2"
+          key={item.path} className={twMerge("py-2 hover:text-primary cursor-pointer rounded-md flex items-center gap-2 transition-colors duration-200", pathname === item.path && "text-primary")}
           onClick={() => navigate(item.path)}
         >
           <div className="text-md w-5">

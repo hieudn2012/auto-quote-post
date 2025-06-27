@@ -4,6 +4,7 @@ import { each, get } from "lodash";
 import { sendToRenderer } from "./main";
 import { getSettings, getSettingByProfileId } from "./setting";
 import axios from "axios";
+import { screen, BrowserWindow } from 'electron';
 
 const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms * 1000));
 
@@ -62,9 +63,42 @@ const changePort = async ({ profileId }: { profileId: string }) => {
 
 const startProfile = async (profileId: string) => {
   sendToRenderer('profile-status', { profileId, message: Message.START_PROFILE });
+  
+  // Get the current screen position where the Electron app is running
+  const primaryDisplay = screen.getPrimaryDisplay();
+  const displays = screen.getAllDisplays();
+  
+  // Find the display where the main window is located
+  const mainWindow = (global as any).mainWindow as BrowserWindow | null; // Access global mainWindow
+  let targetDisplay = primaryDisplay;
+  
+  if (mainWindow) {
+    const windowBounds = mainWindow.getBounds();
+    const windowCenter = {
+      x: windowBounds.x + windowBounds.width / 2,
+      y: windowBounds.y + windowBounds.height / 2
+    };
+    
+    // Find which display contains the window center
+    targetDisplay = displays.find((display: Electron.Display) => {
+      const bounds = display.bounds;
+      return windowCenter.x >= bounds.x && 
+             windowCenter.x <= bounds.x + bounds.width &&
+             windowCenter.y >= bounds.y && 
+             windowCenter.y <= bounds.y + bounds.height;
+    }) || primaryDisplay;
+  }
+  
   return axios.post('http://localhost:36912/browser/start-profile', {
     profileId,
-    sync: true
+    sync: true,
+    // Add screen position configuration
+    screen: {
+      x: targetDisplay.bounds.x,
+      y: targetDisplay.bounds.y,
+      width: targetDisplay.bounds.width,
+      height: targetDisplay.bounds.height
+    }
   })
 }
 
