@@ -9,11 +9,7 @@ interface Browser {
 export const writeBrowser = ({ profileId, wsUrl }: Browser) => {
   const folderSystem = getFolderSystem()
   const browserPath = `${folderSystem.browsers}/${profileId}.txt`;
-  if (!fs.existsSync(browserPath)) {
-    fs.writeFileSync(browserPath, '');
-  }
-
-  fs.appendFileSync(browserPath, `${wsUrl}\n`);
+  fs.writeFileSync(browserPath, `${wsUrl}\n`);
 }
 
 export const getBrowser = (profileId: string) => {

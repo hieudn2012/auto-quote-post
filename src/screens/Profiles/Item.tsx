@@ -26,7 +26,7 @@ const Item = ({ profile, selected, onSelect, onRun, onStop, onSetting, settings,
 
   return (
     <div
-      className="flex flex-col gap-2 p-2 border border-gray-100 rounded-md cursor-pointer hover:border-primary transition-all duration-300 select-none"
+      className="flex flex-col gap-2 p-2 border border-gray-200 rounded-md cursor-pointer hover:border-primary transition-all duration-300 select-none"
       onClick={() => onSelect(profile)}
     >
       <div className="flex items-center gap-2">

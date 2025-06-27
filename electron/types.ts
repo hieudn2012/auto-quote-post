@@ -9,4 +9,5 @@ export enum InvokeChannel {
   GET_PROFILES_FROM_JSON = 'get-profiles-from-json',
   SAVE_SETTINGS = 'save-settings',
   GET_HISTORY = 'get-history',
+  CLEAR_HISTORY = 'clear-history',
 } 

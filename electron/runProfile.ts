@@ -7,8 +7,6 @@ import axios from "axios";
 
 const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms * 1000));
 
-const ports = [30000, 30001, 30002];
-
 enum Message {
   START_PROFILE = 'Start profile',
   STOP_PROFILE = 'Stop profile',
@@ -22,6 +20,7 @@ enum Message {
   MAX_RETRIES = 'Max retries reached (5), stopping...',
   NETWORK_ERROR = 'Network error, change port...',
   CLOSE_PAGES = 'Close pages',
+  URL_NOT_FOUND = 'Url not found OR your has been run all urls successfully',
 }
 
 enum ErrorMessage {
@@ -35,20 +34,20 @@ enum ErrorMessage {
   UPLOAD_IMAGE_ERROR = 'Upload image error',
   CLOSE_PAGES_ERROR = 'Close pages error',
   UNKNOWN_ERROR = 'Unknown error',
+  URL_NOT_FOUND = 'Url not found OR your has been run all urls successfully',
 }
 
 const changePort = async ({ profileId }: { profileId: string }) => {
-  const port = ports[Math.floor(Math.random() * ports.length)];
-  sendToRenderer('profile-status', { profileId, message: `Change port to ${port}` });
+  const setting = getSettingByProfileId(profileId)
+  const proxy = setting.proxy
+
+  sendToRenderer('profile-status', { profileId, message: `Change port to ${proxy?.port}` });
   const data = {
-    autoProxyRegion: "us",
-    changeIpUrl: "",
-    host: "51.81.186.144",
-    mode: "socks5",
-    password: "",
-    port,
-    torProxyRegion: "us",
-    username: ""
+    host: proxy?.host,
+    mode: proxy?.mode,
+    username: proxy?.username,
+    password: proxy?.password,
+    port: proxy?.port,
   }
 
   const settings = getSettings()
@@ -78,17 +77,19 @@ export const stopProfile = async (profileId: string) => {
 
 export const runProfile = async (profileId: string, retryCount: number = 0) => {
   try {
-    const setting = getSettingByProfileId(profileId);
-    const postUrl = setting.url?.value || '';
     const { data } = await startProfile(profileId);
     const wsUrl = data.wsUrl;
 
     writeBrowser({ profileId, wsUrl });
 
-    await sharePost({ profileId, postUrl });
+    await sharePost({ profileId });
 
   } catch (error) {
-    console.log(error);
+    const message = get(error, 'message', ErrorMessage.UNKNOWN_ERROR);
+    if (message.includes(ErrorMessage.URL_NOT_FOUND)) {
+      sendToRenderer('profile-status', { profileId, message: Message.URL_NOT_FOUND });
+      return;
+    }
 
     if (retryCount >= 5) {
       sendToRenderer('profile-status', { profileId, message: Message.MAX_RETRIES });
@@ -100,10 +101,18 @@ export const runProfile = async (profileId: string, retryCount: number = 0) => {
   }
 }
 
-export const sharePost = async ({ profileId, postUrl }: { profileId: string, postUrl: string }, retryCount: number = 0) => {
+export const sharePost = async ({ profileId }: { profileId: string }, retryCount: number = 0) => {
   try {
     const setting = getSettingByProfileId(profileId);
     const settings = getSettings();
+    const postUrl = setting.url || '';
+
+    if (!postUrl) {
+      await stopProfile(profileId);
+      await wait(2);
+      sendToRenderer('profile-status', { profileId, message: Message.DONE });
+      return;
+    }
 
     const randomCaptionId = setting?.caption_ids?.[Math.floor(Math.random() * setting?.caption_ids.length)];
     const randomCaption = settings.captions.find(caption => caption.id === randomCaptionId)?.caption || '';
@@ -219,15 +228,11 @@ export const sharePost = async ({ profileId, postUrl }: { profileId: string, pos
     sendToRenderer('profile-status', { profileId, message: Message.CLICK_POST });
     console.log('click post');
     await wait(10);
-    await stopProfile(profileId);
-    await wait(2);
 
-    sendToRenderer('profile-status', { profileId, message: Message.DONE });
     writeHistory({ profileId, postUrl });
-
+    await sharePost({ profileId }, retryCount + 1);
   } catch (error) {
     console.log(error);
-    
     const message = get(error, 'message', ErrorMessage.UNKNOWN_ERROR);
     sendToRenderer('profile-status', { profileId, message: Message.ERROR + message });
     if (message.includes(ErrorMessage.CONNECT_ECONNREFUSED)) {
@@ -244,6 +249,6 @@ export const sharePost = async ({ profileId, postUrl }: { profileId: string, pos
       sendToRenderer('profile-status', { profileId, message: Message.MAX_RETRIES });
       return;
     }
-    await sharePost({ profileId, postUrl }, retryCount + 1);
+    await sharePost({ profileId }, retryCount + 1);
   }
 }

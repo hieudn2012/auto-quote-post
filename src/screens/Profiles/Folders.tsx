@@ -12,7 +12,7 @@ export const Folders = ({ profiles, selectedFolder, onSelect }: FoldersProps) =>
 
   return (
     <div className="flex gap-2 flex-wrap">
-      <div className={twMerge("flex items-center gap-2 px-4 py-1 border border-gray-200 rounded-md cursor-pointer hover:border-primary", selectedFolder === "" && "border-primary")} onClick={() => onSelect("")}>
+      <div className={twMerge("flex items-center gap-2 px-4 py-1 border border-gray-300 rounded-md cursor-pointer hover:border-primary", selectedFolder === "" && "border-primary")} onClick={() => onSelect("")}>
         {selectedFolder === "" && <i className="fa-solid fa-check-circle text-green-500" />}
         All
       </div>

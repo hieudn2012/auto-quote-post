@@ -1,12 +1,21 @@
 import Button from "@/components/Button";
 import { useState } from "react";
 
-export const Collapse = ({ title, children }: { title: string; children: React.ReactNode }) => {
+interface CollapseProps {
+  title: string;
+  children: React.ReactNode;
+  icon: string;
+}
+
+export const Collapse = ({ title, children, icon }: CollapseProps) => {
   const [isOpen, setIsOpen] = useState(false)
   return (
     <div className="bg-white rounded-md border border-gray-100 select-none">
       <div className="flex items-center justify-between cursor-pointer p-4 hover:bg-gray-100" onClick={() => setIsOpen(!isOpen)}>
-        <p className="text-sm font-bold">{title}</p>
+        <div className="flex items-center gap-2">
+          <i className={`${icon} text-sm`}></i>
+          <p className="text-sm font-bold">{title}</p>
+        </div>
         <Button
           icon={isOpen ? 'fas fa-chevron-up' : 'fas fa-chevron-down'}
           onClick={() => setIsOpen(!isOpen)}

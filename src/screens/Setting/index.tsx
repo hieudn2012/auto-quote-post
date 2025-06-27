@@ -90,7 +90,7 @@ export default function Setting() {
   const addGroup = () => {
     setValues({
       ...values,
-      groups: [...values.groups, { id: uuidv4(), caption_ids: [], media_folder_ids: [], url_ids: [], name: "", proxy_id: "" }],
+      groups: [...values.groups, { id: uuidv4(), caption_ids: [], media_folder_ids: [], url_ids: [], name: "", proxy_ids: [] }],
     });
   };
 
@@ -104,7 +104,7 @@ export default function Setting() {
   const addProxy = () => {
     setValues({
       ...values,
-      proxies: [...values.proxies, { id: uuidv4(), name: "", host: "", port: 0, username: "", password: "" }],
+      proxies: [...values.proxies, { id: uuidv4(), name: "", host: "", port: 0, username: "", password: "", mode: "socks5" }],
     });
   };
 
@@ -126,7 +126,7 @@ export default function Setting() {
     <Layout>
       <form onSubmit={handleSubmit}>
         <div className="flex flex-col gap-4">
-          <Collapse title="Global Settings">
+          <Collapse icon="fas fa-cog" title="Global Settings">
             <div className="grid grid-cols-1 gap-4">
               <Input
                 name="token"
@@ -137,7 +137,7 @@ export default function Setting() {
               />
             </div>
           </Collapse>
-          <Collapse title="Captions">
+          <Collapse icon="fas fa-quote-left" title="Captions">
             <div className="flex flex-col gap-2">
               {map(values.captions, (caption, index) => (
                 <div key={caption.id} className="flex items-center gap-2">
@@ -170,7 +170,7 @@ export default function Setting() {
               </div>
             </div>
           </Collapse>
-          <Collapse title="Media Folders">
+          <Collapse icon="fas fa-folder" title="Media Folders">
             <div className="flex flex-col gap-2">
               {map(values.media_folders, (folder, index) => (
                 <div key={folder.id} className="flex items-center gap-2">
@@ -223,7 +223,7 @@ export default function Setting() {
               </div>
             </div>
           </Collapse>
-          <Collapse title="URLs">
+          <Collapse icon="fas fa-link" title="URLs">
             <div className="flex flex-col gap-2">
               {map(values.urls, (url, index) => (
                 <div key={url.id} className="flex items-center gap-2">
@@ -268,13 +268,24 @@ export default function Setting() {
               </div>
             </div>
           </Collapse>
-          <Collapse title="Proxies">
+          <Collapse icon="fas fa-globe" title="Proxies">
             <div className="flex flex-col gap-2">
               {map(values.proxies, (proxy, index) => (
-                <div key={proxy.id} className="grid grid-cols-5 gap-2">
+                <div key={proxy.id} className="grid grid-cols-6 gap-2">
                   <Input name={`proxies[${index}].name`} value={proxy.name} onChange={handleChange} label="Name" />
                   <Input name={`proxies[${index}].host`} placeholder="127.0.0.1" value={proxy.host} onChange={handleChange} label="Host" />
                   <Input name={`proxies[${index}].port`} placeholder="30001" value={proxy.port} onChange={handleChange} label="Port" />
+                  <Select
+                    value={proxy.mode}
+                    onChange={(value) => {
+                      setValues({
+                        ...values,
+                        proxies: values.proxies.map((proxy, i) => i === index ? { ...proxy, mode: value as "socks5" | "http" } : proxy),
+                      })
+                    }}
+                    label="Mode"
+                    options={[{ label: "Socks5", value: "socks5" }, { label: "HTTP", value: "http" }]}
+                  />
                   <Input name={`proxies[${index}].username`} placeholder="Username" value={proxy.username} onChange={handleChange} label="Username" />
                   <div className="flex items-center gap-2">
                     <Input
@@ -306,7 +317,7 @@ export default function Setting() {
               </div>
             </div>
           </Collapse>
-          <Collapse title="Groups">
+          <Collapse icon="fas fa-users" title="Groups">
             <div className="flex flex-col gap-10">
               {map(values.groups, (group, index) => (
                 <div key={group.id} className="w-full">
@@ -327,17 +338,17 @@ export default function Setting() {
                       onChange={handleChange}
                       label="Name"
                     />
-                    <Select
+                    <MultipleSelect
                       label={`Proxy`}
-                      value={group.proxy_id}
-                      options={settings.proxies.map((proxy) => ({
+                      value={group.proxy_ids || []}
+                      options={map(settings.proxies, (proxy) => ({
                         label: proxy.name,
                         value: proxy.id,
                       }))}
                       onChange={(value) => {
                         setValues({
                           ...values,
-                          groups: values.groups.map((group, i) => i === index ? { ...group, proxy_id: value } : group),
+                          groups: values.groups.map((group, i) => i === index ? { ...group, proxy_ids: value } : group),
                         })
                       }}
                     />

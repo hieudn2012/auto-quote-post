@@ -13,7 +13,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export default function Button({ children, size = 'small', icon, color = 'primary', ...props }: ButtonProps) {
   const sizeClasses = {
-    small: 'text-xs px-2 py-1',
+    small: 'text-xs px-4 py-2',
     medium: 'text-sm px-4 py-[6px]',
     large: 'text-base px-6 py-2'
   }
@@ -28,7 +28,7 @@ export default function Button({ children, size = 'small', icon, color = 'primar
   return (
     <button
       className={twMerge(
-        `flex items-center gap-2 font-bold bg-transparent border-2 rounded-md outline-none`,
+        `flex items-center gap-2 font-bold bg-transparent rounded-md outline-none`,
         sizeClasses[size],
         colorClasses[color],
         'hover:opacity-80 transition-opacity duration-200',

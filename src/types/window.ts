@@ -12,6 +12,7 @@ export interface WindowInstance {
     syncProfile: () => Promise<Profile[]>
     getProfilesFromJson: () => Promise<Profile[]>
     getHistory: () => Promise<History[]>
+    clearHistory: (type: ClearHistoryType) => Promise<void>
   }
   ipcRenderer?: {
     on: (channel: string, listener: (event: IpcRendererEvent, ...args: any[]) => void) => void
@@ -30,7 +31,7 @@ export interface GroupSetting {
   caption_ids: string[]
   media_folder_ids: string[]
   url_ids: string[]
-  proxy_id: string
+  proxy_ids: string[]
 }
 
 export interface Proxy {
@@ -40,6 +41,7 @@ export interface Proxy {
   port: number
   username: string
   password: string
+  mode: 'socks5' | 'http'
 }
 
 export interface Setting {
@@ -70,6 +72,19 @@ export interface History {
   profile_id: string
   post_url: string
   created_at: string
+}
+
+export enum ClearHistoryType {
+  ALL = 'all',
+  TODAY = 'today',
+  YESTERDAY = 'yesterday',
+  LAST_3_DAYS = 'last_3_days',
+  LAST_7_DAYS = 'last_7_days',
+  LAST_30_DAYS = 'last_30_days',
+  LAST_60_DAYS = 'last_60_days'
+}
+export interface ClearHistory {
+  type: ClearHistoryType,
 }
 
 export const windowInstance = window as unknown as WindowInstance

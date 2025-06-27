@@ -1,4 +1,4 @@
-import { Setting } from '@/types/window'
+import { Setting, ClearHistoryType  } from '@/types/window'
 import { ipcRenderer, contextBridge } from 'electron'
 import { InvokeChannel } from './types'
 
@@ -38,6 +38,7 @@ contextBridge.exposeInMainWorld('api', {
   syncProfile: () => invoke(InvokeChannel.SYNC_PROFILE),
   getProfilesFromJson: () => invoke(InvokeChannel.GET_PROFILES_FROM_JSON),
   getHistory: () => invoke(InvokeChannel.GET_HISTORY),
+  clearHistory: (type: ClearHistoryType) => invoke(InvokeChannel.CLEAR_HISTORY, type),
 })
 
 contextBridge.exposeInMainWorld('sendToRenderer', (channel: string, data: unknown) => {

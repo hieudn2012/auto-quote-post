@@ -3,12 +3,12 @@ import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import { runProfile, stopProfile } from './runProfile'
 import { getSettings, saveSettings, getSettingByProfileId } from './setting'
-import { Setting } from '@/types/window'
+import { ClearHistoryType, Setting } from '@/types/window'
 import { init } from './init'
 import { openSelectFolder } from './openSelectFolder'
 import { getProfilesFromJson, syncProfile } from './syncProfile'
 import { InvokeChannel } from './types'
-import { getHistory } from './history'
+import { clearHistory, getHistory } from './history'
 // Suppress macOS text input context warnings
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true'
 
@@ -101,6 +101,10 @@ handle(InvokeChannel.GET_PROFILES_FROM_JSON, async () => {
 
 handle(InvokeChannel.GET_HISTORY, async () => {
   return getHistory()
+})
+
+handle(InvokeChannel.CLEAR_HISTORY, async (_event, type: ClearHistoryType) => {
+  clearHistory({ type })
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common
