@@ -42,7 +42,7 @@ export const Siderbar = () => {
 
   return (
     <div>
-      <div className="text-md font-medium p-2">
+      <div className="text-md p-2">
         <p className="font-bold text-center">Administrator</p>
       </div>
       <div className="border-b border-gray-200 mb-5" />
@@ -54,7 +54,7 @@ export const Siderbar = () => {
           <div className="text-md w-5">
             <i className={item.icon}></i>
           </div>
-          <div className="text-md font-medium">{item.label}</div>
+          <div className="text-md">{item.label}</div>
         </div>
       ))}
     </div>

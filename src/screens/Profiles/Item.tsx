@@ -34,18 +34,18 @@ const Item = ({ profile, selected, onSelect, onRun, onStop, onSetting, settings,
           <Checkbox checked={selected} onChange={() => onSelect(profile)} />
         </div>
         <ProviderColumn name={Column.NAME} checkedColumns={checkedColumns}>
-          <div className="text-sm font-medium w-[100px]">{profile.name}</div>
+          <div className="text-sm w-[100px]">{profile.name}</div>
         </ProviderColumn>
         <ProviderColumn name={Column.NOTES} checkedColumns={checkedColumns}>
-          <div className="text-sm font-medium w-[200px]">
+          <div className="text-sm w-[200px]">
             <div dangerouslySetInnerHTML={{ __html: profile.notes }} />
           </div>
         </ProviderColumn>
         <ProviderColumn name={Column.PROXY} checkedColumns={checkedColumns}>
-          <div className="text-sm font-medium w-[50px]">{profile.proxy.port}</div>
+          <div className="text-sm w-[50px]">{profile.proxy.port}</div>
         </ProviderColumn>
         <ProviderColumn name={Column.GROUP} checkedColumns={checkedColumns}>
-          <div className="text-sm font-medium w-[100px]">
+          <div className="text-sm w-[100px]">
             {groupSetting?.name || '-'}
           </div>
         </ProviderColumn>

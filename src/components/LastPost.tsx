@@ -7,7 +7,7 @@ export const LastPost = ({ profileId }: { profileId: string }) => {
   const isValid = !!lastPost?.created_at
 
   return (
-    <div className="text-sm font-medium w-[100px]">
+    <div className="text-sm w-[100px]">
       {isValid ? formatPostDate(lastPost?.created_at || '') : '-'}
     </div>
   )
