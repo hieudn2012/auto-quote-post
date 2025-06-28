@@ -182,6 +182,10 @@ export const sharePost = async ({ profileId }: { profileId: string }, retryCount
     const randomView = views[Object.keys(views)[Math.floor(Math.random() * Object.keys(views).length)] as ViewKey];
     await page.setViewport(randomView);
     await page.goto(postUrl);
+    await wait(10);
+
+    // Escape to close all popup
+    await page.keyboard.press('Escape');
     await wait(3);
 
     // find svg with aria-label="Repost"
