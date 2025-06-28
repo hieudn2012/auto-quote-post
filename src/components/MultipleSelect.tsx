@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 
 interface Option {
   value: string;
-  label: string;
+  label: string | React.ReactNode;
 }
 
 interface MultipleSelectProps {
@@ -20,7 +20,7 @@ export const MultipleSelect = ({
   onChange,
   placeholder = "Select options...",
   label,
-  className = ""
+  className = "",
 }: MultipleSelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -51,6 +51,10 @@ export const MultipleSelect = ({
     return value.map(v => options.find(opt => opt.value === v)?.label).filter(Boolean).join(", ");
   };
 
+  const handleClear = () => {
+    onChange([]);
+  };
+
   return (
     <div className={`flex flex-col gap-1 w-full ${className}`}>
       {label && (
@@ -63,16 +67,32 @@ export const MultipleSelect = ({
         >
           <div className="flex-1 min-h-[20px] overflow-hidden">
             {value.length > 0 ? (
-              <div className="text-gray-900 truncate max-w-full">{getSelectedLabels()}</div>
+              <div className="text-gray-900 truncate max-w-full select-none">{getSelectedLabels()}</div>
             ) : (
-              <div className="text-gray-500 truncate max-w-full">{placeholder}</div>
+              <div className="text-gray-500 truncate max-w-full select-none">{placeholder}</div>
             )}
           </div>
-          <div className={`ml-2 transition-transform duration-200 flex-shrink-0 ${isOpen ? 'rotate-180' : ''}`}>
-            <div className="w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-400"></div>
+          <div className="flex items-center gap-1">
+            {value.length > 0 && (
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleClear();
+                }}
+                className="p-1 hover:bg-gray-100 rounded transition-colors duration-150"
+                title="Clear selection"
+              >
+                <svg className="w-4 h-4 text-gray-400 hover:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            )}
+            <div className={`transition-transform duration-200 flex-shrink-0 ${isOpen ? 'rotate-180' : ''}`}>
+              <div className="w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-400"></div>
+            </div>
           </div>
         </div>
-
         {isOpen && (
           <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto">
             {options.map((option) => (

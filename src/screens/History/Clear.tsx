@@ -45,22 +45,20 @@ export const Clear = () => {
   }
 
   return (
-    <div className="flex justify-end">
-      <div className="flex items-center gap-2 w-[400px]">
-        <Select
-          options={options}
-          value={selected}
-          onChange={(value) => setSelected(value as ClearHistoryType)}
-        />
-        <Button
-          icon="fa-solid fa-trash"
-          size="large"
-          color="error"
-          onClick={handleClear}
-        >
-          Clear
-        </Button>
-      </div>
+    <div className="flex items-center gap-2 w-[400px]">
+      <Select
+        options={options}
+        value={selected}
+        onChange={(value) => setSelected(value as ClearHistoryType)}
+      />
+      <Button
+        icon="fa-solid fa-trash"
+        size="medium"
+        color="error"
+        onClick={handleClear}
+      >
+        Clear
+      </Button>
     </div>
   )
 }
