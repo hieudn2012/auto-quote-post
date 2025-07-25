@@ -30,57 +30,16 @@ const getProfiles = async (page: number) => {
 
 export const syncProfile = async () => {
   try {
-    const [
-      page1,
-      page2,
-      page3,
-      page4,
-      page5,
-      page6,
-      page7,
-      page8,
-      page9,
-      page10,
-      page11,
-      page12,
-      page13,
-      page14,
-      page15
-    ] = await Promise.all([
-      getProfiles(1),
-      getProfiles(2), 
-      getProfiles(3),
-      getProfiles(4),
-      getProfiles(5),
-      getProfiles(6),
-      getProfiles(7),
-      getProfiles(8),
-      getProfiles(9),
-      getProfiles(10),
-      getProfiles(11),
-      getProfiles(12),
-      getProfiles(13),
-      getProfiles(14),
-      getProfiles(15)
-    ])
-
-    const profiles = [
-      ...page1,
-      ...page2,
-      ...page3, 
-      ...page4,
-      ...page5,
-      ...page6,
-      ...page7,
-      ...page8,
-      ...page9,
-      ...page10,
-      ...page11,
-      ...page12,
-      ...page13,
-      ...page14,
-      ...page15
-    ]
+    const profiles = [];
+    
+    // Fetch profiles page by page sequentially to avoid spamming
+    for (let page = 1; page <= 15; page++) {
+      const pageProfiles = await getProfiles(page);
+      profiles.push(...pageProfiles);
+      
+      // Add small delay between requests
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
 
     // save to file json
     const folderSystem = getFolderSystem()
