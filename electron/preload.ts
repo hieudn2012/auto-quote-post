@@ -39,6 +39,7 @@ contextBridge.exposeInMainWorld('api', {
   getProfilesFromJson: () => invoke(InvokeChannel.GET_PROFILES_FROM_JSON),
   getHistory: () => invoke(InvokeChannel.GET_HISTORY),
   clearHistory: (type: ClearHistoryType) => invoke(InvokeChannel.CLEAR_HISTORY, type),
+  captureAnalytics: (profileId: string) => invoke(InvokeChannel.CAPTURE_ANALYTICS, profileId),
 })
 
 contextBridge.exposeInMainWorld('sendToRenderer', (channel: string, data: unknown) => {

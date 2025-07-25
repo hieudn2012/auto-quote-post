@@ -6,7 +6,7 @@ import { getSettings, getSettingByProfileId } from "./setting";
 import axios from "axios";
 import { screen, BrowserWindow } from 'electron';
 
-const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms * 1000));
+export const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms * 1000));
 
 enum Message {
   START_PROFILE = 'Start profile',
@@ -61,7 +61,7 @@ const changePort = async ({ profileId }: { profileId: string }) => {
   })
 }
 
-const startProfile = async (profileId: string) => {
+export const startProfile = async (profileId: string) => {
   sendToRenderer('profile-status', { profileId, message: Message.START_PROFILE });
   
   // Get the current screen position where the Electron app is running

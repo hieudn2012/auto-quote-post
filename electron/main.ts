@@ -9,6 +9,7 @@ import { openSelectFolder } from './openSelectFolder'
 import { getProfilesFromJson, syncProfile } from './syncProfile'
 import { InvokeChannel } from './types'
 import { clearHistory, getHistory } from './history'
+import { captureAnalytics } from './captureAnalytics'
 // Suppress macOS text input context warnings
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true'
 
@@ -108,6 +109,10 @@ handle(InvokeChannel.GET_HISTORY, async () => {
 
 handle(InvokeChannel.CLEAR_HISTORY, async (_event, type: ClearHistoryType) => {
   clearHistory({ type })
+})
+
+handle(InvokeChannel.CAPTURE_ANALYTICS, async (_event, id: string) => {
+  captureAnalytics(id)
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common

@@ -10,4 +10,5 @@ export enum InvokeChannel {
   SAVE_SETTINGS = 'save-settings',
   GET_HISTORY = 'get-history',
   CLEAR_HISTORY = 'clear-history',
+  CAPTURE_ANALYTICS = 'capture-analytics',
 } 

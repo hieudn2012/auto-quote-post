@@ -13,7 +13,7 @@ import { filter, map, sortBy } from "lodash"
 import { Folders } from "./Folders"
 import useSettingStore from "@/store/setting.store"
 import { Column, CustomShowColumn } from "./CustomShowColumn"
-
+import ScanAnalytics from "./ScanAnalytics"
 export default function Profiles() {
   const { settings } = useSettingStore()
   const { profiles } = useProfileStore()
@@ -103,6 +103,7 @@ export default function Profiles() {
         <div className="text-sm text-gray-500">Selected: <strong>{selectedProfile?.length ?? 0}</strong></div>
         <div className="flex items-center gap-2">
           <SyncProfile />
+          <ScanAnalytics ids={selectedProfile ?? []} />
           <SmartSettings onClick={() => setIsSmartSettingModalOpen(true)} />
           <Button color="success" icon="fa-solid fa-play" onClick={runProfiles}>Run selected</Button>
           <Button color="error" icon="fa-solid fa-stop" onClick={stopProfiles}>Stop selected</Button>

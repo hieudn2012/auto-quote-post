@@ -37,4 +37,9 @@ export const init = () => {
   if (!fs.existsSync(historyFile)) {
     fs.writeFileSync(historyFile, '')
   }
+
+  const screenshotsFolder = folderSystem.screenshots
+  if (!fs.existsSync(screenshotsFolder)) {
+    fs.mkdirSync(screenshotsFolder, { recursive: true })
+  }
 }

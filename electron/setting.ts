@@ -14,6 +14,7 @@ export const getFolderSystem = () => {
     store: path.join(appPath, 'store'),
     browsers: path.join(appPath, 'store', 'browsers'),
     history: path.join(appPath, 'store', 'histories.txt'),
+    screenshots: path.join(appPath, 'store', 'screenshots'),
   }
 }
 

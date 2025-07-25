@@ -30,9 +30,25 @@ const getProfiles = async (page: number) => {
 
 export const syncProfile = async () => {
   try {
-    const [page1, page2, page3, page4, page5, page6, page7, page8, page9, page10] = await Promise.all([
+    const [
+      page1,
+      page2,
+      page3,
+      page4,
+      page5,
+      page6,
+      page7,
+      page8,
+      page9,
+      page10,
+      page11,
+      page12,
+      page13,
+      page14,
+      page15
+    ] = await Promise.all([
       getProfiles(1),
-      getProfiles(2),
+      getProfiles(2), 
       getProfiles(3),
       getProfiles(4),
       getProfiles(5),
@@ -41,9 +57,30 @@ export const syncProfile = async () => {
       getProfiles(8),
       getProfiles(9),
       getProfiles(10),
+      getProfiles(11),
+      getProfiles(12),
+      getProfiles(13),
+      getProfiles(14),
+      getProfiles(15)
     ])
 
-    const profiles = [...page1, ...page2, ...page3, ...page4, ...page5, ...page6, ...page7, ...page8, ...page9, ...page10]
+    const profiles = [
+      ...page1,
+      ...page2,
+      ...page3, 
+      ...page4,
+      ...page5,
+      ...page6,
+      ...page7,
+      ...page8,
+      ...page9,
+      ...page10,
+      ...page11,
+      ...page12,
+      ...page13,
+      ...page14,
+      ...page15
+    ]
 
     // save to file json
     const folderSystem = getFolderSystem()

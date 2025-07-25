@@ -32,6 +32,7 @@ export default function Button({ children, size = 'small', icon, color = 'primar
         sizeClasses[size],
         colorClasses[color],
         'hover:opacity-80 transition-opacity duration-200',
+        'disabled:opacity-50 disabled:cursor-not-allowed'
       )}
       {...props}
     >

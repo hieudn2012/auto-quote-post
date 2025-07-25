@@ -13,6 +13,7 @@ export interface WindowInstance {
     getProfilesFromJson: () => Promise<Profile[]>
     getHistory: () => Promise<History[]>
     clearHistory: (type: ClearHistoryType) => Promise<void>
+    captureAnalytics: (profileId: string) => Promise<void>
   }
   ipcRenderer?: {
     on: (channel: string, listener: (event: IpcRendererEvent, ...args: any[]) => void) => void
