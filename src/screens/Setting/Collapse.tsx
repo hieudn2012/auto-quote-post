@@ -10,7 +10,7 @@ interface CollapseProps {
 export const Collapse = ({ title, children, icon }: CollapseProps) => {
   const [isOpen, setIsOpen] = useState(false)
   return (
-    <div className="bg-white rounded-md border border-gray-100 select-none">
+    <div className="bg-white rounded-md border-2 border-gray-100 select-none shadow-md">
       <div className="flex items-center justify-between cursor-pointer p-4 hover:bg-gray-100" onClick={() => setIsOpen(!isOpen)}>
         <div className="flex items-center gap-2">
           <i className={`${icon} text-sm`}></i>
