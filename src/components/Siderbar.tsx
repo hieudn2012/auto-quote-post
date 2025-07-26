@@ -6,6 +6,7 @@ export enum RoutePath {
   History = "/history",
   Error = "/error",
   Settings = "/settings",
+  Analytics = "/analytics",
 }
 
 const sidebarItems = [
@@ -33,6 +34,12 @@ const sidebarItems = [
     label: "Settings",
     path: RoutePath.Settings,
     icon: "fas fa-cog",
+  },
+  // analytics
+  {
+    label: "Analytics",
+    path: RoutePath.Analytics,
+    icon: "fas fa-chart-bar",
   },
 ]
 

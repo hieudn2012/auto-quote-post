@@ -6,6 +6,7 @@ import History from './screens/History'
 import Error from './screens/Error'
 import Setting from './screens/Setting'
 import { RoutePath } from './components/Siderbar'
+import Analytics from './screens/Analytics'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path={RoutePath.History} element={<History />} />
         <Route path={RoutePath.Error} element={<Error />} />
         <Route path={RoutePath.Settings} element={<Setting />} />
+        <Route path={RoutePath.Analytics} element={<Analytics />} />
       </Routes>
     </Router>
   )

@@ -1,13 +1,14 @@
 import { Dialog, DialogPanel, DialogTitle } from '@headlessui/react'
-
+import { twMerge } from 'tailwind-merge'
 interface ModalProps {
   children: React.ReactNode
   title: string
   isOpen: boolean
   onClose: () => void
+  className?: string
 }
 
-export default function Modal({ children, title, isOpen, onClose }: ModalProps) {
+export default function Modal({ children, title, isOpen, onClose, className }: ModalProps) {
   return (
     <Dialog open={isOpen} as="div" className="relative z-10 focus:outline-none" onClose={onClose} __demoMode>
       {/* Backdrop */}
@@ -17,7 +18,7 @@ export default function Modal({ children, title, isOpen, onClose }: ModalProps) 
         <div className="flex min-h-full items-center justify-center p-4">
           <DialogPanel
             transition
-            className="w-full max-w-md rounded-xl bg-white p-6 backdrop-blur-2xl duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0"
+            className={twMerge("w-full max-w-md rounded-xl bg-white p-6 backdrop-blur-2xl duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0", className)}
           >
             <DialogTitle as="h3" className="text-base/7 font-bold">
               {title}

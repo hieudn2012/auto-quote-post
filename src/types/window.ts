@@ -14,6 +14,7 @@ export interface WindowInstance {
     getHistory: () => Promise<History[]>
     clearHistory: (type: ClearHistoryType) => Promise<void>
     captureAnalytics: (profileId: string) => Promise<void>
+    getAnalytics: () => Promise<Analytics[]>
   }
   ipcRenderer?: {
     on: (channel: string, listener: (event: IpcRendererEvent, ...args: any[]) => void) => void
@@ -86,6 +87,12 @@ export enum ClearHistoryType {
 }
 export interface ClearHistory {
   type: ClearHistoryType,
+}
+
+export interface Analytics {
+  profile_id: string
+  screenshot: string
+  file_type: string
 }
 
 export const windowInstance = window as unknown as WindowInstance

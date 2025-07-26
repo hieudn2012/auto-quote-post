@@ -6,7 +6,7 @@ interface ScanAnalyticsProps {
   ids: string[]
 }
 
-const MAX_PROFILES_PER_GROUP = 5
+const MAX_PROFILES_PER_GROUP = 20
 
 export default function ScanAnalytics({ ids }: ScanAnalyticsProps) {
   const [isProcessing, setIsProcessing] = useState(false)

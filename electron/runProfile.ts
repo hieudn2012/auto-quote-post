@@ -24,7 +24,7 @@ enum Message {
   URL_NOT_FOUND = 'Url not found OR your has been run all urls successfully',
 }
 
-enum ErrorMessage {
+export enum ErrorMessage {
   CONNECT_ECONNREFUSED = 'connect ECONNREFUSED',
   NAVIGATION_TIMEOUT = 'Navigation timeout',
   POST_NOT_FOUND = 'Post not found',
@@ -36,6 +36,7 @@ enum ErrorMessage {
   CLOSE_PAGES_ERROR = 'Close pages error',
   UNKNOWN_ERROR = 'Unknown error',
   URL_NOT_FOUND = 'Url not found OR your has been run all urls successfully',
+  ANALYTICS_ERROR = 'Analytics error',
 }
 
 const changePort = async ({ profileId }: { profileId: string }) => {
@@ -103,7 +104,6 @@ export const startProfile = async (profileId: string) => {
 }
 
 export const stopProfile = async (profileId: string) => {
-  sendToRenderer('profile-status', { profileId, message: Message.STOP_PROFILE });
   return axios.post('http://localhost:36912/browser/stop-profile', {
     profileId
   })

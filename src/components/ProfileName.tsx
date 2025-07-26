@@ -12,5 +12,5 @@ export default function ProfileName({ id }: { id: string }) {
     setName(profile?.name ?? null)
   }, [profiles, id])
 
-  return <div className="text-sm text-gray-500">{name}</div>
+  return <div>{name}</div>
 }
