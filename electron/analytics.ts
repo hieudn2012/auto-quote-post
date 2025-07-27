@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import puppeteer from "puppeteer";
 import sharp from "sharp";
+import moment from "moment";
 import { getFolderSystem } from "./setting";
 import { ErrorMessage, startProfile, stopProfile, wait } from "./runProfile";
 import { writeBrowser } from "./writeLog";
@@ -44,13 +45,15 @@ export const captureAnalytics = async (profileId: string) => {
     // save screenshot to folder
     const folderSystem = getFolderSystem()
 
+    const fileName = `${profileId}.${moment().toISOString()}.jpeg`
+
     // resize screenshot
     const resizedScreenshot = await sharp(screenshot as Buffer)
       .jpeg({ quality: 80 })
       .toBuffer();
-    fs.writeFileSync(`${folderSystem.screenshots}/${profileId}.jpeg`, resizedScreenshot);
+    fs.writeFileSync(`${folderSystem.screenshots}/${fileName}`, resizedScreenshot);
 
-    await browser.close();
+    await stopProfile(profileId);
     sendToRenderer('profile-status', { profileId, message: 'Scan analytics success ✅' });
   } catch (error) {
     console.log(error, 'error');
@@ -64,9 +67,10 @@ export const getAnalytics = async () => {
   const files = fs.readdirSync(folderSystem.screenshots)
   const analytics: Analytics[] = files.map((file) => {
     const profileId = file.split('.')[0]
-    const fileType = file.split('.')[1]
+    const lastUpdate = file.split('.')[1]
+    const fileType = file.split('.')[2]
     const screenshot = fs.readFileSync(`${folderSystem.screenshots}/${file}`)
-    return { profile_id: profileId, screenshot: screenshot.toString('base64'), file_type: fileType }
+    return { profile_id: profileId, screenshot: screenshot.toString('base64'), file_type: fileType, last_update: lastUpdate }
   })
 
   return filter(analytics, (analytics) => analytics.file_type === 'jpeg')
