@@ -26,14 +26,24 @@ export const captureAnalytics = async (profileId: string) => {
     const page = await browser.newPage();
     await page.setViewport({ width: WIDTH, height: HEIGHT });
     await page.goto(`https://www.threads.com/insights/views?days=7`);
-    await wait(60);
+    await wait(20);
 
-    await page.keyboard.press('Escape');
-    await wait(2);
-    await page.keyboard.press('Escape');
-    await wait(2);
-    await page.keyboard.press('Escape');
-    await wait(2);
+    // find div with text "What happened" and click it
+    try {
+      await page.evaluate(() => {
+        const elements = Array.from(document.querySelectorAll('div'));
+        const whatHappenedElement = elements.find(el => el.textContent?.includes('What happened'));
+        if (whatHappenedElement) {
+          (whatHappenedElement as HTMLElement).click();
+        }
+      });
+      await wait(2);
+    } catch (error) {
+      console.log('Could not find "What happened" element');
+    }
+
+    // close all tabs
+
     await page.keyboard.press('Escape');
     await wait(2);
 
