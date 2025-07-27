@@ -55,6 +55,14 @@ export const captureAnalytics = async (profileId: string) => {
     const resizedScreenshot = await sharp(screenshot as Buffer)
       .jpeg({ quality: 80 })
       .toBuffer();
+
+    // check duplicate profile id if exist, delete it
+    const files = fs.readdirSync(folderSystem.screenshots)
+    const duplicateFiles = files.filter((file) => file.split('.')[0] === profileId)
+    if (duplicateFiles.length > 0) {
+      duplicateFiles.forEach((file) => fs.unlinkSync(`${folderSystem.screenshots}/${file}`))
+    }
+
     fs.writeFileSync(`${folderSystem.screenshots}/${fileName}`, resizedScreenshot);
 
     await stopProfile(profileId);
