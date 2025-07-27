@@ -30,6 +30,12 @@ export const captureAnalytics = async (profileId: string) => {
 
     await page.keyboard.press('Escape');
     await wait(2);
+    await page.keyboard.press('Escape');
+    await wait(2);
+    await page.keyboard.press('Escape');
+    await wait(2);
+    await page.keyboard.press('Escape');
+    await wait(2);
 
     const screenshot = await page.screenshot({
       fullPage: false,
