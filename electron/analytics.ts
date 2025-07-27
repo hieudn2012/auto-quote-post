@@ -28,7 +28,11 @@ export const captureAnalytics = async (profileId: string) => {
     await page.goto(`https://www.threads.com/insights/views?days=7`);
     await wait(15);
     await page.keyboard.press('Escape');
-    await wait(5);
+    await wait(1);
+    await page.keyboard.press('Escape');
+    await wait(1);
+    await page.keyboard.press('Escape');
+    await wait(2);
 
     const screenshot = await page.screenshot({
       fullPage: false,
