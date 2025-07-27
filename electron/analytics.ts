@@ -26,19 +26,8 @@ export const captureAnalytics = async (profileId: string) => {
     const page = await browser.newPage();
     await page.setViewport({ width: WIDTH, height: HEIGHT });
     await page.goto(`https://www.threads.com/insights/views?days=7`);
-    await wait(10);
+    await wait(60);
 
-    // focus on the page
-    await page.focus('body');
-    // close all tabs
-    await page.keyboard.press('Escape');
-    await wait(2);
-    await page.keyboard.press('Escape');
-    await wait(2);
-    await page.keyboard.press('Escape');
-    await wait(2);
-    await page.keyboard.press('Escape');
-    await wait(2);
     await page.keyboard.press('Escape');
     await wait(2);
 
