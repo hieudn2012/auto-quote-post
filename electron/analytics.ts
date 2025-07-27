@@ -45,7 +45,7 @@ export const captureAnalytics = async (profileId: string) => {
     // save screenshot to folder
     const folderSystem = getFolderSystem()
 
-    const fileName = `${profileId}.${moment().toISOString()}.jpeg`
+    const fileName = `${profileId}.${moment().format('YYYY-MM-DD_HH-mm-ss')}.jpeg`
 
     // resize screenshot
     const resizedScreenshot = await sharp(screenshot as Buffer)
