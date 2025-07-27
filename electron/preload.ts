@@ -41,6 +41,7 @@ contextBridge.exposeInMainWorld('api', {
   clearHistory: (type: ClearHistoryType) => invoke(InvokeChannel.CLEAR_HISTORY, type),
   captureAnalytics: (profileId: string) => invoke(InvokeChannel.CAPTURE_ANALYTICS, profileId),
   getAnalytics: () => invoke(InvokeChannel.GET_ANALYTICS),
+  clearAnalytics: () => invoke(InvokeChannel.CLEAR_ANALYTICS),
 })
 
 contextBridge.exposeInMainWorld('sendToRenderer', (channel: string, data: unknown) => {

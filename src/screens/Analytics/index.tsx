@@ -6,7 +6,8 @@ import { map } from "lodash"
 import ProfileName from "@/components/ProfileName"
 import Preview from "./Preview"
 import moment from "moment"
-
+import Clear from "./Clear"
+import { toastSuccess } from "@/components/Toast"
 const formatDate = (date: string) => {
   const list = date.split('_')
   const dateMoment = moment(list[0])
@@ -25,6 +26,14 @@ export default function AnalyticsPage() {
   }, [])
   return (
     <Layout>
+      <div className="flex justify-end pb-4">
+        <Clear
+          onClear={() => {
+            setAnalytics([])
+            toastSuccess('Analytics cleared')
+          }}
+        />
+      </div>
       <div className="grid grid-cols-4 gap-4">
         {map(analytics, (analytics) => (
           <div key={analytics.profile_id} className="flex flex-col items-center justify-center gap-2">

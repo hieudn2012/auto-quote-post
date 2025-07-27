@@ -91,5 +91,10 @@ export const getAnalytics = async () => {
   })
 
   return filter(analytics, (analytics) => analytics.file_type === 'jpeg')
+}
 
+export const clearAnalytics = async () => {
+  const folderSystem = getFolderSystem()
+  const files = fs.readdirSync(folderSystem.screenshots)
+  files.forEach((file) => fs.unlinkSync(`${folderSystem.screenshots}/${file}`))
 }
