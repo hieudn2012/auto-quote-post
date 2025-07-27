@@ -93,6 +93,7 @@ export interface Analytics {
   profile_id: string
   screenshot: string
   file_type: string
+  last_update: string
 }
 
 export const windowInstance = window as unknown as WindowInstance

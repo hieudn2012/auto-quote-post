@@ -3,7 +3,7 @@ import puppeteer from "puppeteer";
 import sharp from "sharp";
 import moment from "moment";
 import { getFolderSystem } from "./setting";
-import { ErrorMessage, startProfile, stopProfile, wait } from "./runProfile";
+import { startProfile, stopProfile, wait } from "./runProfile";
 import { writeBrowser } from "./writeLog";
 import { Analytics } from "@/types/window";
 import { sendToRenderer } from "./main";
@@ -27,6 +27,10 @@ export const captureAnalytics = async (profileId: string) => {
     await page.setViewport({ width: WIDTH, height: HEIGHT });
     await page.goto(`https://www.threads.com/insights/views?days=7`);
     await wait(10);
+
+    // focus on the page
+    await page.focus('body');
+    // close all tabs
     await page.keyboard.press('Escape');
     await wait(2);
     await page.keyboard.press('Escape');
@@ -69,11 +73,12 @@ export const captureAnalytics = async (profileId: string) => {
 
     fs.writeFileSync(`${folderSystem.screenshots}/${fileName}`, resizedScreenshot);
 
+    await page.close();
+
     await stopProfile(profileId);
     sendToRenderer('profile-status', { profileId, message: 'Scan analytics success ✅' });
   } catch (error) {
-    console.log(error, 'error');
-    sendToRenderer('profile-status', { profileId, message: ErrorMessage.ANALYTICS_ERROR });
+    sendToRenderer('profile-status', { profileId, message: error });
     await stopProfile(profileId);
   }
 }
