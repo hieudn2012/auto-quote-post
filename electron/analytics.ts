@@ -28,24 +28,11 @@ export const captureAnalytics = async (profileId: string) => {
     await page.goto(`https://www.threads.com/insights/views?days=7`);
     await wait(20);
 
-    // find div with text "What happened" and click it
-    try {
-      await page.evaluate(() => {
-        const elements = Array.from(document.querySelectorAll('div'));
-        const whatHappenedElement = elements.find(el => el.textContent?.includes('What happened'));
-        if (whatHappenedElement) {
-          (whatHappenedElement as HTMLElement).click();
-        }
-      });
-      await wait(2);
-    } catch (error) {
-      console.log('Could not find "What happened" element');
+    // find div with data-bloks-name="ig.components.Icon" and click it
+    const icon = await page.$('div[data-bloks-name="ig.components.Icon"]')
+    if (icon) {
+      await icon.click()
     }
-
-    // close all tabs
-
-    await page.keyboard.press('Escape');
-    await wait(2);
 
     const screenshot = await page.screenshot({
       fullPage: false,
@@ -78,7 +65,11 @@ export const captureAnalytics = async (profileId: string) => {
 
     fs.writeFileSync(`${folderSystem.screenshots}/${fileName}`, resizedScreenshot);
 
-    await page.close();
+    // close all tabs
+    for (const tab of await browser.pages()) {
+      await tab.close()
+    }
+    await wait(2)
 
     await stopProfile(profileId);
     sendToRenderer('profile-status', { profileId, message: 'Scan analytics success ✅' });
