@@ -42,6 +42,7 @@ contextBridge.exposeInMainWorld('api', {
   captureAnalytics: (profileId: string) => invoke(InvokeChannel.CAPTURE_ANALYTICS, profileId),
   getAnalytics: () => invoke(InvokeChannel.GET_ANALYTICS),
   clearAnalytics: () => invoke(InvokeChannel.CLEAR_ANALYTICS),
+  runPost: (profileId: string) => invoke(InvokeChannel.RUN_POST, profileId),
 })
 
 contextBridge.exposeInMainWorld('sendToRenderer', (channel: string, data: unknown) => {

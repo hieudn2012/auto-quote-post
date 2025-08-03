@@ -13,4 +13,5 @@ export enum InvokeChannel {
   CAPTURE_ANALYTICS = 'capture-analytics',
   GET_ANALYTICS = 'get-analytics',
   CLEAR_ANALYTICS = 'clear-analytics',
+  RUN_POST = 'run-post',
 } 

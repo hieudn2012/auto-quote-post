@@ -14,6 +14,7 @@ import { Folders } from "./Folders"
 import useSettingStore from "@/store/setting.store"
 import { Column, CustomShowColumn } from "./CustomShowColumn"
 import ScanAnalytics from "./ScanAnalytics"
+import Post from "./Post"
 export default function Profiles() {
   const { settings } = useSettingStore()
   const { profiles } = useProfileStore()
@@ -105,7 +106,8 @@ export default function Profiles() {
           <SyncProfile />
           <ScanAnalytics ids={selectedProfile ?? []} />
           <SmartSettings onClick={() => setIsSmartSettingModalOpen(true)} />
-          <Button color="success" icon="fa-solid fa-play" onClick={runProfiles}>Run selected</Button>
+          <Button color="success" icon="fa-solid fa-share-nodes" onClick={runProfiles}>Quote</Button>
+          <Post ids={selectedProfile ?? []} />
           <Button color="error" icon="fa-solid fa-stop" onClick={stopProfiles}>Stop selected</Button>
         </div>
       </div>

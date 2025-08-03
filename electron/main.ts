@@ -1,7 +1,7 @@
 import { app, BrowserWindow, ipcMain } from 'electron'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
-import { runProfile, stopProfile } from './runProfile'
+import { runProfile, stopProfile, runPost } from './runProfile'
 import { getSettings, saveSettings, getSettingByProfileId } from './setting'
 import { ClearHistoryType, Setting } from '@/types/window'
 import { init } from './init'
@@ -121,6 +121,10 @@ handle(InvokeChannel.GET_ANALYTICS, async () => {
 
 handle(InvokeChannel.CLEAR_ANALYTICS, async () => {
   clearAnalytics()
+})
+
+handle(InvokeChannel.RUN_POST, async (_event, profileId: string) => {
+  runPost(profileId)
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common

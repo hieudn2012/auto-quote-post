@@ -290,3 +290,8 @@ export const sharePost = async ({ profileId }: { profileId: string }, retryCount
     await sharePost({ profileId }, retryCount + 1);
   }
 }
+
+// run post
+export const runPost = async (profileId: string) => {
+  console.log('run post', profileId);
+}

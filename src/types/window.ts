@@ -16,6 +16,7 @@ export interface WindowInstance {
     captureAnalytics: (profileId: string) => Promise<void>
     getAnalytics: () => Promise<Analytics[]>
     clearAnalytics: () => Promise<void>
+    runPost: (profileId: string) => Promise<void>
   }
   ipcRenderer?: {
     on: (channel: string, listener: (event: IpcRendererEvent, ...args: any[]) => void) => void
