@@ -22,6 +22,8 @@ enum Message {
   NETWORK_ERROR = 'Network error, change port...',
   CLOSE_PAGES = 'Close pages',
   URL_NOT_FOUND = 'Url not found OR your has been run all urls successfully',
+  START_POST = 'Start post',
+  OPEN_HOME_PAGE = 'Open home page',
 }
 
 export enum ErrorMessage {
@@ -37,6 +39,9 @@ export enum ErrorMessage {
   UNKNOWN_ERROR = 'Unknown error',
   URL_NOT_FOUND = 'Url not found OR your has been run all urls successfully',
   ANALYTICS_ERROR = 'Analytics error',
+  NOT_FOUND_POST_BUTTON = 'Not found post button',
+  NOT_FOUND_STATUS_INPUT = 'Not found status input',
+  NOT_FOUND_CAPTION_OR_FILES = 'Not found caption or files',
 }
 
 const changePort = async ({ profileId }: { profileId: string }) => {
@@ -64,32 +69,32 @@ const changePort = async ({ profileId }: { profileId: string }) => {
 
 export const startProfile = async (profileId: string) => {
   sendToRenderer('profile-status', { profileId, message: Message.START_PROFILE });
-  
+
   // Get the current screen position where the Electron app is running
   const primaryDisplay = screen.getPrimaryDisplay();
   const displays = screen.getAllDisplays();
-  
+
   // Find the display where the main window is located
   const mainWindow = (global as any).mainWindow as BrowserWindow | null; // Access global mainWindow
   let targetDisplay = primaryDisplay;
-  
+
   if (mainWindow) {
     const windowBounds = mainWindow.getBounds();
     const windowCenter = {
       x: windowBounds.x + windowBounds.width / 2,
       y: windowBounds.y + windowBounds.height / 2
     };
-    
+
     // Find which display contains the window center
     targetDisplay = displays.find((display: Electron.Display) => {
       const bounds = display.bounds;
-      return windowCenter.x >= bounds.x && 
-             windowCenter.x <= bounds.x + bounds.width &&
-             windowCenter.y >= bounds.y && 
-             windowCenter.y <= bounds.y + bounds.height;
+      return windowCenter.x >= bounds.x &&
+        windowCenter.x <= bounds.x + bounds.width &&
+        windowCenter.y >= bounds.y &&
+        windowCenter.y <= bounds.y + bounds.height;
     }) || primaryDisplay;
   }
-  
+
   return axios.post('http://localhost:36912/browser/start-profile', {
     profileId,
     sync: true,
@@ -292,6 +297,109 @@ export const sharePost = async ({ profileId }: { profileId: string }, retryCount
 }
 
 // run post
-export const runPost = async (profileId: string) => {
-  console.log('run post', profileId);
+export const runPost = async (profileId: string, retryCount: number = 0) => {
+  try {
+    const setting = getSettingByProfileId(profileId);
+    const caption = setting.caption?.caption;
+    const images = setting.files;
+
+    sendToRenderer('profile-status', { profileId, message: Message.START_POST });
+
+    if (!caption || !images) {
+      throw new Error(ErrorMessage.NOT_FOUND_CAPTION_OR_FILES);
+    }
+
+    // start profile
+    const { data } = await startProfile(profileId);
+    const wsUrl = data.wsUrl;
+
+    const browser = await puppeteer.connect({
+      browserWSEndpoint: wsUrl
+    });
+
+
+    const page = await browser.newPage();
+    await page.goto(`https://www.threads.com/`);
+    await wait(10);
+
+    // find div with data-bloks-name="ig.components.Icon" and click it
+    const icon = await page.$('div[data-bloks-name="ig.components.Icon"]')
+    if (icon) {
+      await icon.click()
+    }
+
+    sendToRenderer('profile-status', { profileId, message: Message.OPEN_HOME_PAGE });
+
+    // find div with class = "x1i10hfl x1ypdohk xdl72j9 x2lah0s xe8uvvx xdj266r x14z9mp xat24cr x1lziwak x2lwn1j xeuugli xexx8yu xyri2b x18d9i69 x1c1uobl x1n2onr6 x16tdsg8 x1hl2dhg xggy1nq x1ja2u2z x1t137rt x1q0g3np x1lku1pv x1a2a7pz x6s0dn4 x9f619 x3nfvp2 x1s688f xl56j7k x87ps6o xuxw1ft xc9qbxq x193iq5w x1g2r6go x12w9bfk x11xpdln xz4gly6 x19kf12q x9dqhi0 x6bh95i x1gzj6u4 x1hvtcl2 x1e1ff7m x16qb05n xi7iut8 x1dm3dyd x1pv694p x13fuv20 x18b5jzi x1q0q8m5 x1t7ytsu x178xt8z x1lun4ml xso031l xpilrb4 xp07o12"
+    const post = await page.$('div[class*="x1i10hfl x1ypdohk xdl72j9 x2lah0s xe8uvvx xdj266r x14z9mp xat24cr x1lziwak x2lwn1j xeuugli xexx8yu xyri2b x18d9i69 x1c1uobl x1n2onr6 x16tdsg8 x1hl2dhg xggy1nq x1ja2u2z x1t137rt x1q0g3np x1lku1pv x1a2a7pz x6s0dn4 x9f619 x3nfvp2 x1s688f xl56j7k x87ps6o xuxw1ft xc9qbxq x193iq5w x1g2r6go x12w9bfk x11xpdln xz4gly6 x19kf12q x9dqhi0 x6bh95i x1gzj6u4 x1hvtcl2 x1e1ff7m x16qb05n xi7iut8 x1dm3dyd x1pv694p x13fuv20 x18b5jzi x1q0q8m5 x1t7ytsu x178xt8z x1lun4ml xso031l xpilrb4 xp07o12"]');
+    await wait(3);
+    if (!post) {
+      throw new Error(ErrorMessage.NOT_FOUND_POST_BUTTON);
+    }
+    await post?.click();
+    await wait(5);
+
+    sendToRenderer('profile-status', { profileId, message: Message.UPLOAD_IMAGE });
+
+    // input upload file
+    const input = await page.$('input[type="file"]');
+    await wait(3);
+    if (!input) {
+      throw new Error(ErrorMessage.INPUT_FILE_NOT_FOUND);
+    }
+
+    each(images, async (image) => {
+      await input?.uploadFile(image);
+      sendToRenderer('profile-status', { profileId, message: `Upload image ${image}` });
+      console.log(`upload image ${image}`);
+      await wait(5);
+    });
+
+    sendToRenderer('profile-status', { profileId, message: Message.CLICK_COMMENT_INPUT });
+
+    // find dic with aria-placeholder="What's new?"
+    const statusInput = await page.$('div[aria-placeholder="What\'s new?"]');
+    await wait(3);
+    if (!statusInput) {
+      throw new Error(ErrorMessage.NOT_FOUND_STATUS_INPUT);
+    }
+    await statusInput?.click();
+    await wait(3);
+
+    // type status
+    await page.keyboard.type(caption || '');
+    await wait(3);
+
+    // CTRL + ENTER
+    await page.keyboard.down('Control');
+    await page.keyboard.press('Enter');
+    await page.keyboard.up('Control');
+    await wait(3);
+
+    sendToRenderer('profile-status', { profileId, message: Message.DONE });
+
+    // close browser
+
+    // close all pages
+    const pages = await browser.pages();
+    each(pages, (page) => {
+      page.close();
+    });
+
+    await wait(2);
+    await browser.close();
+    await wait(2);
+  } catch (error) {
+    console.log(error);
+    const message = get(error, 'message', ErrorMessage.UNKNOWN_ERROR);
+    sendToRenderer('profile-status', { profileId, message: Message.ERROR + message });
+    if (message.includes(ErrorMessage.CONNECT_ECONNREFUSED)) {
+      return;
+    }
+    if (retryCount >= 5) {
+      sendToRenderer('profile-status', { profileId, message: Message.MAX_RETRIES });
+      return;
+    }
+    await runPost(profileId, retryCount + 1);
+  }
 }
