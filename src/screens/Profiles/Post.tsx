@@ -1,10 +1,11 @@
 import Button from "@/components/Button";
 import { windowInstance } from "@/types/window";
 interface PostProps {
-  ids: string[]
+  ids: string[];
+  showText?: boolean;
 }
 
-export default function Post({ ids }: PostProps) {
+export default function Post({ ids, showText = true }: PostProps) {
   const handlePost = async () => {
     for (const id of ids) {
       windowInstance.api.runPost(id)
@@ -18,7 +19,7 @@ export default function Post({ ids }: PostProps) {
       icon="fa-solid fa-play"
       onClick={handlePost}
     >
-      Post
+      {showText ? 'Post' : ''}
     </Button>
   )
 }

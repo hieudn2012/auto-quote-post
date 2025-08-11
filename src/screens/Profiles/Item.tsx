@@ -8,6 +8,7 @@ import { Setting as SettingType } from "@/types/window";
 import { find } from "lodash";
 import { LastPost } from "@/components/LastPost";
 import { Column } from "./CustomShowColumn";
+import Post from "./Post";
 interface ItemProps {
   profile: Profile;
   selected: boolean;
@@ -57,6 +58,7 @@ const Item = ({ profile, selected, onSelect, onRun, onStop, onSetting, settings,
         <div className="flex gap-2">
           <Setting onClick={() => onSetting(profile)} />
           <Run id={profile.id} onClick={() => onRun(profile)} />
+          <Post ids={[profile.id]} showText={false} />
           <Stop onClick={() => onStop(profile)} />
         </div>
       </div>

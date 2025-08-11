@@ -330,8 +330,8 @@ export const runPost = async (profileId: string, retryCount: number = 0) => {
 
     sendToRenderer('profile-status', { profileId, message: Message.OPEN_HOME_PAGE });
 
-    // find div with class = "x1i10hfl x1ypdohk xdl72j9 x2lah0s xe8uvvx xdj266r x14z9mp xat24cr x1lziwak x2lwn1j xeuugli xexx8yu xyri2b x18d9i69 x1c1uobl x1n2onr6 x16tdsg8 x1hl2dhg xggy1nq x1ja2u2z x1t137rt x1q0g3np x1lku1pv x1a2a7pz x6s0dn4 x9f619 x3nfvp2 x1s688f xl56j7k x87ps6o xuxw1ft xc9qbxq x193iq5w x1g2r6go x12w9bfk x11xpdln xz4gly6 x19kf12q x9dqhi0 x6bh95i x1gzj6u4 x1hvtcl2 x1e1ff7m x16qb05n xi7iut8 x1dm3dyd x1pv694p x13fuv20 x18b5jzi x1q0q8m5 x1t7ytsu x178xt8z x1lun4ml xso031l xpilrb4 xp07o12"
-    const post = await page.$('div[class*="x1i10hfl x1ypdohk xdl72j9 x2lah0s xe8uvvx xdj266r x14z9mp xat24cr x1lziwak x2lwn1j xeuugli xexx8yu xyri2b x18d9i69 x1c1uobl x1n2onr6 x16tdsg8 x1hl2dhg xggy1nq x1ja2u2z x1t137rt x1q0g3np x1lku1pv x1a2a7pz x6s0dn4 x9f619 x3nfvp2 x1s688f xl56j7k x87ps6o xuxw1ft xc9qbxq x193iq5w x1g2r6go x12w9bfk x11xpdln xz4gly6 x19kf12q x9dqhi0 x6bh95i x1gzj6u4 x1hvtcl2 x1e1ff7m x16qb05n xi7iut8 x1dm3dyd x1pv694p x13fuv20 x18b5jzi x1q0q8m5 x1t7ytsu x178xt8z x1lun4ml xso031l xpilrb4 xp07o12"]');
+    // find div with class = "x1i10hfl x1ypdohk xdl72j9 x2lah0s x3ct3a4 xdj266r x14z9mp xat24cr x1lziwak x2lwn1j xeuugli xexx8yu xyri2b x18d9i69 x1c1uobl x1n2onr6 x16tdsg8 x1hl2dhg xggy1nq x1ja2u2z x1t137rt x1q0g3np x1lku1pv x1a2a7pz x6s0dn4 x9f619 x3nfvp2 x1s688f xl56j7k x87ps6o xuxw1ft xc9qbxq x193iq5w x1g2r6go x12w9bfk x11xpdln xz4gly6 x19kf12q x9dqhi0 x6bh95i x1gzj6u4 x1hvtcl2 x1e1ff7m x16qb05n xi7iut8 x1dm3dyd x1pv694p x13fuv20 x18b5jzi x1q0q8m5 x1t7ytsu x178xt8z x1lun4ml xso031l xpilrb4 xp07o12"
+    const post = await page.$('div[class*="x1i10hfl x1ypdohk xdl72j9 x2lah0s x3ct3a4 xdj266r x14z9mp xat24cr x1lziwak x2lwn1j xeuugli xexx8yu xyri2b x18d9i69 x1c1uobl x1n2onr6 x16tdsg8 x1hl2dhg xggy1nq x1ja2u2z x1t137rt x1q0g3np x1lku1pv x1a2a7pz x6s0dn4 x9f619 x3nfvp2 x1s688f xl56j7k x87ps6o xuxw1ft xc9qbxq x193iq5w x1g2r6go x12w9bfk x11xpdln xz4gly6 x19kf12q x9dqhi0 x6bh95i x1gzj6u4 x1hvtcl2 x1e1ff7m x16qb05n xi7iut8 x1dm3dyd x1pv694p x13fuv20 x18b5jzi x1q0q8m5 x1t7ytsu x178xt8z x1lun4ml xso031l xpilrb4 xp07o12"]');
     await wait(3);
     if (!post) {
       throw new Error(ErrorMessage.NOT_FOUND_POST_BUTTON);
@@ -339,14 +339,14 @@ export const runPost = async (profileId: string, retryCount: number = 0) => {
     await post?.click();
     await wait(5);
 
-    sendToRenderer('profile-status', { profileId, message: Message.UPLOAD_IMAGE });
-
     // input upload file
     const input = await page.$('input[type="file"]');
     await wait(3);
     if (!input) {
       throw new Error(ErrorMessage.INPUT_FILE_NOT_FOUND);
     }
+
+    sendToRenderer('profile-status', { profileId, message: Message.UPLOAD_IMAGE });
 
     each(images, async (image) => {
       await input?.uploadFile(image);
@@ -370,27 +370,29 @@ export const runPost = async (profileId: string, retryCount: number = 0) => {
     await page.keyboard.type(caption || '');
     await wait(3);
 
-    // CTRL + ENTER
-    await page.keyboard.down('Control');
-    await page.keyboard.press('Enter');
-    await page.keyboard.up('Control');
-    await wait(3);
-
     sendToRenderer('profile-status', { profileId, message: Message.DONE });
 
-    // close browser
+    // filter all div with class = "xc26acl x6s0dn4 x78zum5 xl56j7k x6ikm8r x10wlt62 xf7dkkf xv54qhq xlyipyv xp07o12" and click it
+    const posts = await page.$$('div[class*="xc26acl x6s0dn4 x78zum5 xl56j7k x6ikm8r x10wlt62 xf7dkkf xv54qhq xlyipyv xp07o12"]');
+    await wait(3);
+    if (!posts) {
+      throw new Error(ErrorMessage.NOT_FOUND_POST_BUTTON);
+    }
+    each(posts, async (post) => {
+      await wait(2);
+      post?.click();
+    });
+    await wait(5);
 
     // close all pages
     const pages = await browser.pages();
     each(pages, (page) => {
       page.close();
     });
-
-    await wait(2);
     await browser.close();
     await wait(2);
   } catch (error) {
-    console.log(error);
+    console.log(error, '###ERROR###');
     const message = get(error, 'message', ErrorMessage.UNKNOWN_ERROR);
     sendToRenderer('profile-status', { profileId, message: Message.ERROR + message });
     if (message.includes(ErrorMessage.CONNECT_ECONNREFUSED)) {
