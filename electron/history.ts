@@ -1,4 +1,4 @@
-import { filter, get, map, slice, split, trim } from "lodash";
+import { filter, map, sample, slice, split, trim } from "lodash";
 import { getFolderSystem, getSettings } from "./setting"
 import fs from 'node:fs'
 import { ClearHistory, ClearHistoryType } from "../src/types/window";
@@ -38,7 +38,9 @@ export const getRandomUrlByProfileId = ({ profileId }: { profileId: string }) =>
 
   // get urls exclude historyUrls
   const urlsExcludeHistoryUrls = filter(urls, (url) => !historyUrls.includes(url.value))
-  return get(urlsExcludeHistoryUrls, '[0].value', '')
+  // get random url from urlsExcludeHistoryUrls
+  const randomUrl = sample(urlsExcludeHistoryUrls)
+  return randomUrl?.value || ''
 }
 
 export const clearHistory = ({ type }: ClearHistory) => {
